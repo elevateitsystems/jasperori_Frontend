@@ -23,7 +23,7 @@ export async function Footer() {
   return (
     <footer data-menu-inert className="bg-navy-dark pt-20 pb-10 [--focus-ring:var(--color-white)]">
       <div className="site-container">
-        <div className="mx-auto max-w-footer">
+        <div className="mx-auto max-w-inner">
           <div className="grid gap-x-12 gap-y-10 border-b border-white/10 pb-14 md:grid-cols-2 lg:grid-cols-4">
             <div>
               <Logo

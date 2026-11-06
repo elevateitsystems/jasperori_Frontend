@@ -57,8 +57,8 @@
   --spacing-header: 68px;
   /* Content width inside the 1600px frame (1600 - 2 x 140): max-w-content */
   --container-content: 1320px;
-  /* Footer content width (1600 - 2 x (200 + 32)): max-w-footer */
-  --container-footer: 1136px;
+  /* Inner content width used by the footer and several sections (1600 - 2 x (200 + 32)): max-w-inner */
+  --container-inner: 1136px;
 
   /* ----------------------------------------------------------------------------------------------
    * Letter spacing overrides (in em, so they are exact for the size they are used with).
@@ -80,94 +80,99 @@
    * Text styles (Manrope unless the name starts with inter-).
    * Each sets font size, line height, letter spacing and the default weight. Weight, line height
    * and letter spacing can still be overridden with font-*, leading-* and tracking-* utilities.
+   *
+   * Headings are fluid: clamp(min, ..., max) grows linearly from 360px to 1280px viewport width and
+   * is exactly the spec size from 1280px up (so the 1600px desktop matches the design). Their line
+   * heights are ratios of the spec values (e.g. 70.72 / 68) and letter spacing is in em, so both
+   * keep the design proportions at every size.
    * Uppercase styles (eyebrow, micro, inter-eyebrow) are defined as @utility further down.
    * Tailwind's default text sizes are removed so only design sizes can be used.
    * -------------------------------------------------------------------------------------------- */
   --text-*: initial;
 
   /* 96/96: large faded numbers ("01", "02") behind the Home support cards */
-  --text-watermark: 96px;
-  --text-watermark--line-height: 96px;
+  --text-watermark: clamp(64px, calc(64px + 32 * ((100vw - 360px) / 920)), 96px);
+  --text-watermark--line-height: calc(96 / 96);
   --text-watermark--letter-spacing: 0em;
   --text-watermark--font-weight: 800;
 
   /* 88/81.84 -5.72px: inner page hero H1 */
-  --text-display: 88px;
-  --text-display--line-height: 81.84px;
+  --text-display: clamp(44px, calc(44px + 44 * ((100vw - 360px) / 920)), 88px);
+  --text-display--line-height: calc(81.84 / 88);
   --text-display--letter-spacing: -0.065em;
   --text-display--font-weight: 800;
 
   /* 72/70.56 -4.32px: Contact "The right work starts with the right questions." */
-  --text-display-md: 72px;
-  --text-display-md--line-height: 70.56px;
+  --text-display-md: clamp(40px, calc(40px + 32 * ((100vw - 360px) / 920)), 72px);
+  --text-display-md--line-height: calc(70.56 / 72);
   --text-display-md--letter-spacing: -0.06em;
   --text-display-md--font-weight: 800;
 
   /* 68/70.72 -3.74px: Home hero H1 */
-  --text-hero-home: 68px;
-  --text-hero-home--line-height: 70.72px;
+  --text-hero-home: clamp(40px, calc(40px + 28 * ((100vw - 360px) / 920)), 68px);
+  --text-hero-home--line-height: calc(70.72 / 68);
   --text-hero-home--letter-spacing: -0.055em;
   --text-hero-home--font-weight: 800;
 
   /* 60/58.8 -3.6px: "What can we simplify for you?", Services purple CTA */
-  --text-h2-xl: 60px;
-  --text-h2-xl--line-height: 58.8px;
+  --text-h2-xl: clamp(36px, calc(36px + 24 * ((100vw - 360px) / 920)), 60px);
+  --text-h2-xl--line-height: calc(58.8 / 60);
   --text-h2-xl--letter-spacing: -0.06em;
   --text-h2-xl--font-weight: 800;
 
   /* 60/61.2 -3.3px: About and Services intro headings */
-  --text-h2-xl-snug: 60px;
-  --text-h2-xl-snug--line-height: 61.2px;
+  --text-h2-xl-snug: clamp(36px, calc(36px + 24 * ((100vw - 360px) / 920)), 60px);
+  --text-h2-xl-snug--line-height: calc(61.2 / 60);
   --text-h2-xl-snug--letter-spacing: -0.055em;
   --text-h2-xl-snug--font-weight: 800;
 
   /* 60/57.6 -3.6px: About "A focused, human approach." */
-  --text-h2-xl-tight: 60px;
-  --text-h2-xl-tight--line-height: 57.6px;
+  --text-h2-xl-tight: clamp(36px, calc(36px + 24 * ((100vw - 360px) / 920)), 60px);
+  --text-h2-xl-tight--line-height: calc(57.6 / 60);
   --text-h2-xl-tight--letter-spacing: -0.06em;
   --text-h2-xl-tight--font-weight: 800;
 
   /* 60/60 -3px: Support "Support designed around continuity." */
-  --text-h2-xl-none: 60px;
-  --text-h2-xl-none--line-height: 60px;
+  --text-h2-xl-none: clamp(36px, calc(36px + 24 * ((100vw - 360px) / 920)), 60px);
+  --text-h2-xl-none--line-height: calc(60 / 60);
   --text-h2-xl-none--letter-spacing: -0.05em;
   --text-h2-xl-none--font-weight: 800;
 
   /* 48/48 -2.16px: Home section headings. Variants: tracking-tight-5 (Contact "What happens
      next?"), tracking-tight-6 (About "100%") */
-  --text-h2: 48px;
-  --text-h2--line-height: 48px;
+  --text-h2: clamp(32px, calc(32px + 16 * ((100vw - 360px) / 920)), 48px);
+  --text-h2--line-height: calc(48 / 48);
   --text-h2--letter-spacing: -0.045em;
   --text-h2--font-weight: 800;
 
   /* 48/48.96 -2.4px: Services and Booking headings */
-  --text-h2-snug: 48px;
-  --text-h2-snug--line-height: 48.96px;
+  --text-h2-snug: clamp(32px, calc(32px + 16 * ((100vw - 360px) / 920)), 48px);
+  --text-h2-snug--line-height: calc(48.96 / 48);
   --text-h2-snug--letter-spacing: -0.05em;
   --text-h2-snug--font-weight: 800;
 
   /* 48/51.84 -2.16px: About quote */
-  --text-quote: 48px;
-  --text-quote--line-height: 51.84px;
+  --text-quote: clamp(30px, calc(30px + 18 * ((100vw - 360px) / 920)), 48px);
+  --text-quote--line-height: calc(51.84 / 48);
   --text-quote--letter-spacing: -0.045em;
   --text-quote--font-weight: 800;
 
   /* 36/40 -1.62px: Support area titles. Variant: tracking-tight-5 (Support "Clear from the first
      contact.") */
-  --text-h3-lg: 36px;
-  --text-h3-lg--line-height: 40px;
+  --text-h3-lg: clamp(28px, calc(28px + 8 * ((100vw - 360px) / 920)), 36px);
+  --text-h3-lg--line-height: calc(40 / 36);
   --text-h3-lg--letter-spacing: -0.045em;
   --text-h3-lg--font-weight: 800;
 
   /* 36/45 -1.44px: Services image card "Expertise shaped around the context." */
-  --text-h3-lg-relaxed: 36px;
-  --text-h3-lg-relaxed--line-height: 45px;
+  --text-h3-lg-relaxed: clamp(28px, calc(28px + 8 * ((100vw - 360px) / 920)), 36px);
+  --text-h3-lg-relaxed--line-height: calc(45 / 36);
   --text-h3-lg-relaxed--letter-spacing: -0.04em;
   --text-h3-lg-relaxed--font-weight: 800;
 
   /* 30/36 -1.2px: About value titles */
-  --text-h3: 30px;
-  --text-h3--line-height: 36px;
+  --text-h3: clamp(24px, calc(24px + 6 * ((100vw - 360px) / 920)), 30px);
+  --text-h3--line-height: calc(36 / 30);
   --text-h3--letter-spacing: -0.04em;
   --text-h3--font-weight: 800;
 
@@ -274,8 +279,8 @@
   --text-lang--font-weight: 800;
 
   /* Inter: Home "Services" and "About TechSalem" sections only. Use together with font-inter. */
-  --text-inter-h2: 36px;
-  --text-inter-h2--line-height: 40px;
+  --text-inter-h2: clamp(28px, calc(28px + 8 * ((100vw - 360px) / 920)), 36px);
+  --text-inter-h2--line-height: calc(40 / 36);
   --text-inter-h2--letter-spacing: -0.025em;
   --text-inter-h2--font-weight: 700;
 
@@ -481,6 +486,24 @@
   h6,
   p {
     margin: 0;
+  }
+
+  /*
+   * Long (Swedish) words in headings: never overflow, and hyphenate on small screens (uses the
+   * <html lang> dictionary). Not on desktop, so line breaks there stay as in the design.
+   */
+  h1,
+  h2,
+  h3 {
+    overflow-wrap: break-word;
+  }
+
+  @media (width < 64rem) {
+    h1,
+    h2,
+    h3 {
+      hyphens: auto;
+    }
   }
 
   /*

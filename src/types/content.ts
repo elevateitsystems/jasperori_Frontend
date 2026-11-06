@@ -4,6 +4,7 @@
  */
 
 import type { supportSlugs } from '@/content/shared';
+import type { IconName } from '@/types/icons';
 
 /** Slug of a support page, e.g. 'support-01'. The list lives in src/content/shared.ts. */
 export type SupportSlug = (typeof supportSlugs)[number];
@@ -45,11 +46,26 @@ export interface ImageAsset {
   height: number;
 }
 
-/** Page metadata. The title is shown as "<title> | <siteName>". */
+/** Page metadata. The title is shown as "<title> | <siteName>" unless `absoluteTitle` is set. */
 export interface PageMeta {
   title: string;
-  /** Not in the design yet: add when the client provides it. */
+  /** Use `title` as the full browser title, without the " | <siteName>" suffix. */
+  absoluteTitle?: boolean;
+  /** Not in the design yet for most pages: add when the client provides it. */
   description?: string;
+  /** Open Graph / social sharing image. */
+  image?: ImageAsset;
+}
+
+/** Fixed-length lists: both languages must have the same number of items. */
+export type Tuple2<T> = [T, T];
+export type Tuple4<T> = [T, T, T, T];
+
+/** Reusable call-to-action banner (Home "Let's build what's next"). */
+export interface CtaBannerContent {
+  title: string;
+  text: string;
+  button: InternalLinkItem;
 }
 
 /** Shared content for the header and footer. */
@@ -104,7 +120,48 @@ export interface PlaceholderPageContent {
   meta: PageMeta;
 }
 
-export type HomePageContent = PlaceholderPageContent;
+export interface HomePageContent {
+  meta: PageMeta;
+  hero: {
+    eyebrow: string;
+    title: string;
+    text: string;
+    image: ImageAsset;
+    primaryCta: InternalLinkItem;
+    secondaryCta: InternalLinkItem;
+  };
+  services: {
+    eyebrow: string;
+    title: string;
+    text: string;
+    cards: Tuple4<{
+      icon: IconName;
+      title: string;
+      text: string;
+      /** Optional: cards 3 and 4 have no link in the design. */
+      link?: InternalLinkItem;
+    }>;
+  };
+  about: {
+    image: ImageAsset;
+    badge: { label: string; text: string };
+    eyebrow: string;
+    title: string;
+    paragraphs: Tuple2<string>;
+    link: InternalLinkItem;
+  };
+  why: {
+    eyebrow: string;
+    title: string;
+    items: Tuple4<{ title: string; text: string }>;
+  };
+  support: {
+    eyebrow: string;
+    title: string;
+    cards: Tuple2<{ icon: IconName; title: string; text: string; link: InternalLinkItem }>;
+  };
+  cta: CtaBannerContent;
+}
 export type AboutPageContent = PlaceholderPageContent;
 export type ServicesPageContent = PlaceholderPageContent;
 /** One support page. Both support pages share one template; only the content differs. */

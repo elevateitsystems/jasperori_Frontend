@@ -1,11 +1,12 @@
 import type { LocaleContent } from '@/types/content';
 
+import { home } from './home';
 import { site } from './site';
 
 /** English content. Must match LocaleContent exactly (checked by `satisfies`). */
 export const en = {
   site,
-  home: { meta: { title: 'Home' } },
+  home,
   about: { meta: { title: 'About' } },
   services: { meta: { title: 'Services' } },
   supportPages: {

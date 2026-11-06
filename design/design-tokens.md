@@ -102,3 +102,14 @@ These were checked against the spec files when the tokens were coded in `src/app
 - **Footer** (Phase 2): the 1px white/10 line is the bottom border of the column grid. The bottom
   bar's frame is 44px tall (28px top padding + 16px text), so the listed 28px bottom padding takes
   no space; the footer's own 40px bottom padding follows. Total height 377px.
+- **Fluid headings** (Phase 3): heading styles grow from 360px to 1280px viewport width and are the
+  exact spec size from 1280px up. Line heights are spec ratios, letter spacing is in em.
+- **Home hero photo** (Phase 3): the spec marks it `stretch` (Figma custom crop, not recorded).
+  Matched to the screenshot: at 1600px the photo is 1177.6px wide (73.6%), right edge 23.6px past
+  the frame, top -28px; the uncovered left part is under the overlay's opaque navy.
+- **Icons** (Phase 3), matched by comparing the spec's vector boxes with lucide's geometry:
+  service cards = `network`, `workflow`, `chart-column`, `shield-check` (the screenshot shows a
+  shield with a check, not a clipboard); support cards = `headphones`; "Learn More" =
+  `arrow-up-right`; buttons and "Discover TechSalem" = `arrow-right`.
+- **Home CTA ring** (Phase 3): the 384px ring is at x1600, y-160 relative to the banner, i.e.
+  entirely outside it, so it is clipped and invisible, as in the approved screenshot.

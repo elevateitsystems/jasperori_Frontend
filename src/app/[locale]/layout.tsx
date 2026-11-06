@@ -8,6 +8,7 @@ import { SkipLink } from '@/components/layout/SkipLink';
 import { getContent } from '@/content';
 import { routing } from '@/i18n/routing';
 import { fontVariables } from '@/lib/fonts';
+import { siteUrl } from '@/lib/site-url';
 
 import '../globals.css';
 
@@ -21,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const { siteName } = await getContent(locale, 'site');
 
   // Fallback only. Pages set their full title through getPageMetadata (src/lib/metadata.ts).
-  return { title: siteName };
+  return { metadataBase: siteUrl, title: siteName };
 }
 
 /**

@@ -1,11 +1,12 @@
 import type { LocaleContent } from '@/types/content';
 
+import { home } from './home';
 import { site } from './site';
 
 /** Swedish content. Must match LocaleContent exactly (checked by `satisfies`). */
 export const sv = {
   site,
-  home: { meta: { title: 'Hem' } },
+  home,
   about: { meta: { title: 'Om oss' } },
   services: { meta: { title: 'Tjänster' } },
   supportPages: {
