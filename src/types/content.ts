@@ -3,12 +3,17 @@
  * CMS can replace the content source later without touching components.
  */
 
+import type { supportSlugs } from '@/content/shared';
+
+/** Slug of a support page, e.g. 'support-01'. The list lives in src/content/shared.ts. */
+export type SupportSlug = (typeof supportSlugs)[number];
+
 /** Internal routes. The locale prefix is added by the locale-aware Link from src/i18n. */
 export type InternalPath =
   | '/'
   | '/about'
   | '/services'
-  | '/support'
+  | `/support/${SupportSlug}`
   | '/contact'
   | '/booking'
   | '/privacy-policy'
@@ -23,6 +28,13 @@ export type Href = InternalPath | ExternalHref;
 export interface LinkItem {
   label: string;
   href: Href;
+  /** Open in a new tab (external links such as social media). */
+  openInNewTab?: boolean;
+}
+
+/** A link that must stay inside the site (navigation, buttons). */
+export interface InternalLinkItem extends LinkItem {
+  href: InternalPath;
 }
 
 /** An image in public/images. Use an empty alt for purely decorative images. */
@@ -44,14 +56,14 @@ export interface PageMeta {
 export interface SiteSettings {
   siteName: string;
   navigation: {
-    home: LinkItem;
-    about: LinkItem;
-    services: LinkItem;
-    support: LinkItem;
-    contact: LinkItem;
+    home: InternalLinkItem;
+    about: InternalLinkItem;
+    services: InternalLinkItem;
+    support: InternalLinkItem;
+    contact: InternalLinkItem;
   };
   header: {
-    cta: LinkItem;
+    cta: InternalLinkItem;
   };
   footer: {
     tagline: string;
@@ -95,6 +107,7 @@ export interface PlaceholderPageContent {
 export type HomePageContent = PlaceholderPageContent;
 export type AboutPageContent = PlaceholderPageContent;
 export type ServicesPageContent = PlaceholderPageContent;
+/** One support page. Both support pages share one template; only the content differs. */
 export type SupportPageContent = PlaceholderPageContent;
 export type ContactPageContent = PlaceholderPageContent;
 export type BookingPageContent = PlaceholderPageContent;
@@ -108,7 +121,8 @@ export interface LocaleContent {
   home: HomePageContent;
   about: AboutPageContent;
   services: ServicesPageContent;
-  support: SupportPageContent;
+  /** Keyed by slug, so every language must provide every support page. */
+  supportPages: Record<SupportSlug, SupportPageContent>;
   contact: ContactPageContent;
   booking: BookingPageContent;
   privacyPolicy: PrivacyPolicyPageContent;
@@ -118,5 +132,5 @@ export interface LocaleContent {
 
 export type ContentKey = keyof LocaleContent;
 
-/** Keys of content entries that are pages (have page metadata). */
-export type PageKey = Exclude<ContentKey, 'site'>;
+/** Keys of single pages (have page metadata). Support pages are looked up by slug instead. */
+export type PageKey = Exclude<ContentKey, 'site' | 'supportPages'>;

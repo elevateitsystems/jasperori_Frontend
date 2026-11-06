@@ -25,7 +25,9 @@ export const colorTokens = [
 
 export const gradientTokens = [
   { name: 'overlay-home-hero', className: 'bg-overlay-home-hero' },
-  { name: 'overlay-hero', className: 'bg-overlay-hero' },
+  { name: 'overlay-hero-about', className: 'bg-overlay-hero-about' },
+  { name: 'overlay-hero-services', className: 'bg-overlay-hero-services' },
+  { name: 'overlay-hero-support', className: 'bg-overlay-hero-support' },
   { name: 'accent-bar', className: 'bg-accent-bar' },
   { name: 'brand', className: 'bg-brand' },
   { name: 'overlay-image-text', className: 'bg-overlay-image-text' },

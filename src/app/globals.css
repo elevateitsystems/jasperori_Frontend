@@ -57,6 +57,8 @@
   --spacing-header: 68px;
   /* Content width inside the 1600px frame (1600 - 2 x 140): max-w-content */
   --container-content: 1320px;
+  /* Footer content width (1600 - 2 x (200 + 32)): max-w-footer */
+  --container-footer: 1136px;
 
   /* ----------------------------------------------------------------------------------------------
    * Letter spacing overrides (in em, so they are exact for the size they are used with).
@@ -344,23 +346,21 @@
 }
 
 /* -------------------------------------------------------------------------------------------------
- * Gradients. Stops are exact from the specs. Directions are not stored in the specs and were read
- * from the approved screenshot (see design/design-tokens.md, "Notes from implementation").
+ * Gradients. Exact angles and stops, calculated from the Figma file (fill order: image at the
+ * bottom, gradient on top). Values are documented in design/design-tokens.md.
  * ----------------------------------------------------------------------------------------------- */
 :root {
-  /* Home hero, on top of the photo */
+  /* Home hero, on top of the photo. After 56.4% it keeps the last color. */
   --gradient-home-hero: linear-gradient(
-    to right,
-    #172340 0%,
-    #2f2b6b 50%,
-    rgb(72 51 151 / 0.33) 100%
+    89deg,
+    rgb(23 35 64 / 1) 2%,
+    rgb(47 43 107 / 1) 29%,
+    rgb(72 51 151 / 0.33) 56.4%
   );
-  /* About, Services, Support, Contact, Booking hero (Services adds a black/20 layer on top) */
-  --gradient-hero: linear-gradient(to top right, var(--color-purple) 0%, rgb(81 54 165 / 0) 100%);
-  /* 4 x 112px vertical bar next to the hero text */
+  /* 4 x 112px vertical bar next to the hero text, top to bottom */
   --gradient-accent-bar: linear-gradient(
-    to bottom,
-    #7d4090 29%,
+    180deg,
+    #7d4090 28.6%,
     #88418a 36%,
     #944185 43%,
     #9f407f 50%,
@@ -372,9 +372,9 @@
     #e32651 93%,
     var(--color-red) 100%
   );
-  /* Navy -> purple -> red (Home "Let's build what's next" CTA) */
+  /* Navy -> purple -> red, left to right (Home "Let's build what's next" CTA) */
   --gradient-brand: linear-gradient(
-    to right,
+    90deg,
     var(--color-navy) 0%,
     #1f264d 7%,
     #272a5b 14%,
@@ -391,26 +391,39 @@
     #d82f5b 93%,
     var(--color-red) 100%
   );
-  /* Text protection on images with white text (Services image card), bottom up */
+  /* Text protection on images with white text (Services image card), bottom to top */
   --gradient-image-text: linear-gradient(
-    to top,
+    0deg,
     rgb(0 0 0 / 0.75) 0%,
     rgb(0 0 0 / 0.1) 50%,
     rgb(0 0 0 / 0) 100%
   );
-  /* About "100%" image section (about-quote-office.jpg) */
-  --gradient-about-quote: linear-gradient(to bottom, rgb(0 0 0 / 0.15) 0%, rgb(0 0 0 / 0) 100%);
+  /* About "100%" image section (about-quote-office.jpg), left to right */
+  --gradient-about-quote: linear-gradient(90deg, rgb(0 0 0 / 0.15) 0%, rgb(0 0 0 / 0) 100%);
 
   /* Side padding of the site container: 20px at 375px wide, growing to 140px at 1600px. */
   --site-gutter: clamp(20px, calc(9.796vw - 16.735px), 140px);
 }
 
-@utility bg-overlay-home-hero {
-  background-image: var(--gradient-home-hero);
+/*
+ * Inner-page hero overlay: purple 100% -> purple 0%. One utility; the variant sets the exact angle
+ * and stop positions for each page frame:
+ *   bg-overlay-hero-about     About and Booking
+ *   bg-overlay-hero-services  Services and Contact (Services adds a bg-black/20 layer on top)
+ *   bg-overlay-hero-support   Support
+ */
+@theme {
+  --hero-overlay-about: 103deg, rgb(81 54 165 / 1) 3.4%, rgb(81 54 165 / 0) 95.3%;
+  --hero-overlay-services: 101deg, rgb(81 54 165 / 1) 2.9%, rgb(81 54 165 / 0) 72.3%;
+  --hero-overlay-support: 99deg, rgb(81 54 165 / 1) 6.8%, rgb(81 54 165 / 0) 101.4%;
 }
 
-@utility bg-overlay-hero {
-  background-image: var(--gradient-hero);
+@utility bg-overlay-hero-* {
+  background-image: linear-gradient(--value(--hero-overlay-*));
+}
+
+@utility bg-overlay-home-hero {
+  background-image: var(--gradient-home-hero);
 }
 
 @utility bg-accent-bar {

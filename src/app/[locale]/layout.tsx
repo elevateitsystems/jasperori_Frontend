@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale } from 'next-intl/server';
 
+import { Footer } from '@/components/layout/Footer';
+import { Header } from '@/components/layout/Header';
+import { SkipLink } from '@/components/layout/SkipLink';
 import { getContent } from '@/content';
 import { routing } from '@/i18n/routing';
 import { fontVariables } from '@/lib/fonts';
@@ -22,17 +25,25 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 /**
- * Root layout. The locale comes from the [locale] segment (validated in src/i18n/request.ts,
- * which returns a 404 for unknown locales).
+ * Root layout and page shell: skip link, header, main content, footer. Every page (including the
+ * 404 page) renders inside it. The locale comes from the [locale] segment (validated in
+ * src/i18n/request.ts, which returns a 404 for unknown locales).
+ *
+ * `data-menu-inert` marks what the open mobile menu makes inert (see MobileMenu).
  */
 export default async function LocaleLayout({ children }: LayoutProps<'/[locale]'>) {
   const locale = await getLocale();
 
   return (
     <html lang={locale} className={fontVariables}>
-      <body>
+      <body className="flex flex-col">
         <NextIntlClientProvider>
-          <main id="main-content">{children}</main>
+          <SkipLink />
+          <Header />
+          <main id="main" tabIndex={-1} data-menu-inert className="flex-1 outline-none">
+            {children}
+          </main>
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>

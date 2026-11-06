@@ -22,12 +22,23 @@ The token names match the variables Figma Make recorded (e.g. `--color-navy`, `-
 Nav links: navy at 75% opacity. Card borders: black at 10% opacity.
 
 ## Gradients
-- **Home hero overlay** (on top of the photo): linear #172340 0% → #2F2B6B 50% → #483397 at 33% opacity, 100%
-- **Inner-page hero overlay** (About, Services, Support, Contact, Booking): linear #5136A5 100% → #5136A5 0%. Services adds black at 20% on top.
-- **Hero accent bar** (4×112px vertical bar next to the hero text): #7D4090 → #EF1747
-- **Brand gradient** (Home "Let's build what's next" CTA): navy #17233F → purple #5136A5 → red #EF1747
-- **Image text-protection** (Services image card): black 75% → 10% → 0% from the bottom up
-- **About quote image**: black 15% → 0%
+Exact CSS values, calculated from the Figma file (fill order: image at the bottom, gradient on top).
+Coded in `src/app/globals.css`.
+
+| Gradient | CSS | Utility |
+|---|---|---|
+| Home hero overlay | `linear-gradient(89deg, rgba(23,35,64,1) 2%, rgba(47,43,107,1) 29%, rgba(72,51,151,0.33) 56.4%)` (keeps the last color after 56.4%) | `bg-overlay-home-hero` |
+| About + Booking hero overlay | `linear-gradient(103deg, rgba(81,54,165,1) 3.4%, rgba(81,54,165,0) 95.3%)` | `bg-overlay-hero-about` |
+| Services + Contact hero overlay | `linear-gradient(101deg, rgba(81,54,165,1) 2.9%, rgba(81,54,165,0) 72.3%)` | `bg-overlay-hero-services` |
+| Support hero overlay | `linear-gradient(99deg, rgba(81,54,165,1) 6.8%, rgba(81,54,165,0) 101.4%)` | `bg-overlay-hero-support` |
+| Hero accent bar (4×112px) | `180deg`: #7D4090 28.6% → … → #EF1747 100% (intermediate stops as in the spec) | `bg-accent-bar` |
+| Brand gradient (Home "Let's build what's next" CTA) | `90deg`: navy #17233F 0% → purple #5136A5 50% → red #EF1747 100% (with the spec's intermediate stops) | `bg-brand` |
+| About "100%" image section | `90deg`: black 15% → black 0% (left → right) | `bg-overlay-about-quote` |
+| Image text-protection (Services image card) | `0deg`: black 75% 0% → 10% 50% → 0% 100% (bottom → top) | `bg-overlay-image-text` |
+
+- Services hero: the spec lists its fills bottom-first as image → purple gradient → black 20%, so
+  the solid black layer at 20% opacity sits **on top of** the gradient (`bg-black/20` layer above
+  `bg-overlay-hero-services`).
 
 ## Typography
 - Main font: **Manrope** (weights 300 Light, 400 Regular, 600 SemiBold, 700 Bold, 800 ExtraBold).
@@ -76,14 +87,18 @@ Nav links: navy at 75% opacity. Card borders: black at 10% opacity.
 
 ## Notes from implementation (Phase 1)
 These were checked against the spec files when the tokens were coded in `src/app/globals.css`.
-- **Gradient directions** are not stored in the specs. They were read from the approved screenshot:
-  home hero overlay left → right; inner-page purple overlay from the bottom-left corner (purple)
-  towards the top-right (transparent); hero accent bar top → bottom; brand gradient left → right;
-  image text-protection bottom → top. The About "100%" image overlay (black 15% → 0%) is too subtle
-  to read, so it uses Figma's default top → bottom.
+- **Gradients:** the Phase 1 directions were estimates from the screenshot. They have been
+  replaced by the exact values in the Gradients table above (Phase 2).
 - **Type variants actually used** beyond the table above: 72/70.56 (Contact intro heading);
   60px at line heights 57.6, 58.8, 60 and 61.2; 48px at 48, 48.96 and 51.84 (About quote);
   36/45 (Services image card); 20/28 Bold without letter spacing (titles; the logo is the
   ExtraBold -0.64px variant); 18/28 Bold; 16/24 ExtraBold; 12/16 Regular and Bold.
 - **Inter sections** (Home Services + About TechSalem): 36/40 Bold -0.9px; 13/19.5 SemiBold
   uppercase 1.56px; 20/28 SemiBold; 18/29.25 Regular; 14/22.75 Regular; 14/20 SemiBold; 12/16 Regular.
+- **Logo mark** (Phase 2): the spec's two 8×24px bars (purple at x24 y7, red at x7 y12 inside the
+  36×36 square) are the origins of *rotated* layers: purple is rotated 45°, red -45°. Both end up
+  centred in the square and form the "X" visible in the screenshot, with red on top. Coded as an
+  inline SVG in `src/components/ui/Logo.tsx`.
+- **Footer** (Phase 2): the 1px white/10 line is the bottom border of the column grid. The bottom
+  bar's frame is 44px tall (28px top padding + 16px text), so the listed 28px bottom padding takes
+  no space; the footer's own 40px bottom padding follows. Total height 377px.

@@ -4,7 +4,7 @@ const navigation = {
   home: { label: 'Home', href: '/' },
   about: { label: 'About', href: '/about' },
   services: { label: 'Services', href: '/services' },
-  support: { label: 'Support', href: '/support' },
+  support: { label: 'Support', href: '/support/support-01' },
   contact: { label: 'Contact', href: '/contact' },
 } satisfies SiteSettings['navigation'];
 
@@ -29,9 +29,8 @@ export const site: SiteSettings = {
     support: {
       heading: 'Support',
       links: {
-        // TODO: point each link at its own support page once the Support routes are built.
-        supportPage1: { label: 'Support page 01', href: '/support' },
-        supportPage2: { label: 'Support page 02', href: '/support' },
+        supportPage1: { label: 'Support page 01', href: '/support/support-01' },
+        supportPage2: { label: 'Support page 02', href: '/support/support-02' },
         privacy: { label: 'Privacy policy', href: '/privacy-policy' },
         cookies: { label: 'Cookie policy', href: '/cookie-policy' },
       },
@@ -40,8 +39,8 @@ export const site: SiteSettings = {
       heading: 'Connect',
       links: {
         // TODO: replace '#' with the real LinkedIn and Facebook URLs when the client provides them.
-        linkedin: { label: 'LinkedIn', href: '#' },
-        facebook: { label: 'Facebook', href: '#' },
+        linkedin: { label: 'LinkedIn', href: '#', openInNewTab: true },
+        facebook: { label: 'Facebook', href: '#', openInNewTab: true },
         email: { label: 'hello@techsalem.se', href: 'mailto:hello@techsalem.se' },
       },
     },

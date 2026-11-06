@@ -1,10 +1,10 @@
-import { PagePlaceholder } from '@/components/sections/PagePlaceholder';
-import { getPageMetadata } from '@/lib/metadata';
+import { getLocale } from 'next-intl/server';
 
-export function generateMetadata() {
-  return getPageMetadata('support');
-}
+import { supportSlugs } from '@/content/shared';
+import { redirect } from '@/i18n/navigation';
 
-export default function SupportPage() {
-  return <PagePlaceholder pageKey="support" />;
+/** /[locale]/support has no page of its own: send visitors to the first support page. */
+export default async function SupportIndexPage() {
+  const locale = await getLocale();
+  redirect({ href: `/support/${supportSlugs[0]}`, locale });
 }
