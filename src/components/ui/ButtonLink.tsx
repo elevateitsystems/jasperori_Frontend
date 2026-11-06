@@ -1,9 +1,11 @@
 import type { ReactNode } from 'react';
 
+import { AnchorLink } from '@/components/ui/AnchorLink';
 import { Icon } from '@/components/ui/Icon';
 import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/cn';
-import type { InternalPath } from '@/types/content';
+import { isAnchorHref } from '@/lib/links';
+import type { ActionLinkItem } from '@/types/content';
 
 /**
  * Button-style link variants (values from the spec):
@@ -30,7 +32,8 @@ const variants = {
 export type ButtonVariant = keyof typeof variants;
 
 interface ButtonLinkProps {
-  href: InternalPath;
+  /** Another page, or '#id' for a section on the same page (smooth scroll + focus). */
+  href: ActionLinkItem['href'];
   children: ReactNode;
   variant?: ButtonVariant;
   /** Trailing 16px right arrow, 12px after the label. */
@@ -45,15 +48,13 @@ export function ButtonLink({
   withArrow = false,
   className,
 }: ButtonLinkProps) {
-  return (
-    <Link
-      href={href}
-      className={cn(
-        'group inline-flex items-center justify-center gap-3 rounded-sm text-button whitespace-nowrap transition-colors',
-        variants[variant],
-        className,
-      )}
-    >
+  const classes = cn(
+    'group inline-flex items-center justify-center gap-3 rounded-sm text-button whitespace-nowrap transition-colors',
+    variants[variant],
+    className,
+  );
+  const content = (
+    <>
       {children}
       {withArrow ? (
         <Icon
@@ -61,6 +62,19 @@ export function ButtonLink({
           className="size-4 shrink-0 transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none"
         />
       ) : null}
+    </>
+  );
+
+  if (isAnchorHref(href)) {
+    return (
+      <AnchorLink href={href} className={classes}>
+        {content}
+      </AnchorLink>
+    );
+  }
+  return (
+    <Link href={href} className={classes}>
+      {content}
     </Link>
   );
 }

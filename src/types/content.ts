@@ -38,6 +38,15 @@ export interface InternalLinkItem extends LinkItem {
   href: InternalPath;
 }
 
+/** A section on the same page, e.g. '#lets-talk' (the id of the target section). */
+export type AnchorHref = `#${string}`;
+
+/** A button target: another page of the site, or a section on the same page. */
+export interface ActionLinkItem {
+  label: string;
+  href: InternalPath | AnchorHref;
+}
+
 /** An image in public/images. Use an empty alt for purely decorative images. */
 export interface ImageAsset {
   src: `/images/${string}`;
@@ -75,8 +84,8 @@ export interface PageHeroContent {
   title: string;
   text: string;
   image: ImageAsset;
-  primaryCta: InternalLinkItem;
-  secondaryCta?: InternalLinkItem;
+  primaryCta: ActionLinkItem;
+  secondaryCta?: ActionLinkItem;
 }
 
 /** "04 / Contact" strip, shared by About and Services. */
@@ -244,7 +253,25 @@ export interface SupportPageContent {
     items: Tuple3<{ question: string; answer: string }>;
   };
 }
-export type ContactPageContent = PlaceholderPageContent;
+export interface ContactPageContent {
+  meta: PageMeta;
+  hero: PageHeroContent;
+  talk: {
+    label: string;
+    title: string;
+    text: string;
+    /** Full-row links: small `label` above the value (`link.label`). */
+    links: Tuple2<{ label: string; link: LinkItem }>;
+  };
+  direct: {
+    image: ImageAsset;
+    label: string;
+    title: string;
+    text: string;
+    facts: Tuple2<{ label: string; value: string }>;
+  };
+  steps: { label: string; items: Tuple3<string> };
+}
 export type BookingPageContent = PlaceholderPageContent;
 export type PrivacyPolicyPageContent = PlaceholderPageContent;
 export type CookiePolicyPageContent = PlaceholderPageContent;

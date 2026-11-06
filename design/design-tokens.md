@@ -132,3 +132,8 @@ These were checked against the spec files when the tokens were coded in `src/app
   question, between questions and below the last. The Support hero image is a plain centred cover
   fill (not the Services crop). Accordions (About capabilities, Support FAQ) share one component,
   `src/components/ui/Accordion.tsx`, with a variant per style.
+- **Contact layout notes** (Phase 7): the "Let's talk" block has no section frame; it starts 139px
+  below the hero and ends 89px above the split. The "Direct contact" split frame is 1630px wide and
+  cut off at 1600px; the site builds what is visible (photo 814px = 50.875%, red panel to the screen
+  edge). The hero button links to `#lets-talk` (same-page anchor). Separator grids (Home "Why",
+  Contact steps) share `src/components/ui/SeparatedGrid.tsx`.

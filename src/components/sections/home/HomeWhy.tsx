@@ -1,5 +1,6 @@
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Section } from '@/components/ui/Section';
+import { SeparatedGrid } from '@/components/ui/SeparatedGrid';
 import type { HomePageContent } from '@/types/content';
 
 interface HomeWhyProps {
@@ -18,7 +19,7 @@ export function HomeWhy({ content }: HomeWhyProps) {
         {content.title}
       </h2>
 
-      <ol className="mt-12 grid gap-px bg-white/15 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4">
+      <SeparatedGrid className="mt-12 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4">
         {content.items.map((item, index) => (
           <li key={item.title} className="bg-navy p-7">
             <span
@@ -31,7 +32,7 @@ export function HomeWhy({ content }: HomeWhyProps) {
             <p className="mt-3 text-body-sm-relaxed text-white/60">{item.text}</p>
           </li>
         ))}
-      </ol>
+      </SeparatedGrid>
     </Section>
   );
 }

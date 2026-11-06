@@ -1,6 +1,7 @@
 import type { LocaleContent } from '@/types/content';
 
 import { about } from './about';
+import { contact } from './contact';
 import { contactStrip } from './contact-strip';
 import { home } from './home';
 import { services } from './services';
@@ -15,7 +16,7 @@ export const sv = {
   about,
   services,
   supportPages,
-  contact: { meta: { title: 'Kontakt' } },
+  contact,
   booking: { meta: { title: 'Boka konsultation' } },
   privacyPolicy: { meta: { title: 'Integritetspolicy' } },
   cookiePolicy: { meta: { title: 'Cookiepolicy' } },
