@@ -1,6 +1,447 @@
 @import 'tailwindcss';
 
-/* Minimal reset on top of Tailwind Preflight. Design tokens are added in the next phase. */
+/*
+ * TechSalem design tokens.
+ *
+ * Source: design/design-tokens.md and design/spec/*.md (approved Figma). Every value below is exact.
+ * This file is the only place where design values are defined; components use the generated
+ * utilities (bg-navy, text-h2, shadow-glow, ...). The token names are listed for TypeScript in
+ * src/lib/design-tokens.ts (used by cn() and the dev tokens page). Keep both in sync.
+ */
+
+@theme {
+  /* ----------------------------------------------------------------------------------------------
+   * Colors. Tailwind's default palette is removed so only design colors can be used.
+   * -------------------------------------------------------------------------------------------- */
+  --color-*: initial;
+  --color-navy: #17233f;
+  --color-navy-dark: #10192e;
+  --color-purple: #5136a5;
+  --color-red: #ef1747;
+  --color-charcoal: #111315;
+  --color-zinc-950: #09090b;
+  --color-ink-muted: #555563;
+  --color-ink-soft: #4a4c56;
+  --color-cloud: #f6f6f8;
+  --color-lavender: #f0edf8;
+  --color-line: #e6e7ee;
+  --color-white: #ffffff;
+  /* Used with opacity only: card borders (black/10), image overlays (black/20). */
+  --color-black: #000000;
+
+  /* ----------------------------------------------------------------------------------------------
+   * Radius. sm (4px) is the main radius. rounded-full is the pill (Figma r33554400).
+   * -------------------------------------------------------------------------------------------- */
+  --radius-*: initial;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+
+  /* ----------------------------------------------------------------------------------------------
+   * Shadows.
+   * -------------------------------------------------------------------------------------------- */
+  --shadow-*: initial;
+  /* EN/SV switch, active button */
+  --shadow-switch: 0 1px 2px -1px rgb(0 0 0 / 0.1), 0 1px 3px 0 rgb(0 0 0 / 0.1);
+  /* White hero button */
+  --shadow-glow: 0 14px 32px 0 rgb(23 35 63 / 0.18);
+  /* Large white CTA button */
+  --shadow-cta: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  /* ----------------------------------------------------------------------------------------------
+   * Layout.
+   * -------------------------------------------------------------------------------------------- */
+  /* Header height: h-header, top-header, scroll-mt-header, ... */
+  --spacing-header: 68px;
+  /* Content width inside the 1600px frame (1600 - 2 x 140): max-w-content */
+  --container-content: 1320px;
+
+  /* ----------------------------------------------------------------------------------------------
+   * Letter spacing overrides (in em, so they are exact for the size they are used with).
+   * Text styles below already include their default letter spacing. Use these only where the
+   * spec differs from that default, e.g. `text-eyebrow tracking-caps-13` = 12px with 1.56px.
+   * -------------------------------------------------------------------------------------------- */
+  --tracking-tight-5: -0.05em;
+  --tracking-tight-6: -0.06em;
+  --tracking-caps-12: 0.12em;
+  --tracking-caps-13: 0.13em;
+  --tracking-caps-15: 0.15em;
+  --tracking-caps-16: 0.16em;
+  --tracking-caps-18: 0.18em;
+  --tracking-caps-20: 0.2em;
+  --tracking-caps-22: 0.22em;
+  --tracking-caps-24: 0.24em;
+
+  /* ----------------------------------------------------------------------------------------------
+   * Text styles (Manrope unless the name starts with inter-).
+   * Each sets font size, line height, letter spacing and the default weight. Weight, line height
+   * and letter spacing can still be overridden with font-*, leading-* and tracking-* utilities.
+   * Uppercase styles (eyebrow, micro, inter-eyebrow) are defined as @utility further down.
+   * Tailwind's default text sizes are removed so only design sizes can be used.
+   * -------------------------------------------------------------------------------------------- */
+  --text-*: initial;
+
+  /* 96/96: large faded numbers ("01", "02") behind the Home support cards */
+  --text-watermark: 96px;
+  --text-watermark--line-height: 96px;
+  --text-watermark--letter-spacing: 0em;
+  --text-watermark--font-weight: 800;
+
+  /* 88/81.84 -5.72px: inner page hero H1 */
+  --text-display: 88px;
+  --text-display--line-height: 81.84px;
+  --text-display--letter-spacing: -0.065em;
+  --text-display--font-weight: 800;
+
+  /* 72/70.56 -4.32px: Contact "The right work starts with the right questions." */
+  --text-display-md: 72px;
+  --text-display-md--line-height: 70.56px;
+  --text-display-md--letter-spacing: -0.06em;
+  --text-display-md--font-weight: 800;
+
+  /* 68/70.72 -3.74px: Home hero H1 */
+  --text-hero-home: 68px;
+  --text-hero-home--line-height: 70.72px;
+  --text-hero-home--letter-spacing: -0.055em;
+  --text-hero-home--font-weight: 800;
+
+  /* 60/58.8 -3.6px: "What can we simplify for you?", Services purple CTA */
+  --text-h2-xl: 60px;
+  --text-h2-xl--line-height: 58.8px;
+  --text-h2-xl--letter-spacing: -0.06em;
+  --text-h2-xl--font-weight: 800;
+
+  /* 60/61.2 -3.3px: About and Services intro headings */
+  --text-h2-xl-snug: 60px;
+  --text-h2-xl-snug--line-height: 61.2px;
+  --text-h2-xl-snug--letter-spacing: -0.055em;
+  --text-h2-xl-snug--font-weight: 800;
+
+  /* 60/57.6 -3.6px: About "A focused, human approach." */
+  --text-h2-xl-tight: 60px;
+  --text-h2-xl-tight--line-height: 57.6px;
+  --text-h2-xl-tight--letter-spacing: -0.06em;
+  --text-h2-xl-tight--font-weight: 800;
+
+  /* 60/60 -3px: Support "Support designed around continuity." */
+  --text-h2-xl-none: 60px;
+  --text-h2-xl-none--line-height: 60px;
+  --text-h2-xl-none--letter-spacing: -0.05em;
+  --text-h2-xl-none--font-weight: 800;
+
+  /* 48/48 -2.16px: Home section headings. Variants: tracking-tight-5 (Contact "What happens
+     next?"), tracking-tight-6 (About "100%") */
+  --text-h2: 48px;
+  --text-h2--line-height: 48px;
+  --text-h2--letter-spacing: -0.045em;
+  --text-h2--font-weight: 800;
+
+  /* 48/48.96 -2.4px: Services and Booking headings */
+  --text-h2-snug: 48px;
+  --text-h2-snug--line-height: 48.96px;
+  --text-h2-snug--letter-spacing: -0.05em;
+  --text-h2-snug--font-weight: 800;
+
+  /* 48/51.84 -2.16px: About quote */
+  --text-quote: 48px;
+  --text-quote--line-height: 51.84px;
+  --text-quote--letter-spacing: -0.045em;
+  --text-quote--font-weight: 800;
+
+  /* 36/40 -1.62px: Support area titles. Variant: tracking-tight-5 (Support "Clear from the first
+     contact.") */
+  --text-h3-lg: 36px;
+  --text-h3-lg--line-height: 40px;
+  --text-h3-lg--letter-spacing: -0.045em;
+  --text-h3-lg--font-weight: 800;
+
+  /* 36/45 -1.44px: Services image card "Expertise shaped around the context." */
+  --text-h3-lg-relaxed: 36px;
+  --text-h3-lg-relaxed--line-height: 45px;
+  --text-h3-lg-relaxed--letter-spacing: -0.04em;
+  --text-h3-lg-relaxed--font-weight: 800;
+
+  /* 30/36 -1.2px: About value titles */
+  --text-h3: 30px;
+  --text-h3--line-height: 36px;
+  --text-h3--letter-spacing: -0.04em;
+  --text-h3--font-weight: 800;
+
+  /* 30/36 Light: lead text */
+  --text-lead: 30px;
+  --text-lead--line-height: 36px;
+  --text-lead--letter-spacing: 0em;
+  --text-lead--font-weight: 300;
+
+  /* 24/32 Light: smaller lead text */
+  --text-lead-sm: 24px;
+  --text-lead-sm--line-height: 32px;
+  --text-lead-sm--letter-spacing: 0em;
+  --text-lead-sm--font-weight: 300;
+
+  /* 24/32: titles. Spec uses 600, 700 and 800: add font-semibold / font-extrabold */
+  --text-title-24: 24px;
+  --text-title-24--line-height: 32px;
+  --text-title-24--letter-spacing: 0em;
+  --text-title-24--font-weight: 700;
+
+  /* 20/28 Bold: titles */
+  --text-title-20: 20px;
+  --text-title-20--line-height: 28px;
+  --text-title-20--letter-spacing: 0em;
+  --text-title-20--font-weight: 700;
+
+  /* 20/28 ExtraBold -0.64px: "TechSalem" logo text */
+  --text-logo: 20px;
+  --text-logo--line-height: 28px;
+  --text-logo--letter-spacing: -0.032em;
+  --text-logo--font-weight: 800;
+
+  /* 18/28 Bold: Support FAQ questions, Home glass card */
+  --text-title-18: 18px;
+  --text-title-18--line-height: 28px;
+  --text-title-18--letter-spacing: 0em;
+  --text-title-18--font-weight: 700;
+
+  /* 16/24 ExtraBold: Support step numbers */
+  --text-title-16: 16px;
+  --text-title-16--line-height: 24px;
+  --text-title-16--letter-spacing: 0em;
+  --text-title-16--font-weight: 800;
+
+  /* 18/32: large body */
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 32px;
+  --text-body-lg--letter-spacing: 0em;
+  --text-body-lg--font-weight: 400;
+
+  /* 16/28: body */
+  --text-body: 16px;
+  --text-body--line-height: 28px;
+  --text-body--letter-spacing: 0em;
+  --text-body--font-weight: 400;
+
+  /* 16/32: body, loose */
+  --text-body-loose: 16px;
+  --text-body-loose--line-height: 32px;
+  --text-body-loose--letter-spacing: 0em;
+  --text-body-loose--font-weight: 400;
+
+  /* 14/20: small body */
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 20px;
+  --text-body-sm--letter-spacing: 0em;
+  --text-body-sm--font-weight: 400;
+
+  /* 14/24: small body, relaxed */
+  --text-body-sm-relaxed: 14px;
+  --text-body-sm-relaxed--line-height: 24px;
+  --text-body-sm-relaxed--letter-spacing: 0em;
+  --text-body-sm-relaxed--font-weight: 400;
+
+  /* 14/28: small body, loose (footer tagline, card text) */
+  --text-body-sm-loose: 14px;
+  --text-body-sm-loose--line-height: 28px;
+  --text-body-sm-loose--letter-spacing: 0em;
+  --text-body-sm-loose--font-weight: 400;
+
+  /* 14/20 SemiBold: navigation links */
+  --text-nav: 14px;
+  --text-nav--line-height: 20px;
+  --text-nav--letter-spacing: 0em;
+  --text-nav--font-weight: 600;
+
+  /* 14/20 Bold: buttons, footer headings (ExtraBold variant: font-extrabold) */
+  --text-button: 14px;
+  --text-button--line-height: 20px;
+  --text-button--letter-spacing: 0em;
+  --text-button--font-weight: 700;
+
+  /* 12/16: copyright, small print (Bold variant: font-bold) */
+  --text-caption: 12px;
+  --text-caption--line-height: 16px;
+  --text-caption--letter-spacing: 0em;
+  --text-caption--font-weight: 400;
+
+  /* 11/16.5 ExtraBold: EN/SV switch */
+  --text-lang: 11px;
+  --text-lang--line-height: 16.5px;
+  --text-lang--letter-spacing: 0em;
+  --text-lang--font-weight: 800;
+
+  /* Inter: Home "Services" and "About TechSalem" sections only. Use together with font-inter. */
+  --text-inter-h2: 36px;
+  --text-inter-h2--line-height: 40px;
+  --text-inter-h2--letter-spacing: -0.025em;
+  --text-inter-h2--font-weight: 700;
+
+  --text-inter-title: 20px;
+  --text-inter-title--line-height: 28px;
+  --text-inter-title--letter-spacing: 0em;
+  --text-inter-title--font-weight: 600;
+
+  --text-inter-lead: 18px;
+  --text-inter-lead--line-height: 29.25px;
+  --text-inter-lead--letter-spacing: 0em;
+  --text-inter-lead--font-weight: 400;
+
+  --text-inter-body: 14px;
+  --text-inter-body--line-height: 22.75px;
+  --text-inter-body--letter-spacing: 0em;
+  --text-inter-body--font-weight: 400;
+
+  --text-inter-label: 14px;
+  --text-inter-label--line-height: 20px;
+  --text-inter-label--letter-spacing: 0em;
+  --text-inter-label--font-weight: 600;
+
+  --text-inter-caption: 12px;
+  --text-inter-caption--line-height: 16px;
+  --text-inter-caption--letter-spacing: 0em;
+  --text-inter-caption--font-weight: 400;
+}
+
+/*
+ * Fonts. The --next-font-* variables are set by next/font on <html> (see src/lib/fonts.ts).
+ * `inline` makes the utilities resolve the variable on the element itself.
+ */
+@theme inline {
+  --font-sans: var(--next-font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-inter: var(--next-font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* -------------------------------------------------------------------------------------------------
+ * Uppercase text styles. Same override behaviour as the text styles above.
+ * ----------------------------------------------------------------------------------------------- */
+
+/* 12/16 ExtraBold, uppercase, 2.4px. Spec variants: font-bold; tracking-caps-12/13/15/16/18 */
+@utility text-eyebrow {
+  font-size: 12px;
+  line-height: var(--tw-leading, 16px);
+  letter-spacing: var(--tw-tracking, 0.2em);
+  font-weight: var(--tw-font-weight, 800);
+  text-transform: uppercase;
+}
+
+/* 10/15 ExtraBold, uppercase, 2px. Spec variants: font-bold; tracking-caps-16/22/24 */
+@utility text-micro {
+  font-size: 10px;
+  line-height: var(--tw-leading, 15px);
+  letter-spacing: var(--tw-tracking, 0.2em);
+  font-weight: var(--tw-font-weight, 800);
+  text-transform: uppercase;
+}
+
+/* Inter 13/19.5 SemiBold, uppercase, 1.56px. Use together with font-inter. */
+@utility text-inter-eyebrow {
+  font-size: 13px;
+  line-height: var(--tw-leading, 19.5px);
+  letter-spacing: var(--tw-tracking, 0.12em);
+  font-weight: var(--tw-font-weight, 600);
+  text-transform: uppercase;
+}
+
+/* -------------------------------------------------------------------------------------------------
+ * Gradients. Stops are exact from the specs. Directions are not stored in the specs and were read
+ * from the approved screenshot (see design/design-tokens.md, "Notes from implementation").
+ * ----------------------------------------------------------------------------------------------- */
+:root {
+  /* Home hero, on top of the photo */
+  --gradient-home-hero: linear-gradient(
+    to right,
+    #172340 0%,
+    #2f2b6b 50%,
+    rgb(72 51 151 / 0.33) 100%
+  );
+  /* About, Services, Support, Contact, Booking hero (Services adds a black/20 layer on top) */
+  --gradient-hero: linear-gradient(to top right, var(--color-purple) 0%, rgb(81 54 165 / 0) 100%);
+  /* 4 x 112px vertical bar next to the hero text */
+  --gradient-accent-bar: linear-gradient(
+    to bottom,
+    #7d4090 29%,
+    #88418a 36%,
+    #944185 43%,
+    #9f407f 50%,
+    #aa3f78 57%,
+    #b53d72 64%,
+    #c13a6a 71%,
+    #cc3563 79%,
+    #d82f5b 86%,
+    #e32651 93%,
+    var(--color-red) 100%
+  );
+  /* Navy -> purple -> red (Home "Let's build what's next" CTA) */
+  --gradient-brand: linear-gradient(
+    to right,
+    var(--color-navy) 0%,
+    #1f264d 7%,
+    #272a5b 14%,
+    #2f2d69 21%,
+    #382f77 29%,
+    #403286 36%,
+    #483496 43%,
+    var(--color-purple) 50%,
+    #673d9b 57%,
+    #7d4090 64%,
+    #944185 71%,
+    #aa3f78 79%,
+    #c13a6a 86%,
+    #d82f5b 93%,
+    var(--color-red) 100%
+  );
+  /* Text protection on images with white text (Services image card), bottom up */
+  --gradient-image-text: linear-gradient(
+    to top,
+    rgb(0 0 0 / 0.75) 0%,
+    rgb(0 0 0 / 0.1) 50%,
+    rgb(0 0 0 / 0) 100%
+  );
+  /* About "100%" image section (about-quote-office.jpg) */
+  --gradient-about-quote: linear-gradient(to bottom, rgb(0 0 0 / 0.15) 0%, rgb(0 0 0 / 0) 100%);
+
+  /* Side padding of the site container: 20px at 375px wide, growing to 140px at 1600px. */
+  --site-gutter: clamp(20px, calc(9.796vw - 16.735px), 140px);
+}
+
+@utility bg-overlay-home-hero {
+  background-image: var(--gradient-home-hero);
+}
+
+@utility bg-overlay-hero {
+  background-image: var(--gradient-hero);
+}
+
+@utility bg-accent-bar {
+  background-image: var(--gradient-accent-bar);
+}
+
+@utility bg-brand {
+  background-image: var(--gradient-brand);
+}
+
+@utility bg-overlay-image-text {
+  background-image: var(--gradient-image-text);
+}
+
+@utility bg-overlay-about-quote {
+  background-image: var(--gradient-about-quote);
+}
+
+/* -------------------------------------------------------------------------------------------------
+ * Layout: 1320px content column, centred, with responsive side padding.
+ * ----------------------------------------------------------------------------------------------- */
+@utility site-container {
+  width: 100%;
+  max-width: calc(var(--container-content) + 2 * var(--site-gutter));
+  margin-inline: auto;
+  padding-inline: var(--site-gutter);
+}
+
+/* -------------------------------------------------------------------------------------------------
+ * Base styles.
+ * ----------------------------------------------------------------------------------------------- */
 @layer base {
   html {
     -webkit-font-smoothing: antialiased;
@@ -8,7 +449,33 @@
     text-size-adjust: 100%;
   }
 
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
   body {
-    min-height: 100dvh;
+    @apply min-h-dvh bg-white font-sans text-zinc-950;
+  }
+
+  /* Preflight already resets these; kept explicit so the intent survives config changes. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    margin: 0;
+  }
+
+  /*
+   * Keyboard focus ring. Purple by default; on purple or dark backgrounds set the --focus-ring
+   * variable on the section, e.g. class="[--focus-ring:var(--color-white)]".
+   */
+  :focus-visible {
+    outline: 2px solid var(--focus-ring, var(--color-purple));
+    outline-offset: 2px;
   }
 }

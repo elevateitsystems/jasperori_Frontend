@@ -15,6 +15,7 @@ The token names match the variables Figma Make recorded (e.g. `--color-navy`, `-
 | ink-soft | #4A4C56 | Section intro paragraph (Home services) |
 | cloud (light bg) | #F6F6F8 | Light section backgrounds, EN/SV switch track |
 | lavender | #F0EDF8 | Light purple card / section backgrounds |
+| charcoal | #111315 | Dark sections: About "A focused, human approach", Support FAQ |
 | line | #E6E7EE | Large faded numbers ("01", "02"), light dividers |
 | white | #FFFFFF | |
 
@@ -72,3 +73,17 @@ Nav links: navy at 75% opacity. Card borders: black at 10% opacity.
 - Section vertical padding: mostly 120px top and bottom
 - Hero: 1015px tall frame (including its overlay), starting right under the header
 - Icons: thin line icons (lucide style), mostly 16px and 20px, in 44px squares on cards
+
+## Notes from implementation (Phase 1)
+These were checked against the spec files when the tokens were coded in `src/app/globals.css`.
+- **Gradient directions** are not stored in the specs. They were read from the approved screenshot:
+  home hero overlay left → right; inner-page purple overlay from the bottom-left corner (purple)
+  towards the top-right (transparent); hero accent bar top → bottom; brand gradient left → right;
+  image text-protection bottom → top. The About "100%" image overlay (black 15% → 0%) is too subtle
+  to read, so it uses Figma's default top → bottom.
+- **Type variants actually used** beyond the table above: 72/70.56 (Contact intro heading);
+  60px at line heights 57.6, 58.8, 60 and 61.2; 48px at 48, 48.96 and 51.84 (About quote);
+  36/45 (Services image card); 20/28 Bold without letter spacing (titles; the logo is the
+  ExtraBold -0.64px variant); 18/28 Bold; 16/24 ExtraBold; 12/16 Regular and Bold.
+- **Inter sections** (Home Services + About TechSalem): 36/40 Bold -0.9px; 13/19.5 SemiBold
+  uppercase 1.56px; 20/28 SemiBold; 18/29.25 Regular; 14/22.75 Regular; 14/20 SemiBold; 12/16 Regular.

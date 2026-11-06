@@ -21,6 +21,7 @@ Read `AGENTS.md` as well. It is managed by Next.js and explains where to find th
 - Before building any page or section, read that page's spec in `design/spec/<page>.md` and look at the screenshots in `design/screenshots/`.
 - The spec values (font sizes, weights, line heights, letter spacing, colors, spacing, sizes, radius, shadows) are exact. Use them; don't guess or round them to "close enough" Tailwind defaults.
 - The theme tokens come from `design/design-tokens.md`.
+- `design/IMAGE-MAP.md` is the guide to where each image in `public/images` is used and which overlay it has.
 - Each spec line's `x/y/W×H` values are positions inside the 1600px desktop frame. Use them to work out spacing and widths, but build with flexbox/grid (never absolute positioning for layout).
 - Fonts: Manrope everywhere, EXCEPT the Home page "Services" section and "About TechSalem" section, which use Inter, as in the approved Figma.
 - Don't build the leftover "Explore Your Skills Pathway" frame. It's not part of the design.
@@ -39,6 +40,7 @@ Read `AGENTS.md` as well. It is managed by Next.js and explains where to find th
   - Muted text: #555563
   - Light background: #F6F6F8
   - Lavender: #F0EDF8
+  - Charcoal: #111315 (About "A focused, human approach" section and Support FAQ section)
   - White: #FFFFFF
 - Gradients run from navy, through purple, to pink-red.
 - Define colors, fonts and other design values once as Tailwind theme tokens and reuse them. Do not scatter raw hex values through components.
@@ -53,6 +55,11 @@ Read `AGENTS.md` as well. It is managed by Next.js and explains where to find th
 - Booking
 - Privacy policy
 - Cookie policy
+
+Decisions:
+
+- Support: the two support pages share one template, built from the Support spec (`design/spec/support.md`). Only the content differs.
+- Privacy policy and Cookie policy have no design. They will be built later as simple text pages using the site's existing styles.
 
 ## Languages and content
 
