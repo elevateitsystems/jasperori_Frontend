@@ -13,12 +13,23 @@ Read `AGENTS.md` as well. It is managed by Next.js and explains where to find th
 
 - The client-approved Figma design is the only source of truth. Match it exactly: spacing, sizes, colors, typography and layout.
 - Never invent new sections, components, styles or copy that are not in the design.
-- Reference screenshots of the design are in the `design/` folder.
+- The design reference (specs, tokens, screenshots) is in the `design/` folder. See "Design reference (source of truth)" below.
 - If the design is unclear or something is missing, ask before guessing.
+
+## Design reference (source of truth)
+
+- Before building any page or section, read that page's spec in `design/spec/<page>.md` and look at the screenshots in `design/screenshots/`.
+- The spec values (font sizes, weights, line heights, letter spacing, colors, spacing, sizes, radius, shadows) are exact. Use them; don't guess or round them to "close enough" Tailwind defaults.
+- The theme tokens come from `design/design-tokens.md`.
+- Each spec line's `x/y/W×H` values are positions inside the 1600px desktop frame. Use them to work out spacing and widths, but build with flexbox/grid (never absolute positioning for layout).
+- Fonts: Manrope everywhere, EXCEPT the Home page "Services" section and "About TechSalem" section, which use Inter, as in the approved Figma.
+- Don't build the leftover "Explore Your Skills Pathway" frame. It's not part of the design.
+- Icons: use `lucide-react` icons that match the screenshot (to be installed in a later phase).
+- The `.fig` file (`design/figma/techsalem-approved.fig`) is for humans only. Never try to read it.
 
 ## Design basics
 
-- Font: Manrope everywhere.
+- Font: Manrope everywhere, except the Home page "Services" and "About TechSalem" sections, which use Inter (see "Design reference" above).
 - Desktop design width: 1600px.
 - Colors:
   - Navy: #17233F

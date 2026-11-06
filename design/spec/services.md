@@ -1,0 +1,224 @@
+# Services page: design spec (from approved Figma)
+Frame size: 1600×4467px. Coordinates are relative to the page's top-left corner.
+Top-level blocks are listed in vertical (top → bottom) order. Colors show hex/token-name and @alpha.
+`tw:` hints are the Tailwind variables Figma Make recorded for that text. `css` hints are the original CSS.
+
+- frame "Frame 2147240627" · x0 y0 1600×68 · bg #ffffff/white · flex-row gap310 pad(t12 r140 b12 l140) justify-space_evenly items-center
+  - frame "Text" · x140 y16 150×36 · flex-row gap10 items-center
+    - frame "Text" · x140 y16 36×36 · bg #17233f/navy · r4/4/4/4
+      - frame "Text" · x164 y23 8×24 · bg #5136a5/purple
+      - frame "Text" · x147 y28 8×24 · bg #ef1747/accent
+    - frame "Text" · x186 y20 104×28 · flex-col
+      - TEXT "TechSalem"  · Manrope ExtraBold 20px · lh 28px · ls -0.64px · #17233f/navy  · x186 y20 w104  · tw: color=--color-navy fontSize=--text-xl lineHeight=--tw-leading fontWeight=--font-weight-extrabold
+  - frame "Navigation" · x554 y24 378×20 · flex-row gap32 items-center
+    - frame "Link" · x554 y24 40×20 · flex-col
+      - TEXT "Home"  · Manrope SemiBold 14px · lh 20px · #17233f/navy @0.75  · x554 y24 w40  · tw: color=--color-zinc-950 fontSize=--text-sm lineHeight=--tw-leading fontWeight=--font-weight-semibold
+    - frame "Link" · x626 y24 41×20 · flex-col
+      - TEXT "About"  · Manrope SemiBold 14px · lh 20px · #17233f/navy @0.75  · x626 y24 w41  · tw: color=--color-zinc-950 fontSize=--text-sm lineHeight=--tw-leading fontWeight=--font-weight-semibold
+    - frame "Link" · x698 y24 58×20 · flex-col
+      - TEXT "Services"  · Manrope SemiBold 14px · lh 20px · #17233f/navy @0.75  · x698 y24 w58  · tw: color=--color-zinc-950 fontSize=--text-sm lineHeight=--tw-leading fontWeight=--font-weight-semibold
+    - frame "Link" · x788 y24 55×20 · flex-col
+      - TEXT "Support"  · Manrope SemiBold 14px · lh 20px · #17233f/navy @0.75  · x788 y24 w55  · tw: color=--color-zinc-950 fontSize=--text-sm lineHeight=--tw-leading fontWeight=--font-weight-semibold
+    - frame "Link" · x876 y24 56×20 · flex-col
+      - TEXT "Contact"  · Manrope SemiBold 14px · lh 20px · #17233f/navy @0.75  · x876 y24 w56  · tw: color=--color-zinc-950 fontSize=--text-sm lineHeight=--tw-leading fontWeight=--font-weight-semibold
+  - frame "Frame 2147240630" · x1195 y12 265×44 · flex-row gap28 items-center
+    - frame "Container" · x1195 y12 265×44 · flex-row gap12 items-center
+      - frame "Container" · x1195 y16 78×37 · bg #f6f6f8/light-bg · r33554400/33554400/33554400/33554400 · flex-row pad(t4 r4 b4 l4)
+        - frame "Button" · x1199 y20 35×29 · bg #ffffff/white · r33554400/33554400/33554400/33554400 · flex-col pad(t6 r10 b6 l10) justify-center items-center · effects drop_shadow(0,1 blur2 spread-1 #000000 @0.1), drop_shadow(0,1 blur3 spread0 #000000 @0.1)
+          - TEXT "EN"  · Manrope ExtraBold 11px · lh 16.5px · align-center · #17233f/navy  · x1209 y26 w15  · tw: color=--color-navy backgroundColor=--color-white fontWeight=--font-weight-extrabold
+        - frame "Button" · x1234 y20 35×29 · r33554400/33554400/33554400/33554400 · flex-col pad(t6 r10 b6 l10) justify-center items-center
+          - TEXT "SV"  · Manrope ExtraBold 11px · lh 16.5px · align-center · #555563/muted  · x1244 y26 w15  · tw: color=--color-ink-muted fontWeight=--font-weight-extrabold
+      - frame "Button" · x1285 y12 175×44 · bg #17233f/navy · r4/4/4/4 · flex-col pad(t12 r20 b12 l20) justify-center items-center
+        - TEXT "Book a consultation"  · Manrope Bold 14px · lh 20px · align-center · #ffffff/white  · x1305 y24 w135  · tw: color=--color-white backgroundColor=--color-navy fontSize=--text-sm lineHeight=--tw-leading fontWeight=--font-weight-bold borderRadius=--radius-sm
+- frame "Frame 2147229838" · x0 y72 1600×1015 · bg IMAGE[/images/hero-office-wide.png, stretch] + gradient_linear(#5136a5/purple 0% → #5136a5/purple @0 100%) + #000000 @0.2
+  - frame "Container" · x176 y433 896×375 · flex-col
+    - frame "Paragraph" · x176 y433 896×15 · flex-row gap12 items-center
+      - frame "Text" · x176 y438 6×6 · bg #ef1747/accent
+      - TEXT "Consulting services"  · Manrope ExtraBold 10px · lh 15px · ls 2.4px · upper · #ffffff/white @0.6  · x194 y433 w159  · tw: fontWeight=--font-weight-extrabold
+    - frame "Heading 1" · x176 y448 896×192 · flex-col pad(t28 r0 b28 l0)
+      - TEXT "Practical expertise for meaningful progress."  · Manrope ExtraBold 88px · lh 81.84px · ls -5.72px · #ffffff/white  · x176 y476 w896  · tw: color=--color-white fontSize=--text-5xl lineHeight=--tw-leading fontWeight=--font-weight-extrabold
+    - frame "Paragraph:margin" · x176 y640 576×88 · flex-col pad(t32 r0 b32 l0)
+      - TEXT "A focused consulting portfolio designed around your priorities. Final service names can be updated when the offering is confirmed."  · Manrope Regular 16px · lh 28px · #ffffff/white @0.65  · x176 y672 w576  · tw: fontSize=--text-sm
+    - frame "Container" · x176 y728 896×80
+      - frame "Link" · x176 y760 251×48 · bg #ef1747/accent · flex-row gap12 pad(t16 r24 b16 l24) items-center
+        - TEXT "Start a conversation"  · Manrope ExtraBold 12px · lh 16px · ls 1.56px · upper · #ffffff/white  · x200 y776 w175  · tw: color=--color-white backgroundColor=--color-red fontSize=--text-xs lineHeight=--tw-leading fontWeight=--font-weight-extrabold
+        - frame "Icon" · x387 y776 16×16
+          - icon/vector 9×7 at x390 y781 stroke #ffffff/white fill -
+- frame "Frame 2147240630" · x1 y1087 1600×524 · bg #f6f6f8/light-bg · flex-col gap64 pad(t120 r0 b120 l0) items-center
+  - frame "Container" · x201 y1207 1200×284 · grid pad(t0 r32 b0 l32)
+    - frame "Paragraph" · x233 y1207 149×284 · flex-col
+      - TEXT "01 / Our perspective"  · Manrope ExtraBold 10px · lh 15px · ls 2.2px · upper · #555563/muted  · x233 y1207 w150  · tw: color=--color-ink-muted fontWeight=--font-weight-extrabold
+    - frame "Container" · x529 y1207 741×284 · flex-col
+      - frame "Heading 2" · x529 y1207 741×184 · flex-col
+        - TEXT "One services page. One connected view. Consulting services."  · Manrope ExtraBold 60px · lh 61.2px · ls -3.3px · #09090b/text · span-override: #ef1747/accent  · x529 y1207 w742  · tw: color=--color-zinc-950 fontSize=--text-4xl lineHeight=--tw-leading fontWeight=--font-weight-extrabold
+      - frame "Paragraph:margin" · x529 y1391 672×100 · flex-col pad(t36 r0 b36 l0)
+        - TEXT "We keep the offering intentionally clear. Each engagement is shaped around the business outcome, the current environment, and what your team needs to move forward."  · Manrope Regular 16px · lh 32px · #555563/muted  · x529 y1427 w672  · tw: color=--color-ink-muted fontSize=--text-base
+- frame "Container:margin" · x1 y1549 1600×984 · flex-col pad(t0 r0 b128 l0) items-center
+  - frame "Container" · x201 y1549 1200×856 · grid pad(t0 r32 b0 l32)
+    - frame "Article" · x233 y1549 752×420 · bg #17233f/navy · flex-col pad(t40 r40 b40 l40) justify-space_between
+      - frame "Container" · x273 y1589 672×36 · flex-row justify-space_between
+        - frame "Text" · x273 y1589 16×16 · flex-col
+          - TEXT "01"  · Manrope ExtraBold 12px · lh 16px · ls 2.16px · #ffffff/white @0.5  · x273 y1589 w16  · tw: fontSize=--text-xs lineHeight=--tw-leading fontWeight=--font-weight-extrabold
+        - frame "Text" · x927 y1589 18×36 · flex-col
+          - TEXT "+"  · Manrope Light 30px · lh 36px · #ffffff/white  · x927 y1589 w18  · tw: color=--color-white fontSize=--text-3xl lineHeight=--tw-leading fontWeight=--font-weight-light
+      - frame "Container" · x273 y1793 672×136 · flex-col
+        - frame "Paragraph" · x273 y1793 672×15 · flex-col
+          - TEXT "Consulting area"  · Manrope ExtraBold 10px · lh 15px · ls 2px · upper · #ffffff/white @0.55  · x273 y1793 w121  · tw: fontWeight=--font-weight-extrabold
+        - frame "Heading 3" · x273 y1808 576×69 · flex-col pad(t20 r0 b20 l0)
+          - TEXT "Consulting service 01"  · Manrope ExtraBold 48px · lh 48.96px · ls -2.4px · #ffffff/white  · x273 y1828 w462  · tw: color=--color-white fontSize=--text-4xl lineHeight=--tw-leading fontWeight=--font-weight-extrabold
+        - frame "Paragraph" · x273 y1877 576×52 · flex-col pad(t24 r0 b24 l0)
+          - TEXT "Editable placeholder for a strategic technology or business consulting offer."  · Manrope Regular 14px · lh 28px · #ffffff/white @0.6  · x273 y1901 w486  · tw: fontSize=--text-sm
+    - frame "Article" · x1001 y1549 368×420 · bg #f0edf8/lavender · flex-col pad(t40 r40 b40 l40) justify-space_between
+      - frame "Container" · x1041 y1589 288×36 · flex-row justify-space_between
+        - frame "Text" · x1041 y1589 18×16 · flex-col
+          - TEXT "02"  · Manrope ExtraBold 12px · lh 16px · ls 2.16px · #5136a5/purple  · x1041 y1589 w18  · tw: color=--color-purple fontSize=--text-xs lineHeight=--tw-leading fontWeight=--font-weight-extrabold
+        - frame "Text" · x1311 y1589 18×36 · flex-col
+          - TEXT "+"  · Manrope Light 30px · lh 36px · #17233f/navy  · x1311 y1589 w18  · tw: color=--color-navy fontSize=--text-3xl lineHeight=--tw-leading fontWeight=--font-weight-light
+      - frame "Container" · x1041 y1716 288×213 · flex-col
+        - frame "Paragraph" · x1041 y1716 288×15 · flex-col
+          - TEXT "Consulting area"  · Manrope ExtraBold 10px · lh 15px · ls 2px · upper · #5136a5/purple  · x1041 y1716 w121  · tw: color=--color-purple fontWeight=--font-weight-extrabold
+        - frame "Heading 3" · x1041 y1731 288×118 · flex-col pad(t20 r0 b20 l0)
+          - TEXT "Consulting service 02"  · Manrope ExtraBold 48px · lh 48.96px · ls -2.4px · #17233f/navy  · x1041 y1751 w288  · tw: color=--color-navy fontSize=--text-4xl lineHeight=--tw-leading fontWeight=--font-weight-extrabold
+        - frame "Paragraph" · x1041 y1849 288×80 · flex-col pad(t24 r0 b24 l0)
+          - TEXT "Editable placeholder for a practical transformation or optimization offer."  · Manrope Regular 14px · lh 28px · #555563/muted  · x1041 y1873 w288  · tw: color=--color-ink-muted fontSize=--text-sm
+    - frame "Article" · x233 y1985 464×420 · bg #ef1747/accent · flex-col pad(t40 r40 b40 l40) justify-space_between
+      - frame "Container" · x273 y2025 384×36 · flex-row justify-space_between
+        - frame "Text" · x273 y2025 18×16 · flex-col
+          - TEXT "03"  · Manrope ExtraBold 12px · lh 16px · ls 2.16px · #ffffff/white @0.5  · x273 y2025 w18  · tw: fontSize=--text-xs lineHeight=--tw-leading fontWeight=--font-weight-extrabold
+        - frame "Text" · x639 y2025 18×36 · flex-col
+          - TEXT "+"  · Manrope Light 30px · lh 36px · #ffffff/white  · x639 y2025 w18  · tw: color=--color-white fontSize=--text-3xl lineHeight=--tw-leading fontWeight=--font-weight-light
+      - frame "Container" · x273 y2152 384×213 · flex-col
+        - frame "Paragraph" · x273 y2152 384×15 · flex-col
+          - TEXT "Consulting area"  · Manrope ExtraBold 10px · lh 15px · ls 2px · upper · #ffffff/white @0.55  · x273 y2152 w121  · tw: fontWeight=--font-weight-extrabold
+        - frame "Heading 3" · x273 y2167 384×118 · flex-col pad(t20 r0 b20 l0)
+          - TEXT "Consulting service 03"  · Manrope ExtraBold 48px · lh 48.96px · ls -2.4px · #ffffff/white  · x273 y2187 w384  · tw: color=--color-white fontSize=--text-4xl lineHeight=--tw-leading fontWeight=--font-weight-extrabold
+        - frame "Paragraph" · x273 y2285 384×80 · flex-col pad(t24 r0 b24 l0)
+          - TEXT "Editable placeholder for another focused, outcome-led consulting service."  · Manrope Regular 14px · lh 28px · #ffffff/white @0.6  · x273 y2309 w384  · tw: fontSize=--text-sm
+    - frame "Container" · x713 y1985 656×420 · bg IMAGE[/images/services-card-office.jpg, fill] + gradient_linear(#000000 @0.75 0% → #000000 @0.1 50% → #000000 @0 100%)
+      - TEXT "Expertise shaped around the context."  · Manrope ExtraBold 36px · lh 45px · ls -1.44px · #ffffff/white  · x753 y2275 w512  · tw: color=--color-white fontSize=--text-3xl lineHeight=--leading-tight fontWeight=--font-weight-extrabold
+- frame "Section" · x0 y2533 1600×697 · bg #f6f6f8/light-bg · flex-col pad(t128 r0 b128 l0)
+  - frame "Container:margin" · x0 y2661 1600×441 · flex-col items-center
+    - frame "Container" · x200 y2661 1200×441 · flex-col pad(t0 r32 b0 l32)
+      - frame "Container" · x232 y2661 1136×145 · grid
+        - frame "Container" · x232 y2661 450×145 · flex-col
+          - frame "Paragraph" · x232 y2661 450×15 · flex-col
+            - TEXT "02 / From need to outcome"  · Manrope Bold 10px · lh 15px · ls 2px · upper · #ef1747/accent  · x232 y2661 w193  · tw: color=--color-red fontWeight=--font-weight-bold
+          - frame "Heading 2" · x232 y2676 450×130 · flex-col pad(t32 r0 b32 l0)
+            - TEXT "From question to clear direction."  · Manrope ExtraBold 48px · lh 48.96px · ls -2.4px · #09090b/text  · x232 y2708 w450  · tw: color=--color-zinc-950 fontSize=--text-4xl lineHeight=--tw-leading fontWeight=--font-weight-extrabold
+        - frame "Paragraph" · x918 y2742 450×64 · flex-col
+          - TEXT "Every engagement starts with context—not a predetermined answer."  · Manrope Regular 16px · lh 32px · #555563/muted  · x918 y2742 w450  · tw: color=--color-ink-muted
+      - frame "Container:margin" · x232 y2806 1136×296 · flex-col pad(t80 r0 b80 l0)
+        - frame "Container" · x232 y2886 1136×216
+          - frame "Container" · x232 y2906 1136×1 · bg #17233f/navy @0.15
+          - frame "Article" · x232 y2886 357×216 · flex-col
+            - frame "Text" · x232 y2886 40×40 · bg #17233f/navy · r33554400/33554400/33554400/33554400 · grid
+              - TEXT "01"  · Manrope ExtraBold 12px · lh 16px · #ffffff/white  · x245 y2898 w14  · tw: color=--color-white backgroundColor=--color-navy fontSize=--text-xs lineHeight=--tw-leading fontWeight=--font-weight-extrabold
+            - frame "Heading 3" · x232 y2926 357×104 · flex-col pad(t40 r0 b40 l0)
+              - TEXT "Discover the real business need"  · Manrope ExtraBold 24px · lh 32px · #09090b/text  · x232 y2966 w358  · tw: color=--color-zinc-950 fontSize=--text-2xl lineHeight=--tw-leading fontWeight=--font-weight-extrabold
+            - frame "Paragraph" · x232 y3030 357×72 · flex-col pad(t16 r0 b16 l0)
+              - TEXT "Every engagement starts with context—not a predetermined answer."  · Manrope Regular 14px · lh 28px · #555563/muted  · x232 y3046 w358  · tw: color=--color-ink-muted fontSize=--text-sm
+          - frame "Article" · x621 y2886 357×216 · flex-col
+            - frame "Text" · x621 y2886 40×40 · bg #17233f/navy · r33554400/33554400/33554400/33554400 · grid
+              - TEXT "02"  · Manrope ExtraBold 12px · lh 16px · #ffffff/white  · x633 y2898 w16  · tw: color=--color-white backgroundColor=--color-navy fontSize=--text-xs lineHeight=--tw-leading fontWeight=--font-weight-extrabold
+            - frame "Heading 3" · x621 y2926 357×72 · flex-col pad(t40 r0 b40 l0)
+              - TEXT "Shape a focused engagement"  · Manrope ExtraBold 24px · lh 32px · #09090b/text  · x621 y2966 w349  · tw: color=--color-zinc-950 fontSize=--text-2xl lineHeight=--tw-leading fontWeight=--font-weight-extrabold
+            - frame "Paragraph" · x621 y2998 357×72 · flex-col pad(t16 r0 b16 l0)
+              - TEXT "Every engagement starts with context—not a predetermined answer."  · Manrope Regular 14px · lh 28px · #555563/muted  · x621 y3014 w358  · tw: color=--color-ink-muted fontSize=--text-sm
+          - frame "Article" · x1011 y2886 357×216 · flex-col
+            - frame "Text" · x1011 y2886 40×40 · bg #17233f/navy · r33554400/33554400/33554400/33554400 · grid
+              - TEXT "03"  · Manrope ExtraBold 12px · lh 16px · #ffffff/white  · x1023 y2898 w16  · tw: color=--color-white backgroundColor=--color-navy fontSize=--text-xs lineHeight=--tw-leading fontWeight=--font-weight-extrabold
+            - frame "Heading 3" · x1011 y2926 357×72 · flex-col pad(t40 r0 b40 l0)
+              - TEXT "Deliver practical next steps"  · Manrope ExtraBold 24px · lh 32px · #09090b/text  · x1011 y2966 w322  · tw: color=--color-zinc-950 fontSize=--text-2xl lineHeight=--tw-leading fontWeight=--font-weight-extrabold
+            - frame "Paragraph" · x1011 y2998 357×72 · flex-col pad(t16 r0 b16 l0)
+              - TEXT "Every engagement starts with context—not a predetermined answer."  · Manrope Regular 14px · lh 28px · #555563/muted  · x1011 y3014 w358  · tw: color=--color-ink-muted fontSize=--text-sm
+- frame "Section" · x0 y3230 1600×420 · bg #5136a5/purple · flex-col items-center
+  - frame "Container" · x200 y3230 1200×420 · grid
+    - frame "Container" · x200 y3230 800×420 · flex-row pad(t80 r32 b80 l32) items-center
+      - frame "Container" · x232 y3328 736×224 · flex-col
+        - frame "Paragraph" · x232 y3328 736×15 · flex-col
+          - TEXT "03 / Next step"  · Manrope Bold 10px · lh 15px · ls 2px · upper · #ffffff/white @0.5  · x232 y3328 w100  · tw: fontWeight=--font-weight-bold
+        - frame "Heading 2" · x232 y3343 736×209 · flex-col pad(t32 r0 b32 l0)
+          - TEXT "The right engagement starts with the right question."  · Manrope ExtraBold 60px · lh 58.8px · ls -3.6px · #ffffff/white  · x232 y3375 w736  · tw: color=--color-white fontSize=--text-5xl lineHeight=--tw-leading fontWeight=--font-weight-extrabold
+    - frame "Container" · x1000 y3230 400×420 · bg #ef1747/accent · flex-col pad(t40 r40 b40 l40) justify-max
+      - frame "Paragraph" · x1040 y3429 320×84 · flex-col
+        - TEXT "Tell us what you need to change, improve, or understand. We will help shape the next step."  · Manrope Regular 16px · lh 28px · #ffffff/white @0.7  · x1040 y3429 w320
+      - frame "Link:margin" · x1040 y3513 320×97 · flex-col pad(t40 r0 b40 l0)
+        - frame "Link" · x1040 y3553 320×57 · border 1px #ffffff/white @0.35 · flex-row pad(t24 r0 b24 l0) justify-space_between items-center
+          - TEXT "Start a conversation"  · Manrope ExtraBold 12px · lh 16px · ls 1.8px · upper · #ffffff/white  · x1040 y3586 w180  · tw: color=--color-white fontSize=--text-xs lineHeight=--tw-leading fontWeight=--font-weight-extrabold
+          - frame "Text" · x1335 y3578 25×32 · flex-col
+            - TEXT "→"  · Manrope ExtraBold 24px · lh 32px · ls 1.8px · upper · #ffffff/white  · x1335 y3578 w25  · tw: color=--color-white fontSize=--text-2xl lineHeight=--tw-leading fontWeight=--font-weight-extrabold
+- frame "CorporatePage" · x0 y3650 1600×440 · flex-col pad(t128 r0 b128 l0) items-center
+  - frame "Container" · x200 y3778 1200×184 · grid pad(t0 r32 b0 l32)
+    - frame "Container" · x232 y3778 544×184 · flex-col
+      - frame "Paragraph" · x232 y3778 544×15 · flex-col
+        - TEXT "04 / Contact"  · Manrope ExtraBold 10px · lh 15px · ls 2.2px · upper · #555563/muted  · x232 y3778 w95  · tw: color=--color-ink-muted fontWeight=--font-weight-extrabold
+      - frame "Heading 2" · x232 y3793 544×146 · flex-col pad(t28 r0 b28 l0)
+        - TEXT "What can we simplify for you?"  · Manrope ExtraBold 60px · lh 58.8px · ls -3.6px · #09090b/text · span-override: #5136a5/purple  · x232 y3821 w544  · tw: color=--color-zinc-950 fontSize=--text-5xl lineHeight=--tw-leading fontWeight=--font-weight-extrabold
+    - frame "Container" · x824 y3778 544×184 · border 1px #17233f/navy @0.15 · grid
+      - frame "Link" · x824 y3779 544×61 · border 1px #17233f/navy @0.15 · flex-row pad(t20 r0 b20 l0) justify-space_between items-center
+        - frame "Text" · x824 y3799 37×20 · flex-col
+          - TEXT "Email"  · Manrope Bold 14px · lh 20px · #555563/muted  · x824 y3799 w37  · tw: color=--color-ink-muted fontSize=--text-sm lineHeight=--tw-leading fontWeight=--font-weight-bold
+        - TEXT "hello@techsalem.se"  · Manrope Bold 14px · lh 20px · #09090b/text  · x1229 y3799 w139  · tw: color=--color-zinc-950 fontSize=--text-sm lineHeight=--tw-leading fontWeight=--font-weight-bold
+      - frame "LinkComponent" · x824 y3840 544×61 · border 1px #17233f/navy @0.15 · flex-row pad(t20 r0 b20 l0) justify-space_between items-center
+        - frame "CorporatePage" · x824 y3860 90×20 · flex-col
+          - TEXT "Consultation"  · Manrope Bold 14px · lh 20px · #555563/muted  · x824 y3860 w90  · tw: color=--color-ink-muted fontSize=--text-sm lineHeight=--tw-leading fontWeight=--font-weight-bold
+        - TEXT "Choose a time"  · Manrope Bold 14px · lh 20px · #09090b/text  · x1271 y3860 w97  · tw: color=--color-zinc-950 fontSize=--text-sm lineHeight=--tw-leading fontWeight=--font-weight-bold
+      - frame "Link" · x824 y3901 544×61 · border 1px #17233f/navy @0.15 · flex-row pad(t20 r0 b20 l0) justify-space_between items-center
+        - frame "Text" · x824 y3921 58×20 · flex-col
+          - TEXT "LinkedIn"  · Manrope Bold 14px · lh 20px · #555563/muted  · x824 y3921 w58  · tw: color=--color-ink-muted fontSize=--text-sm lineHeight=--tw-leading fontWeight=--font-weight-bold
+        - TEXT "TechSalem"  · Manrope Bold 14px · lh 20px · #09090b/text  · x1293 y3921 w75  · tw: color=--color-zinc-950 fontSize=--text-sm lineHeight=--tw-leading fontWeight=--font-weight-bold
+- frame "Frame 2147240631" · x0 y4090 1600×377 · bg #10192e/navy-dark · flex-row gap171 pad(t80 r200 b40 l200) justify-space_evenly
+  - frame "Container" · x200 y4170 1200×257 · flex-col pad(t0 r32 b0 l32)
+    - frame "Container" · x232 y4170 1136×213 · border 1px #ffffff/white @0.1 · grid pad(t0 r0 b56 l0)
+      - frame "Container" · x232 y4170 248×156 · flex-col
+        - frame "Container" · x232 y4170 248×42
+          - frame "Text" · x232 y4170 150×36 · flex-row gap10 items-center
+            - frame "Text" · x232 y4170 36×36 · bg #ffffff/white · r4/4/4/4
+              - frame "Text" · x256 y4177 8×24 · bg #5136a5/purple
+              - frame "Text" · x239 y4182 8×24 · bg #ef1747/accent
+            - frame "Text" · x278 y4174 104×28 · flex-col
+              - TEXT "TechSalem"  · Manrope ExtraBold 20px · lh 28px · ls -0.64px · #ffffff/white  · x278 y4174 w104  · tw: color=--color-white fontSize=--text-xl lineHeight=--tw-leading fontWeight=--font-weight-extrabold
+        - frame "Paragraph" · x232 y4212 248×108 · flex-col pad(t24 r0 b24 l0)
+          - TEXT "Technology and business consulting for organizations ready to move with clarity and confidence."  · Manrope Regular 14px · lh 28px · #ffffff/white @0.55  · x232 y4236 w248  · tw: fontSize=--text-sm
+      - frame "Container" · x528 y4170 248×156 · flex-col
+        - frame "Heading 3" · x528 y4170 248×20 · flex-col
+          - TEXT "Quick links"  · Manrope Bold 14px · lh 20px · #ffffff/white  · x528 y4170 w74  · tw: color=--color-white fontSize=--text-sm lineHeight=--tw-leading fontWeight=--font-weight-bold
+        - frame "Container:margin" · x528 y4190 248×136 · flex-col pad(t20 r0 b20 l0)
+          - frame "Container" · x528 y4210 248×116 · grid
+            - frame "Link" · x528 y4210 248×20 · flex-col
+              - TEXT "Home"  · Manrope Regular 14px · lh 20px · #ffffff/white @0.55  · x528 y4210 w38  · tw: fontSize=--text-sm lineHeight=--tw-leading
+            - frame "Link" · x528 y4242 248×20 · flex-col
+              - TEXT "About"  · Manrope Regular 14px · lh 20px · #ffffff/white @0.55  · x528 y4242 w40  · tw: fontSize=--text-sm lineHeight=--tw-leading
+            - frame "Link" · x528 y4274 248×20 · flex-col
+              - TEXT "Services"  · Manrope Regular 14px · lh 20px · #ffffff/white @0.55  · x528 y4274 w56  · tw: fontSize=--text-sm lineHeight=--tw-leading
+            - frame "Link" · x528 y4306 248×20 · flex-col
+              - TEXT "Support"  · Manrope Regular 14px · lh 20px · #ffffff/white @0.55  · x528 y4306 w53  · tw: fontSize=--text-sm lineHeight=--tw-leading
+      - frame "Container" · x824 y4170 248×156 · flex-col
+        - frame "Heading 3" · x824 y4170 248×20 · flex-col
+          - TEXT "Support"  · Manrope Bold 14px · lh 20px · #ffffff/white  · x824 y4170 w56  · tw: color=--color-white fontSize=--text-sm lineHeight=--tw-leading fontWeight=--font-weight-bold
+        - frame "Container:margin" · x824 y4190 248×136 · flex-col pad(t20 r0 b20 l0)
+          - frame "Container" · x824 y4210 248×116 · grid
+            - frame "Link" · x824 y4210 248×20 · flex-col
+              - TEXT "Support page 01"  · Manrope Regular 14px · lh 20px · #ffffff/white @0.55  · x824 y4210 w105  · tw: fontSize=--text-sm lineHeight=--tw-leading
+            - frame "Link" · x824 y4242 248×20 · flex-col
+              - TEXT "Support page 02"  · Manrope Regular 14px · lh 20px · #ffffff/white @0.55  · x824 y4242 w108  · tw: fontSize=--text-sm lineHeight=--tw-leading
+            - frame "Link" · x824 y4274 248×20 · flex-col
+              - TEXT "Privacy policy"  · Manrope Regular 14px · lh 20px · #ffffff/white @0.55  · x824 y4274 w87  · tw: fontSize=--text-sm lineHeight=--tw-leading
+            - frame "Link" · x824 y4306 248×20 · flex-col
+              - TEXT "Cookie policy"  · Manrope Regular 14px · lh 20px · #ffffff/white @0.55  · x824 y4306 w86  · tw: fontSize=--text-sm lineHeight=--tw-leading
+      - frame "Container" · x1120 y4170 248×156 · flex-col
+        - frame "Heading 3" · x1120 y4170 248×20 · flex-col
+          - TEXT "Connect"  · Manrope Bold 14px · lh 20px · #ffffff/white  · x1120 y4170 w59  · tw: color=--color-white fontSize=--text-sm lineHeight=--tw-leading fontWeight=--font-weight-bold
+        - frame "Container:margin" · x1120 y4190 248×104 · flex-col pad(t20 r0 b20 l0)
+          - frame "Container" · x1120 y4210 248×84 · grid
+            - frame "Link" · x1120 y4210 248×20 · flex-col
+              - TEXT "LinkedIn"  · Manrope Regular 14px · lh 20px · #ffffff/white @0.55  · x1120 y4210 w54  · tw: fontSize=--text-sm lineHeight=--tw-leading
+            - frame "Link" · x1120 y4242 248×20 · flex-col
+              - TEXT "Facebook"  · Manrope Regular 14px · lh 20px · #ffffff/white @0.55  · x1120 y4242 w63  · tw: fontSize=--text-sm lineHeight=--tw-leading
+            - frame "Link" · x1120 y4274 248×20 · flex-col
+              - TEXT "hello@techsalem.se"  · Manrope Regular 14px · lh 20px · #ffffff/white @0.55  · x1120 y4274 w131  · tw: fontSize=--text-sm lineHeight=--tw-leading
+    - frame "Container" · x232 y4383 1136×44 · flex-row gap12 pad(t28 r0 b28 l0) justify-space_between
+      - frame "Paragraph" · x232 y4411 212×16 · flex-col
+        - TEXT "© 2026 TechSalem. All rights reserved."  · Manrope Regular 12px · lh 16px · #ffffff/white @0.4  · x232 y4411 w212  · tw: fontSize=--text-xs lineHeight=--tw-leading
+      - frame "Paragraph" · x1225 y4411 143×16 · flex-col
+        - TEXT "Technology with purpose."  · Manrope Regular 12px · lh 16px · #ffffff/white @0.4  · x1225 y4411 w143  · tw: fontSize=--text-xs lineHeight=--tw-leading

@@ -54,3 +54,6 @@ Desktop.ini
 .vscode/*
 !.vscode/settings.json
 !.vscode/extensions.json
+
+# design: the original Figma file is large (9 MB) and stays local only
+design/figma/*.fig
