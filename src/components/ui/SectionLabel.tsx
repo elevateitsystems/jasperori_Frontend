@@ -14,6 +14,8 @@ interface SectionLabelProps {
   /** 1px bottom border with 20px padding under the text (border colour via className). */
   divider?: boolean;
   id?: string;
+  /** Element; use h2 when the label is the section's only heading (e.g. the Support FAQ). */
+  as?: 'p' | 'h2';
   /** Text (and border) colour, e.g. "text-white/60 border-white/20". */
   className?: string;
 }
@@ -25,10 +27,11 @@ export function SectionLabel({
   tracking = 'default',
   divider = false,
   id,
+  as: Tag = 'p',
   className,
 }: SectionLabelProps) {
   return (
-    <p
+    <Tag
       id={id}
       className={cn(
         size === 'lg'
@@ -40,6 +43,6 @@ export function SectionLabel({
       )}
     >
       {children}
-    </p>
+    </Tag>
   );
 }

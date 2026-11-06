@@ -5,6 +5,7 @@ import { contactStrip } from './contact-strip';
 import { home } from './home';
 import { services } from './services';
 import { site } from './site';
+import { supportPages } from './support';
 
 /** English content. Must match LocaleContent exactly (checked by `satisfies`). */
 export const en = {
@@ -13,10 +14,7 @@ export const en = {
   home,
   about,
   services,
-  supportPages: {
-    'support-01': { meta: { title: 'Support page 01' } },
-    'support-02': { meta: { title: 'Support page 02' } },
-  },
+  supportPages,
   contact: { meta: { title: 'Contact' } },
   booking: { meta: { title: 'Book a consultation' } },
   privacyPolicy: { meta: { title: 'Privacy policy' } },

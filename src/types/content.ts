@@ -221,8 +221,29 @@ export interface ServicesPageContent {
   };
   next: { label: string; title: string; text: string; link: InternalLinkItem };
 }
-/** One support page. Both support pages share one template; only the content differs. */
-export type SupportPageContent = PlaceholderPageContent;
+/** Colour of a support path card (from content). */
+export type SupportCardTone = 'navy' | 'purple';
+
+/** One support page. All support pages share one template; only the content differs. */
+export interface SupportPageContent {
+  meta: PageMeta;
+  hero: PageHeroContent;
+  paths: {
+    label: string;
+    title: string;
+    text: string;
+    cards: Tuple2<{ title: string; text: string; tone: SupportCardTone; link: InternalLinkItem }>;
+  };
+  how: {
+    label: string;
+    title: string;
+    steps: Tuple3<{ title: string; text: string }>;
+  };
+  faq: {
+    label: string;
+    items: Tuple3<{ question: string; answer: string }>;
+  };
+}
 export type ContactPageContent = PlaceholderPageContent;
 export type BookingPageContent = PlaceholderPageContent;
 export type PrivacyPolicyPageContent = PlaceholderPageContent;

@@ -126,3 +126,9 @@ These were checked against the spec files when the tokens were coded in `src/app
   a 1200px grid (the 1136px inner width + 32px each side): the red panel ends at x1400 and the
   purple continues to the right. Inner-page heroes come in two layouts: `accent-bar` (About) and
   `simple` (Services, Support, Contact, Booking: red-square eyebrow, one square-cornered button).
+- **Support layout notes** (Phase 6): the "How it works" block starts 11px before the 912px
+  lavender section ends (no background of its own), so its content sits 117px below the lavender.
+  Step rows have a top border only (no line under the last row). The FAQ has lines above the first
+  question, between questions and below the last. The Support hero image is a plain centred cover
+  fill (not the Services crop). Accordions (About capabilities, Support FAQ) share one component,
+  `src/components/ui/Accordion.tsx`, with a variant per style.

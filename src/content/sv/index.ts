@@ -5,6 +5,7 @@ import { contactStrip } from './contact-strip';
 import { home } from './home';
 import { services } from './services';
 import { site } from './site';
+import { supportPages } from './support';
 
 /** Swedish content. Must match LocaleContent exactly (checked by `satisfies`). */
 export const sv = {
@@ -13,10 +14,7 @@ export const sv = {
   home,
   about,
   services,
-  supportPages: {
-    'support-01': { meta: { title: 'Supportsida 01' } },
-    'support-02': { meta: { title: 'Supportsida 02' } },
-  },
+  supportPages,
   contact: { meta: { title: 'Kontakt' } },
   booking: { meta: { title: 'Boka konsultation' } },
   privacyPolicy: { meta: { title: 'Integritetspolicy' } },

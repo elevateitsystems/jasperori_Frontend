@@ -1,3 +1,4 @@
+import { Accordion } from '@/components/ui/Accordion';
 import { Section } from '@/components/ui/Section';
 import { SectionLabel } from '@/components/ui/SectionLabel';
 import { SplitHeading } from '@/components/ui/SplitHeading';
@@ -10,9 +11,7 @@ interface AboutCapabilitiesProps {
 /**
  * About "03 / Our capabilities" (spec: charcoal "Section"). 128px vertical padding, 1136px inner.
  * Heading row (48px top padding; heading 768px, text 320px, bottom-aligned), 56px, then the
- * accordion: native <details>/<summary> (keyboard and screen-reader support built in, no JS).
- * All items start closed, as in the design; several can be open at once. The "+" turns into an
- * "x" (45deg rotation) when open.
+ * shared Accordion ("capabilities" variant). All items start closed, as in the design.
  */
 export function AboutCapabilities({ content }: AboutCapabilitiesProps) {
   return (
@@ -37,25 +36,7 @@ export function AboutCapabilities({ content }: AboutCapabilitiesProps) {
         </p>
       </div>
 
-      <ul className="mt-14 border-t border-white/10">
-        {content.items.map((item) => (
-          <li key={item.title} className="border-b border-white/10">
-            <details className="group">
-              <summary className="flex min-h-20 cursor-pointer list-none items-center gap-5 py-5 [&::-webkit-details-marker]:hidden">
-                <span aria-hidden="true" className="size-1.5 shrink-0 bg-purple" />
-                <h3 className="text-title-24 font-semibold text-white">{item.title}</h3>
-                <span
-                  aria-hidden="true"
-                  className="ml-auto shrink-0 pl-1 text-lead-sm text-white/50 transition-transform duration-200 group-open:rotate-45 motion-reduce:transition-none"
-                >
-                  +
-                </span>
-              </summary>
-              <p className="max-w-175 px-7 pb-7 text-body-sm-loose text-white/50">{item.text}</p>
-            </details>
-          </li>
-        ))}
-      </ul>
+      <Accordion items={content.items} variant="capabilities" className="mt-14" />
     </Section>
   );
 }
