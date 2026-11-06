@@ -97,7 +97,7 @@
   --text-watermark--font-weight: 800;
 
   /* 88/81.84 -5.72px: inner page hero H1 */
-  --text-display: clamp(44px, calc(44px + 44 * ((100vw - 360px) / 920)), 88px);
+  --text-display: clamp(40px, calc(40px + 48 * ((100vw - 360px) / 920)), 88px);
   --text-display--line-height: calc(81.84 / 88);
   --text-display--letter-spacing: -0.065em;
   --text-display--font-weight: 800;

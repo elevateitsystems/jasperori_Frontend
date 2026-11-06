@@ -59,7 +59,32 @@ export interface PageMeta {
 
 /** Fixed-length lists: both languages must have the same number of items. */
 export type Tuple2<T> = [T, T];
+export type Tuple3<T> = [T, T, T];
 export type Tuple4<T> = [T, T, T, T];
+export type Tuple6<T> = [T, T, T, T, T, T];
+
+/** A heading whose last part has another colour; rendered as one heading. */
+export interface SplitTitle {
+  title: string;
+  titleAccent: string;
+}
+
+/** Inner-page hero (About, Services, Support, Contact, Booking). */
+export interface PageHeroContent {
+  eyebrow: string;
+  title: string;
+  text: string;
+  image: ImageAsset;
+  primaryCta: InternalLinkItem;
+  secondaryCta?: InternalLinkItem;
+}
+
+/** "04 / Contact" strip, shared by About and Services. */
+export interface ContactStripContent extends SplitTitle {
+  label: string;
+  /** Each row is a full-width link: `label` on the left, `link.label` (the value) on the right. */
+  rows: Tuple3<{ label: string; link: LinkItem }>;
+}
 
 /** Reusable call-to-action banner (Home "Let's build what's next"). */
 export interface CtaBannerContent {
@@ -162,7 +187,19 @@ export interface HomePageContent {
   };
   cta: CtaBannerContent;
 }
-export type AboutPageContent = PlaceholderPageContent;
+export interface AboutPageContent {
+  meta: PageMeta;
+  hero: PageHeroContent;
+  perspective: SplitTitle & { label: string; text: string };
+  stat: { image: ImageAsset; value: string; label: string };
+  values: { label: string; items: Tuple3<{ title: string; text: string }> };
+  capabilities: SplitTitle & {
+    label: string;
+    text: string;
+    items: Tuple6<{ title: string; text: string }>;
+  };
+  quote: { image: ImageAsset; label: string; text: string; source: string };
+}
 export type ServicesPageContent = PlaceholderPageContent;
 /** One support page. Both support pages share one template; only the content differs. */
 export type SupportPageContent = PlaceholderPageContent;
@@ -175,6 +212,7 @@ export type NotFoundPageContent = PlaceholderPageContent;
 /** All content for one locale. Every locale must match this shape exactly. */
 export interface LocaleContent {
   site: SiteSettings;
+  contactStrip: ContactStripContent;
   home: HomePageContent;
   about: AboutPageContent;
   services: ServicesPageContent;
@@ -190,4 +228,4 @@ export interface LocaleContent {
 export type ContentKey = keyof LocaleContent;
 
 /** Keys of single pages (have page metadata). Support pages are looked up by slug instead. */
-export type PageKey = Exclude<ContentKey, 'site' | 'supportPages'>;
+export type PageKey = Exclude<ContentKey, 'site' | 'contactStrip' | 'supportPages'>;

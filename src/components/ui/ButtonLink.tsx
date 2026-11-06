@@ -11,6 +11,8 @@ import type { InternalPath } from '@/types/content';
  * - light:         white, navy text, Bold 14/20, 48px tall, 24px side padding, hero glow shadow
  * - outline-light: transparent, 1px white border, white text, 48px tall, 24px side padding
  * - cta:           white, navy text, ExtraBold 14/20, 56px tall, 28px side padding, large CTA shadow
+ * - accent:        red, white text, ExtraBold 12/16 uppercase 1.56px tracking, 48px tall, 24px side
+ *                  padding, glow shadow (inner-page heroes)
  * All have a 4px radius. Hover only changes colour/shadow/transform, never the layout.
  */
 const variants = {
@@ -18,6 +20,8 @@ const variants = {
   light: 'h-12 px-6 bg-white text-navy shadow-glow hover:bg-cloud',
   'outline-light': 'h-12 px-6 border border-white text-white hover:bg-white/10',
   cta: 'h-14 px-7 bg-white font-extrabold text-navy shadow-cta hover:bg-cloud',
+  accent:
+    'h-12 px-6 bg-red text-eyebrow tracking-caps-13 text-white shadow-glow hover:brightness-90',
 } as const;
 
 export type ButtonVariant = keyof typeof variants;

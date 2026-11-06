@@ -104,9 +104,17 @@ These were checked against the spec files when the tokens were coded in `src/app
   no space; the footer's own 40px bottom padding follows. Total height 377px.
 - **Fluid headings** (Phase 3): heading styles grow from 360px to 1280px viewport width and are the
   exact spec size from 1280px up. Line heights are spec ratios, letter spacing is in em.
-- **Home hero photo** (Phase 3): the spec marks it `stretch` (Figma custom crop, not recorded).
-  Matched to the screenshot: at 1600px the photo is 1177.6px wide (73.6%), right edge 23.6px past
-  the frame, top -28px; the uncovered left part is under the overlay's opaque navy.
+- **Exact image crops** (Phase 4; Figma custom crops, "stretch" in the spec). Photo position and
+  size inside its box in the 1600px design. Coded in `src/lib/image-crops.ts` (`CroppedImage`):
+  | Image | Box | Photo left / top / width x height |
+  |---|---|---|
+  | Home hero (`home-hero-team-meeting.jpg`) | 1600x1015 | 427 / -28 / 1226x1532 (left 26.7%, width 76.6%, 53px past the right edge) |
+  | About split image (`office-open-space.jpg`) | 798x520 | 0 / -60 / 1061x641 (133% wide, left-aligned) |
+  | Services hero (`hero-office-wide.png`) | 1600x1015 | 0 / 0 / 2707x1015 (fills the height, left-aligned, cut on the right) |
+
+  All other images use a normal centred cover fill. The About crop is not proportional to the
+  photo (1061x641 vs 1600x1068), so Figma squashes it slightly; the site fills that exact box with
+  object-cover instead, without distortion.
 - **Icons** (Phase 3), matched by comparing the spec's vector boxes with lucide's geometry:
   service cards = `network`, `workflow`, `chart-column`, `shield-check` (the screenshot shows a
   shield with a check, not a clipboard); support cards = `headphones`; "Learn More" =
