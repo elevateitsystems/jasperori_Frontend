@@ -200,7 +200,27 @@ export interface AboutPageContent {
   };
   quote: { image: ImageAsset; label: string; text: string; source: string };
 }
-export type ServicesPageContent = PlaceholderPageContent;
+/** Colour scheme of a services card (from content, so a CMS can reorder or restyle cards). */
+export type ServiceCardTone = 'navy' | 'lavender' | 'red';
+
+export interface ServicesPageContent {
+  meta: PageMeta;
+  hero: PageHeroContent;
+  perspective: SplitTitle & { label: string; text: string };
+  services: {
+    /** Small label above each card title ("Consulting area"). */
+    areaLabel: string;
+    items: Tuple3<{ title: string; text: string; tone: ServiceCardTone }>;
+    imageCard: { image: ImageAsset; text: string };
+  };
+  process: {
+    label: string;
+    title: string;
+    text: string;
+    steps: Tuple3<{ title: string; text: string }>;
+  };
+  next: { label: string; title: string; text: string; link: InternalLinkItem };
+}
 /** One support page. Both support pages share one template; only the content differs. */
 export type SupportPageContent = PlaceholderPageContent;
 export type ContactPageContent = PlaceholderPageContent;

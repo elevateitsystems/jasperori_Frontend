@@ -121,3 +121,8 @@ These were checked against the spec files when the tokens were coded in `src/app
   `arrow-up-right`; buttons and "Discover TechSalem" = `arrow-right`.
 - **Home CTA ring** (Phase 3): the 384px ring is at x1600, y-160 relative to the banner, i.e.
   entirely outside it, so it is clipped and invisible, as in the approved screenshot.
+- **Services layout notes** (Phase 5): the bento grid starts 62px above the end of the cloud
+  perspective section (the cards overlap its bottom padding; white below). The "Next step" band is
+  a 1200px grid (the 1136px inner width + 32px each side): the red panel ends at x1400 and the
+  purple continues to the right. Inner-page heroes come in two layouts: `accent-bar` (About) and
+  `simple` (Services, Support, Contact, Booking: red-square eyebrow, one square-cornered button).

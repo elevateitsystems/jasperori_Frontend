@@ -3,6 +3,7 @@ import type { LocaleContent } from '@/types/content';
 import { about } from './about';
 import { contactStrip } from './contact-strip';
 import { home } from './home';
+import { services } from './services';
 import { site } from './site';
 
 /** English content. Must match LocaleContent exactly (checked by `satisfies`). */
@@ -11,7 +12,7 @@ export const en = {
   contactStrip,
   home,
   about,
-  services: { meta: { title: 'Services' } },
+  services,
   supportPages: {
     'support-01': { meta: { title: 'Support page 01' } },
     'support-02': { meta: { title: 'Support page 02' } },
