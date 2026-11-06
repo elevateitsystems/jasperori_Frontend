@@ -1,0 +1,14 @@
+@import 'tailwindcss';
+
+/* Minimal reset on top of Tailwind Preflight. Design tokens are added in the next phase. */
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    min-height: 100dvh;
+  }
+}
