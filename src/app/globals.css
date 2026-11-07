@@ -57,6 +57,11 @@
    * -------------------------------------------------------------------------------------------- */
   /* Header height: h-header, top-header, scroll-mt-header, ... */
   --spacing-header: 68px;
+  /* The 1600px design width as a breakpoint (3xl:): above it, photos keep their design size. */
+  --breakpoint-3xl: 100rem;
+  /* One transition timing for every interactive state (hover, focus, open/close). */
+  --default-transition-duration: 200ms;
+  --default-transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
   /* Content width inside the 1600px frame (1600 - 2 x 140): max-w-content */
   --container-content: 1320px;
   /* Inner content width used by the footer and several sections (1600 - 2 x (200 + 32)): max-w-inner */
@@ -413,6 +418,23 @@
 }
 
 /*
+ * From 1600px up the home hero photo keeps its design size, anchored to the right (see
+ * imageCrops.homeHero). The overlay stops then move with the photo instead of with the width:
+ * the values below are the 2% / 29% / 56.4% stops of the 1600px design expressed from the right
+ * edge of the 89deg gradient line (1617.5px long at 1600x1015), so they are identical at 1600px.
+ */
+@media (width >= 100rem) {
+  :root {
+    --gradient-home-hero: linear-gradient(
+      89deg,
+      rgb(23 35 64 / 1) 32.35px,
+      rgb(47 43 107 / 1) calc(100% - 1148.4px),
+      rgb(72 51 151 / 0.33) calc(100% - 705.2px)
+    );
+  }
+}
+
+/*
  * Inner-page hero overlay: purple 100% -> purple 0%. One utility; the variant sets the exact angle
  * and stop positions for each page frame:
  *   bg-overlay-hero-about     About and Booking
@@ -448,6 +470,38 @@
 @utility bg-overlay-about-quote {
   background-image: var(--gradient-about-quote);
 }
+
+/* -------------------------------------------------------------------------------------------------
+ * Interaction helpers.
+ * ----------------------------------------------------------------------------------------------- */
+
+/* Dark, purple or red surfaces: white keyboard focus ring for everything inside. */
+@utility on-dark {
+  --focus-ring: var(--color-white);
+}
+
+/*
+ * At least 44x44px hit area on touch screens without changing the visible size: an invisible,
+ * centred ::after that is never smaller than 44px. Desktop (fine pointer) is unchanged.
+ */
+@utility touch-target {
+  position: relative;
+
+  @media (pointer: coarse) {
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: max(100%, var(--touch-target-width, 44px));
+      height: max(100%, 44px);
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+
+/* Short screens (phones in landscape): `short:` */
+@custom-variant short (@media (max-height: 500px));
 
 /* -------------------------------------------------------------------------------------------------
  * Layout: 1320px content column, centred, with responsive side padding.
@@ -505,15 +559,88 @@
     h2,
     h3 {
       hyphens: auto;
+      /* Only long words (10+ letters, e.g. Swedish compounds) are hyphenated, never "busi-ness". */
+      hyphenate-limit-chars: 10 4 4;
     }
   }
 
   /*
-   * Keyboard focus ring. Purple by default; on purple or dark backgrounds set the --focus-ring
-   * variable on the section, e.g. class="[--focus-ring:var(--color-white)]".
+   * Small screens only: balanced headings and no one-word last lines in paragraphs. Not from
+   * `lg` up, where the line breaks must stay as in the design.
+   */
+  @media (width < 64rem) {
+    h1,
+    h2,
+    h3 {
+      text-wrap: balance;
+    }
+
+    p {
+      text-wrap: pretty;
+    }
+  }
+
+  /*
+   * Keyboard focus ring. Purple by default; on dark, purple or red backgrounds add the `on-dark`
+   * utility to the section, which switches the ring to white.
    */
   :focus-visible {
     outline: 2px solid var(--focus-ring, var(--color-purple));
     outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-purple);
+    color: var(--color-white);
+  }
+
+  /* Reduced motion: no transitions or animations anywhere (on top of the per-component rules). */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* -------------------------------------------------------------------------------------------------
+ * Scroll reveal (progressive enhancement; see CLAUDE.md "Motion").
+ * Content is visible by default. Only where the browser supports scroll-driven animations, the
+ * user allows motion and motion isn't switched off (<html data-motion="off">), the direct children
+ * of [data-reveal] fade in and move up 20px as they scroll into view. A [data-reveal] child that is
+ * itself [data-reveal] (e.g. a card grid) doesn't animate as a block; its own children do.
+ * Opacity and transform only, so there is no layout shift.
+ * ----------------------------------------------------------------------------------------------- */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    :root:not([data-motion='off']) [data-reveal] > :not([data-reveal]) {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 70%;
+    }
+
+    /* Slight stagger for items that enter together (cards in a row). */
+    :root:not([data-motion='off']) [data-reveal] > :not([data-reveal]):nth-child(2) {
+      animation-range: entry 8% entry 78%;
+    }
+
+    :root:not([data-motion='off']) [data-reveal] > :not([data-reveal]):nth-child(3) {
+      animation-range: entry 16% entry 86%;
+    }
+
+    :root:not([data-motion='off']) [data-reveal] > :not([data-reveal]):nth-child(4) {
+      animation-range: entry 24% entry 94%;
+    }
   }
 }

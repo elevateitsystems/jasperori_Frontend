@@ -147,3 +147,16 @@ These were checked against the spec files when the tokens were coded in `src/app
   the "simple" hero eyebrow, H1 in the 60px h2-xl style) and `Prose` (720px column, H2
   ExtraBold 24/32, H3 Bold 18/28, text 16/28 ink-muted, purple square list markers, bordered
   tables that scroll inside their wrapper on small screens). The Booking page stacks below `xl`.
+- **Site-wide polish** (Phase 10): one transition token (`--default-transition-duration` 200ms,
+  `--default-transition-timing-function` ease-out); buttons move 1px down when pressed. Focus ring
+  2px purple, white inside sections marked with the `on-dark` utility. On touch screens small links
+  get a 44px hit area (`touch-target` utility, desktop sizes unchanged) and stacked link lists
+  (footer, legal contents) are 44px apart. Text selection: purple with white text. Mobile section
+  rhythm 80px. Below `lg`: balanced headings and `pretty` paragraphs. Scroll reveals: see
+  "Motion" in CLAUDE.md. Windows High Contrast: buttons get a border, booking slots and the
+  language switch use system colours (selected = `Highlight`).
+- **Above 1600px** (Phase 10): content stays at the design widths and backgrounds stretch. The Home
+  and Services hero photos keep their 1600px-design size and position (anchored to the right and
+  left edge) instead of zooming in; the Home hero overlay uses px stops so it ends at the same
+  point next to the text. Heroes on short landscape screens (height up to 500px, below `lg`) get
+  less vertical padding.

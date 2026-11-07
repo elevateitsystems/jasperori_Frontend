@@ -32,7 +32,7 @@ export default async function ServicesPage() {
         id="services-hero-title"
       />
       <Perspective content={services.perspective} id="services-perspective-title" labelSize="sm" />
-      <ServicesGrid content={services.services} labelledBy="services-perspective-title" />
+      <ServicesGrid content={services.services} />
       <ServicesProcess content={services.process} />
       <ServicesNextStep content={services.next} />
       <ContactStrip content={contactStrip} id="services-contact-title" />

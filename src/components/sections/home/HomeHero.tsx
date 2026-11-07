@@ -21,20 +21,22 @@ interface HomeHeroProps {
  */
 export function HomeHero({ content }: HomeHeroProps) {
   return (
-    <section aria-labelledby="home-hero-title" className="relative isolate overflow-hidden bg-navy">
+    <section
+      aria-labelledby="home-hero-title"
+      className="relative isolate overflow-hidden bg-navy on-dark"
+    >
       <div className="absolute inset-0 -z-20">
         <CroppedImage
           image={content.image}
           crop={imageCrops.homeHero}
           priority
-          sizes="(min-width: 1024px) 77vw, 100vw"
-          className="object-[50%_20%]"
+          sizes="(min-width: 1600px) 1226px, (min-width: 1024px) 77vw, 100vw"
         />
       </div>
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-overlay-home-hero" />
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-navy/55 lg:hidden" />
 
-      <div className="site-container pt-24 pb-28 md:pt-36 md:pb-40 lg:min-h-253.75 lg:pt-56.5 lg:pb-24">
+      <div className="site-container pt-24 pb-28 md:pt-36 md:pb-40 lg:min-h-253.75 lg:pt-56.5 lg:pb-24 max-lg:short:pt-12 max-lg:short:pb-14">
         <div className="relative max-w-132 lg:ml-11.25">
           <span
             aria-hidden="true"

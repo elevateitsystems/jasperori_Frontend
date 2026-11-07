@@ -25,15 +25,13 @@ export function HomeSupport({ content }: HomeSupportProps) {
         {content.title}
       </h2>
 
-      <ul className="mt-10 grid gap-5 md:grid-cols-2 lg:mt-14">
+      <ul data-reveal className="mt-10 grid gap-5 md:grid-cols-2 lg:mt-14">
         {content.cards.map((card, index) => {
           const titleId = `home-support-card-${index + 1}`;
           return (
             <li key={card.link.href}>
               <Link
                 href={card.link.href}
-                aria-labelledby={titleId}
-                aria-describedby={`${titleId}-text`}
                 className="group relative flex h-full min-h-72 flex-col justify-between gap-12 overflow-hidden border border-navy/10 bg-cloud p-8 transition-colors hover:border-navy/25"
               >
                 <span

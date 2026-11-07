@@ -20,7 +20,11 @@ export function Logo({ name, label, variant, className }: LogoProps) {
   const isLight = variant === 'light';
 
   return (
-    <Link href="/" aria-label={label} className={cn('inline-flex items-center gap-2.5', className)}>
+    <Link
+      href="/"
+      aria-label={label}
+      className={cn('touch-target inline-flex items-center gap-2.5', className)}
+    >
       <svg
         width="36"
         height="36"

@@ -48,7 +48,7 @@ export function PageHero({
   id,
 }: PageHeroProps) {
   return (
-    <section aria-labelledby={id} className="relative isolate overflow-hidden bg-purple">
+    <section aria-labelledby={id} className="relative isolate overflow-hidden bg-purple on-dark">
       <div className="absolute inset-0 -z-20">
         <CroppedImage image={content.image} crop={crop} priority sizes="100vw" />
       </div>
@@ -57,7 +57,7 @@ export function PageHero({
       {/* Small screens: the text runs over the whole photo, so darken it for contrast. */}
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-navy/60 lg:hidden" />
 
-      <div className="site-container pt-24 pb-28 md:pt-36 md:pb-40 lg:min-h-253.75 lg:pt-90.25 lg:pb-24">
+      <div className="site-container pt-24 pb-28 md:pt-36 md:pb-40 lg:min-h-253.75 lg:pt-90.25 lg:pb-24 max-lg:short:pt-12 max-lg:short:pb-14">
         {layout === 'accent-bar' ? (
           <div className="relative pl-5 lg:ml-9">
             <span aria-hidden="true" className="absolute top-0 left-0 h-28 w-1 bg-accent-bar" />

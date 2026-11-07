@@ -25,7 +25,10 @@ export function AboutBelief({ content }: AboutBeliefProps) {
           sizes="(min-width: 1024px) 50vw, 100vw"
         />
       </div>
-      <figure className="bg-red px-6 py-14 [--focus-ring:var(--color-white)] md:p-14 lg:h-130 lg:pt-32.75 lg:pr-7 lg:pb-20 lg:pl-20">
+      <figure
+        data-reveal
+        className="bg-red px-6 py-14 on-dark md:p-14 lg:h-130 lg:pt-32.75 lg:pr-7 lg:pb-20 lg:pl-20"
+      >
         <SectionLabel id="about-belief-label" tracking="wide" className="text-white/60">
           {content.label}
         </SectionLabel>

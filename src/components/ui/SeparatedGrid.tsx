@@ -15,5 +15,9 @@ interface SeparatedGridProps {
  * The lines follow the grid at every breakpoint (between columns and between rows).
  */
 export function SeparatedGrid({ children, className }: SeparatedGridProps) {
-  return <ol className={cn('grid gap-px bg-white/15', className)}>{children}</ol>;
+  return (
+    <ol data-reveal className={cn('grid gap-px bg-white/15', className)}>
+      {children}
+    </ol>
+  );
 }

@@ -33,7 +33,12 @@ export function LanguageSwitch({ className }: LanguageSwitchProps) {
     <div
       role="group"
       aria-label={t('a11y.switchLanguage')}
-      className={cn('inline-flex rounded-full bg-cloud p-1', className)}
+      className={cn(
+        'inline-flex rounded-full bg-cloud p-1 forced-color-adjust-none',
+        // Windows High Contrast: system colours, the active language as a highlighted pill.
+        'forced-colors:border forced-colors:border-[CanvasText] forced-colors:bg-[Canvas]',
+        className,
+      )}
     >
       {SWITCH_LOCALES.map((locale) => {
         const isActive = locale === activeLocale;
@@ -44,14 +49,17 @@ export function LanguageSwitch({ className }: LanguageSwitchProps) {
             locale={locale}
             hrefLang={locale}
             lang={locale}
-            aria-label={labels[locale].name}
             aria-current={isActive ? 'true' : undefined}
             className={cn(
-              'inline-flex items-center justify-center rounded-full px-2.5 py-1.5 text-lang transition-colors',
-              isActive ? 'bg-white text-navy shadow-switch' : 'text-ink-muted hover:text-navy',
+              // The two pills touch: their hit areas grow in height only, so they never overlap.
+              'touch-target inline-flex items-center justify-center rounded-full px-2.5 py-1.5 text-lang transition-colors [--touch-target-width:100%]',
+              isActive
+                ? 'bg-white text-navy shadow-switch forced-colors:bg-[Highlight] forced-colors:text-[HighlightText]'
+                : 'text-ink-muted hover:text-navy forced-colors:text-[LinkText]',
             )}
           >
             {labels[locale].short}
+            <span className="sr-only"> ({labels[locale].name})</span>
           </Link>
         );
       })}

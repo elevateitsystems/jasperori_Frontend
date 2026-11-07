@@ -53,6 +53,8 @@ export interface ImageAsset {
   alt: string;
   width: number;
   height: number;
+  /** object-position below `lg` (phones/tablets), e.g. '68% 30%' to keep the subject in view. */
+  focalPoint?: string;
 }
 
 /** Page metadata. The title is shown as "<title> | <siteName>" unless `absoluteTitle` is set. */

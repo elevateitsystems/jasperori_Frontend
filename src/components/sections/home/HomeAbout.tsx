@@ -20,7 +20,10 @@ export function HomeAbout({ content }: HomeAboutProps) {
   return (
     <section aria-labelledby="home-about-title" className="bg-white py-20 lg:py-30">
       <div className="site-container">
-        <div className="grid items-center gap-y-20 lg:grid-cols-[721fr_608fr] lg:gap-x-7.75 xl:-mx-5">
+        <div
+          data-reveal
+          className="grid items-center gap-y-20 lg:grid-cols-[721fr_608fr] lg:gap-x-7.75 xl:-mx-5"
+        >
           <div className="lg:pb-8">
             <div className="relative max-w-176.5">
               <div className="relative aspect-706/559 overflow-hidden rounded-lg">

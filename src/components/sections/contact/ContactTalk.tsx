@@ -23,10 +23,13 @@ export async function ContactTalk({ content, id }: ContactTalkProps) {
     <section
       id={id}
       aria-labelledby={`${id}-title`}
-      className="bg-white py-20 lg:pt-34.75 lg:pb-22.25"
+      className="scroll-mt-6 bg-white py-20 lg:pt-34.75 lg:pb-22.25"
     >
       <div className="site-container">
-        <div className="mx-auto flex max-w-inner flex-col gap-12 lg:flex-row lg:items-end lg:justify-between">
+        <div
+          data-reveal
+          className="mx-auto flex max-w-inner flex-col gap-12 lg:flex-row lg:items-end lg:justify-between"
+        >
           <div className="lg:w-136">
             <SectionLabel tracking="wide" className="font-bold text-purple">
               {content.label}

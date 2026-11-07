@@ -20,9 +20,16 @@ export function BookingSection({ content, siteEmail, id }: BookingSectionProps) 
   const { intro } = content;
 
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className="bg-white py-20 lg:pt-32.5 lg:pb-32">
+    <section
+      id={id}
+      aria-labelledby={`${id}-title`}
+      className="scroll-mt-6 bg-white py-20 lg:pt-32.5 lg:pb-32"
+    >
       <div className="site-container">
-        <div className="mx-auto grid max-w-inner gap-12 xl:grid-cols-[341fr_639fr] xl:items-start xl:gap-x-39">
+        <div
+          data-reveal
+          className="mx-auto grid max-w-inner gap-12 xl:grid-cols-[341fr_639fr] xl:items-start xl:gap-x-39"
+        >
           <div>
             <SectionLabel tracking="wide" className="font-bold text-purple">
               {intro.label}

@@ -68,8 +68,6 @@ function ServiceCard({ item, number, areaLabel }: ServiceCardProps) {
 
 interface ServicesGridProps {
   content: ServicesPageContent['services'];
-  /** id of the heading that introduces the services (the perspective heading). */
-  labelledBy: string;
 }
 
 /**
@@ -79,19 +77,19 @@ interface ServicesGridProps {
  * bottom padding), so this section has no background and a -62px top margin, as in the design.
  * Tablet: two equal columns per row; mobile: one column.
  */
-export function ServicesGrid({ content, labelledBy }: ServicesGridProps) {
+export function ServicesGrid({ content }: ServicesGridProps) {
   const [first, second, third] = content.items;
   const number = (index: number) => String(index + 1).padStart(2, '0');
 
   return (
-    <section aria-labelledby={labelledBy} className="relative -mt-10 pb-20 lg:-mt-15.5 lg:pb-32">
+    <div className="relative -mt-10 pb-20 lg:-mt-15.5 lg:pb-32">
       <div className="site-container">
-        <div className="mx-auto flex max-w-inner flex-col gap-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-[752fr_368fr]">
+        <div data-reveal className="mx-auto flex max-w-inner flex-col gap-4">
+          <div data-reveal className="grid gap-4 md:grid-cols-2 lg:grid-cols-[752fr_368fr]">
             <ServiceCard item={first} number={number(0)} areaLabel={content.areaLabel} />
             <ServiceCard item={second} number={number(1)} areaLabel={content.areaLabel} />
           </div>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-[464fr_656fr]">
+          <div data-reveal className="grid gap-4 md:grid-cols-2 lg:grid-cols-[464fr_656fr]">
             <ServiceCard item={third} number={number(2)} areaLabel={content.areaLabel} />
             <div className="relative isolate flex min-h-80 items-end overflow-hidden p-8 md:p-10 lg:h-105">
               <div className="absolute inset-0 -z-20">
@@ -106,6 +104,6 @@ export function ServicesGrid({ content, labelledBy }: ServicesGridProps) {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

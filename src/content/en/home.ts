@@ -5,6 +5,8 @@ const heroImage = {
   alt: 'Business team discussing a technology strategy around a laptop',
   width: 1024,
   height: 1280,
+  // Phones/tablets: keep the seated woman and man in view.
+  focalPoint: '68% 30%',
 } satisfies HomePageContent['hero']['image'];
 
 const serviceCardText =

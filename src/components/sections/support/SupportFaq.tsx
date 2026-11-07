@@ -13,12 +13,9 @@ interface SupportFaqProps {
  */
 export function SupportFaq({ content }: SupportFaqProps) {
   return (
-    <section
-      aria-labelledby="support-faq-title"
-      className="bg-charcoal py-20 [--focus-ring:var(--color-white)] lg:py-24"
-    >
+    <section aria-labelledby="support-faq-title" className="bg-charcoal py-20 on-dark lg:py-24">
       <div className="site-container">
-        <div className="mx-auto max-w-215">
+        <div data-reveal className="mx-auto max-w-215">
           <SectionLabel
             as="h2"
             id="support-faq-title"

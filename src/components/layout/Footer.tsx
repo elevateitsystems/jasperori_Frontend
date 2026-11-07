@@ -21,7 +21,7 @@ export async function Footer() {
   ];
 
   return (
-    <footer data-menu-inert className="bg-navy-dark pt-20 pb-10 [--focus-ring:var(--color-white)]">
+    <footer data-menu-inert className="bg-navy-dark pt-20 pb-10 on-dark">
       <div className="site-container">
         <div className="mx-auto max-w-inner">
           <div className="grid gap-x-12 gap-y-10 border-b border-white/10 pb-14 md:grid-cols-2 lg:grid-cols-4">
@@ -41,14 +41,15 @@ export async function Footer() {
                 <h2 id={column.id} className="text-button text-white">
                   {column.heading}
                 </h2>
-                {/* The text style is on the list so each row is 20px tall (32px apart). */}
-                <ul className="mt-5 grid gap-3 text-body-sm">
+                {/* The text style is on the list so each row is 20px tall (32px apart). On touch
+                    screens the rows are 44px apart, so the 44px hit areas don't overlap. */}
+                <ul className="mt-5 grid gap-3 text-body-sm pointer-coarse:gap-6">
                   {Object.values(column.links).map((link) => (
                     <li key={link.label}>
                       <ContentLink
                         link={link}
                         newTabLabel={t('newTab')}
-                        className="text-white/55 transition-colors hover:text-white"
+                        className="touch-target text-white/55 transition-colors hover:text-white"
                       />
                     </li>
                   ))}

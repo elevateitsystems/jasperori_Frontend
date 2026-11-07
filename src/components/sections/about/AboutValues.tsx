@@ -14,11 +14,15 @@ interface AboutValuesProps {
  */
 export function AboutValues({ content }: AboutValuesProps) {
   return (
-    <Section labelledBy="about-values-label" width="inner" className="bg-purple py-20 lg:py-28">
+    <Section
+      labelledBy="about-values-label"
+      width="inner"
+      className="bg-purple py-20 on-dark lg:py-28"
+    >
       <SectionLabel id="about-values-label" divider className="border-white/20 text-white/60">
         {content.label}
       </SectionLabel>
-      <ol className="mt-14 grid gap-10 lg:grid-cols-3">
+      <ol data-reveal className="mt-14 grid gap-10 lg:grid-cols-3">
         {content.items.map((item, index) => (
           <li key={item.title} className="border-t border-white/35 pt-7 pb-2.25">
             <span

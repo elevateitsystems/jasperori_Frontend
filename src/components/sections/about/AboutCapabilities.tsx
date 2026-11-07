@@ -18,7 +18,7 @@ export function AboutCapabilities({ content }: AboutCapabilitiesProps) {
     <Section
       labelledBy="about-capabilities-title"
       width="inner"
-      className="bg-charcoal py-20 [--focus-ring:var(--color-white)] lg:py-32"
+      className="bg-charcoal py-20 on-dark lg:py-32"
     >
       <SectionLabel divider className="border-white/10 text-white/40">
         {content.label}

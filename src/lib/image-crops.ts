@@ -11,6 +11,11 @@ export interface ImageCrop {
   photo: { left: number; top: number; width: number; height: number };
   /** object-position used when the box has another aspect ratio than in the design. */
   position: string;
+  /**
+   * Above 1600px (no design): keep the photo at its design pixel size, anchored to this side of
+   * the box, instead of scaling it with the width (which would zoom far into the photo).
+   */
+  wide?: 'left' | 'right';
 }
 
 export const imageCrops = {
@@ -19,6 +24,7 @@ export const imageCrops = {
     box: { width: 1600, height: 1015 },
     photo: { left: 427, top: -28, width: 1226, height: 1532 },
     position: 'top',
+    wide: 'right',
   },
   /**
    * About split image, box 798x520. Figma stretches the photo non-uniformly here
@@ -35,6 +41,7 @@ export const imageCrops = {
     box: { width: 1600, height: 1015 },
     photo: { left: 0, top: 0, width: 2707, height: 1015 },
     position: 'left',
+    wide: 'left',
   },
 } as const satisfies Record<string, ImageCrop>;
 
@@ -48,5 +55,10 @@ export function cropStyle(crop: ImageCrop): CSSProperties & Record<`--${string}`
     '--crop-width': percent(crop.photo.width, crop.box.width),
     '--crop-height': percent(crop.photo.height, crop.box.height),
     '--crop-position': crop.position,
+    '--crop-left-px': `${crop.photo.left}px`,
+    '--crop-right-px': `${crop.box.width - crop.photo.left - crop.photo.width}px`,
+    '--crop-top-px': `${crop.photo.top}px`,
+    '--crop-width-px': `${crop.photo.width}px`,
+    '--crop-height-px': `${crop.photo.height}px`,
   };
 }

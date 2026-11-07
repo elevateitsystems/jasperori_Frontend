@@ -35,8 +35,9 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function LocaleLayout({ children }: LayoutProps<'/[locale]'>) {
   const locale = await getLocale();
 
+  // data-motion: global switch for scroll-reveal animations ('on' | 'off'), see CLAUDE.md.
   return (
-    <html lang={locale} className={fontVariables}>
+    <html lang={locale} className={fontVariables} data-motion="on">
       <body className="flex flex-col">
         <NextIntlClientProvider>
           <SkipLink />

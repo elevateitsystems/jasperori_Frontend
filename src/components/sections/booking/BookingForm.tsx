@@ -288,7 +288,7 @@ export function BookingForm({ content, siteEmail }: BookingFormProps) {
           <button
             type="button"
             onClick={reset}
-            className="mt-6 text-button text-purple underline underline-offset-4 hover:text-navy"
+            className="touch-target mt-6 text-button text-purple underline underline-offset-4 hover:text-navy"
           >
             {content.success.again}
           </button>
@@ -360,11 +360,14 @@ export function BookingForm({ content, siteEmail }: BookingFormProps) {
                             <span
                               aria-hidden="true"
                               className={cn(
-                                'flex h-10 items-center justify-center text-caption font-bold transition-colors pointer-coarse:h-11',
+                                'flex h-10 items-center justify-center text-caption font-bold transition-colors forced-color-adjust-none pointer-coarse:h-11',
                                 'peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-purple',
+                                // Windows High Contrast: system colours for the slot states.
+                                'forced-colors:border forced-colors:border-[CanvasText] forced-colors:peer-focus-visible:outline-[CanvasText]',
                                 slot.available
-                                  ? 'cursor-pointer bg-cloud text-zinc-950 peer-checked:bg-navy peer-checked:text-white hover:bg-lavender'
-                                  : 'cursor-not-allowed text-ink-muted line-through',
+                                  ? // Hover only on unselected slots, so a selected slot stays navy under the pointer.
+                                    'cursor-pointer bg-cloud text-zinc-950 peer-checked:bg-navy peer-checked:text-white not-forced-colors:peer-not-checked:hover:bg-lavender forced-colors:bg-[Canvas] forced-colors:text-[CanvasText] forced-colors:peer-checked:bg-[Highlight] forced-colors:peer-checked:text-[HighlightText]'
+                                  : 'cursor-not-allowed text-ink-muted line-through forced-colors:text-[GrayText]',
                               )}
                             >
                               {formatTime(slot.start)}
@@ -491,7 +494,7 @@ export function BookingForm({ content, siteEmail }: BookingFormProps) {
             {content.privacyNote.before}{' '}
             <Link
               href={content.privacyNote.link.href}
-              className="underline underline-offset-2 hover:text-purple"
+              className="touch-target underline underline-offset-2 hover:text-purple"
             >
               {content.privacyNote.link.label}
             </Link>

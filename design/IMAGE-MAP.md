@@ -33,3 +33,10 @@ use a normal centred cover fill. Coded in `src/lib/image-crops.ts`.
 - Services hero (box 1600x1015): 0 / 0 / 2707x1015
 
 Note: home-hero-team-meeting.jpg is only 1024px wide but covers a 1600px hero, so it will look a bit soft on large screens.
+
+Wide screens and phones (Phase 10): from 1600px up, the Home and Services hero crops keep their
+1600px size and stick to the right (Home) / left (Services) edge. On phones and tablets the Home hero
+photo uses the focal point `68% 30%` (stored with the image in `src/content/*/home.ts`) so the
+seated people stay in view. home-hero-team-meeting.jpg is shown at 1226px wide on desktop, so it is
+upscaled about 1.2x (2.4x on retina screens) and looks soft at 1920 and 2560; a 2500px+ original
+from the client would fix this.

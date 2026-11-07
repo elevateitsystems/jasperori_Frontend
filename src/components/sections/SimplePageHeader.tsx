@@ -15,7 +15,7 @@ interface SimplePageHeaderProps {
  */
 export function SimplePageHeader({ content, id }: SimplePageHeaderProps) {
   return (
-    <section aria-labelledby={id} className="bg-navy pt-16 pb-12 lg:pt-24 lg:pb-20">
+    <section aria-labelledby={id} className="bg-navy pt-16 pb-12 on-dark lg:pt-24 lg:pb-20">
       <div className="site-container">
         <div className="mx-auto max-w-inner">
           <SquareEyebrow>{content.eyebrow}</SquareEyebrow>

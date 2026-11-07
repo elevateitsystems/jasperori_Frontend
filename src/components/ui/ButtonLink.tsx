@@ -51,7 +51,7 @@ export function ButtonLink({
   className,
 }: ButtonLinkProps) {
   const classes = cn(
-    'group inline-flex items-center justify-center gap-3 rounded-sm text-button whitespace-nowrap transition-colors',
+    'group inline-flex items-center justify-center gap-3 rounded-sm text-button whitespace-nowrap transition-colors active:translate-y-px forced-colors:border forced-colors:border-[ButtonText]',
     variants[variant],
     className,
   );

@@ -41,7 +41,7 @@ export function NavLinks({ links, variant }: NavLinksProps) {
               'text-navy/75 transition-colors hover:text-navy aria-[current=page]:text-navy',
               // Desktop: the text style is on the list so the row is exactly 20px tall.
               variant === 'desktop'
-                ? 'block'
+                ? 'touch-target block'
                 : 'block border-b border-line py-4 text-title-20 font-semibold',
             )}
           >

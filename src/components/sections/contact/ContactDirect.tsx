@@ -19,8 +19,8 @@ export function ContactDirect({ content }: ContactDirectProps) {
       <div className="relative aspect-814/560 overflow-hidden lg:aspect-auto lg:h-140">
         <CroppedImage image={content.image} sizes="(min-width: 1024px) 51vw, 100vw" />
       </div>
-      <div className="flex items-center bg-red px-6 py-14 [--focus-ring:var(--color-white)] md:p-14 lg:h-140 lg:p-16">
-        <div className="w-full max-w-121.75">
+      <div className="flex items-center bg-red px-6 py-14 on-dark md:p-14 lg:h-140 lg:p-16">
+        <div data-reveal className="w-full max-w-121.75">
           <SectionLabel className="font-bold text-white/55">{content.label}</SectionLabel>
           <h2 id="contact-direct-title" className="mt-9 text-h2 tracking-tight-5 text-white">
             {content.title}

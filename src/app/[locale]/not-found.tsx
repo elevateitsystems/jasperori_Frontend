@@ -22,7 +22,7 @@ export default async function NotFoundPage() {
     <>
       <title>{`${page.meta.title} | ${site.siteName}`}</title>
       <SimplePageHeader content={page.header} id="not-found-title" />
-      <div className="bg-white py-16 lg:py-24">
+      <div className="bg-white py-20 lg:py-24">
         <div className="site-container">
           <div className="mx-auto flex max-w-inner flex-col gap-3 sm:flex-row">
             <ButtonLink href={page.actions.home.href}>{page.actions.home.label}</ButtonLink>

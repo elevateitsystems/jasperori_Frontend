@@ -34,12 +34,12 @@ export function SupportPaths({ content }: SupportPathsProps) {
         <p className="text-body-loose text-ink-muted lg:w-96">{content.text}</p>
       </div>
 
-      <ul className="mt-12 grid gap-5 md:grid-cols-2 lg:mt-16">
+      <ul data-reveal className="mt-12 grid gap-5 md:grid-cols-2 lg:mt-16">
         {content.cards.map((card, index) => (
           <li
             key={card.title}
             className={cn(
-              'flex flex-col p-8 [--focus-ring:var(--color-white)] md:p-12 lg:min-h-106.25',
+              'flex flex-col p-8 on-dark md:p-12 lg:min-h-106.25',
               cardTones[card.tone],
             )}
           >
@@ -51,7 +51,7 @@ export function SupportPaths({ content }: SupportPathsProps) {
               <p className="mt-5 max-w-112 text-body text-white/60">{card.text}</p>
               <Link
                 href={card.link.href}
-                className="mt-9 flex w-fit border-b border-white/50 pb-2 text-eyebrow font-bold tracking-caps-15 text-white transition-colors hover:border-white"
+                className="touch-target mt-9 flex w-fit border-b border-white/50 pb-2 text-eyebrow font-bold tracking-caps-15 text-white transition-colors hover:border-white"
               >
                 {card.link.label}
               </Link>

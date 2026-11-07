@@ -30,7 +30,10 @@ export function HomeServices({ content }: HomeServicesProps) {
         <p className="mt-4 max-w-147.75 text-inter-lead text-ink-soft">{content.text}</p>
       </div>
 
-      <ul className="mt-12 grid gap-3.25 md:grid-cols-2 lg:-mx-2.75 lg:mt-16 lg:grid-cols-4">
+      <ul
+        data-reveal
+        className="mt-12 grid gap-3.25 md:grid-cols-2 lg:-mx-2.75 lg:mt-16 lg:grid-cols-4"
+      >
         {content.cards.map((card, index) => (
           <li
             key={card.title}

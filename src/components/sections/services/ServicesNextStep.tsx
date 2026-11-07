@@ -18,11 +18,11 @@ export function ServicesNextStep({ content }: ServicesNextStepProps) {
     <Section
       labelledBy="services-next-title"
       width="inner"
-      className="bg-purple pb-16 [--focus-ring:var(--color-white)] lg:pb-0"
+      className="bg-purple pb-20 on-dark lg:pb-0"
     >
       {/* The centred 1136px box widened by 32px on each side = the 1200px grid of the design. */}
       <div className="grid lg:-mx-8 lg:h-105 lg:grid-cols-[800fr_400fr]">
-        <div className="flex items-center py-16 lg:px-8 lg:py-20">
+        <div className="flex items-center py-20 lg:px-8">
           <div>
             <SectionLabel className="font-bold text-white/50">{content.label}</SectionLabel>
             <h2 id="services-next-title" className="mt-8 max-w-184 text-h2-xl text-white">

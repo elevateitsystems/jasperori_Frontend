@@ -85,16 +85,16 @@ export async function Prose({ sections, contentsLabel }: ProseProps) {
   const newTabLabel = t('newTab');
 
   return (
-    <Section width="inner" className="bg-white py-16 lg:py-24">
+    <Section width="inner" className="bg-white py-20 lg:py-24">
       <div className="max-w-180">
         <nav aria-labelledby="prose-contents" className="mb-12 border-b border-navy/15 pb-10">
           <SectionLabel id="prose-contents" tracking="wide" className="font-bold text-purple">
             {contentsLabel}
           </SectionLabel>
-          <ol className="mt-5 space-y-2">
+          <ol className="mt-5 space-y-2 pointer-coarse:space-y-6">
             {sections.map((section) => (
               <li key={section.id} className="text-body-sm">
-                <AnchorLink href={`#${section.id}`} className={inlineLinkClasses}>
+                <AnchorLink href={`#${section.id}`} className={`touch-target ${inlineLinkClasses}`}>
                   {section.heading}
                 </AnchorLink>
               </li>

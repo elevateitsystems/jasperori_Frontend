@@ -24,7 +24,7 @@ export function CtaBanner({ content, id = 'cta-banner-title' }: CtaBannerProps) 
       <Section
         labelledBy={id}
         width="inner"
-        className="bg-brand py-16 lg:py-24"
+        className="bg-brand py-20 on-dark lg:py-24"
         innerClassName="flex flex-col gap-10 lg:flex-row lg:items-center lg:justify-between"
       >
         <div className="max-w-168">

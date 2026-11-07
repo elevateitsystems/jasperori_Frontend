@@ -20,7 +20,10 @@ export function ArrowLink({ link, icon = 'arrow-right', className }: ArrowLinkPr
   return (
     <Link
       href={link.href}
-      className={cn('group inline-flex items-center underline-offset-4 hover:underline', className)}
+      className={cn(
+        'group touch-target inline-flex items-center underline-offset-4 hover:underline',
+        className,
+      )}
     >
       {link.label}
       <Icon

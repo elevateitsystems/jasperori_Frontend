@@ -13,7 +13,7 @@ interface HomeWhyProps {
  */
 export function HomeWhy({ content }: HomeWhyProps) {
   return (
-    <Section labelledBy="home-why-title" width="inner" className="bg-navy py-20 lg:py-32">
+    <Section labelledBy="home-why-title" width="inner" className="bg-navy py-20 on-dark lg:py-32">
       <Eyebrow className="text-red">{content.eyebrow}</Eyebrow>
       <h2 id="home-why-title" className="mt-5 max-w-168 text-h2 text-white">
         {content.title}

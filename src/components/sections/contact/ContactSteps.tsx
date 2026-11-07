@@ -14,7 +14,11 @@ interface ContactStepsProps {
  */
 export function ContactSteps({ content }: ContactStepsProps) {
   return (
-    <Section labelledBy="contact-steps-title" width="inner" className="bg-navy py-20 lg:py-24">
+    <Section
+      labelledBy="contact-steps-title"
+      width="inner"
+      className="bg-navy py-20 on-dark lg:py-24"
+    >
       <SectionLabel as="h2" id="contact-steps-title" className="font-bold text-white/40">
         {content.label}
       </SectionLabel>

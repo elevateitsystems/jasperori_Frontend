@@ -92,3 +92,10 @@ Decisions:
 
 - After every task, run lint, typecheck and build (and format check). Fix all errors and warnings before finishing.
 - End every task with a short summary of the files that were added, changed or removed.
+
+## Motion
+
+- Scroll reveals are pure CSS (`animation-timeline: view()` in `src/app/globals.css`); browsers without scroll-driven animations, users with reduced motion and visitors without JavaScript simply see the content.
+- Mark a container with `data-reveal`; its direct children fade in and move 20px up, staggered for the first four. Never use it on heroes or anything above the fold.
+- Global switch: `data-motion` on `<html>` in `src/app/[locale]/layout.tsx`. Set it to `"off"` to turn all reveal animations off.
+- Transitions use the default token (200ms, ease-out) from `@theme`; don't set custom durations.
