@@ -6,7 +6,7 @@ import { routing } from '@/i18n/routing';
 import type { InternalPath, PageKey, PageMeta, SupportSlug } from '@/types/content';
 
 /** Route of each page (without locale). The 404 page has no URL of its own. */
-const pagePaths: Record<Exclude<PageKey, 'notFound'>, InternalPath> = {
+export const pagePaths: Record<Exclude<PageKey, 'notFound'>, InternalPath> = {
   home: '/',
   about: '/about',
   services: '/services',

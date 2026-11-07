@@ -16,4 +16,11 @@ export const en = {
     homeLink: '{siteName} – home',
     newTab: '(opens in a new tab)',
   },
+  error: {
+    eyebrow: 'Something went wrong',
+    title: 'This page could not be loaded',
+    text: 'An unexpected error occurred. Please try again.',
+    retry: 'Try again',
+    home: 'Go to homepage',
+  },
 } satisfies UiMessages;

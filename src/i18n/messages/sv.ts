@@ -16,4 +16,11 @@ export const sv = {
     homeLink: '{siteName} – startsida',
     newTab: '(öppnas i en ny flik)',
   },
+  error: {
+    eyebrow: 'Något gick fel',
+    title: 'Sidan kunde inte laddas',
+    text: 'Ett oväntat fel uppstod. Försök igen.',
+    retry: 'Försök igen',
+    home: 'Gå till startsidan',
+  },
 } satisfies UiMessages;
