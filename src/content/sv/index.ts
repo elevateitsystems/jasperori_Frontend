@@ -1,6 +1,7 @@
 import type { LocaleContent } from '@/types/content';
 
 import { about } from './about';
+import { booking } from './booking';
 import { contact } from './contact';
 import { contactStrip } from './contact-strip';
 import { home } from './home';
@@ -17,7 +18,7 @@ export const sv = {
   services,
   supportPages,
   contact,
-  booking: { meta: { title: 'Boka konsultation' } },
+  booking,
   privacyPolicy: { meta: { title: 'Integritetspolicy' } },
   cookiePolicy: { meta: { title: 'Cookiepolicy' } },
   notFound: { meta: { title: 'Sidan hittades inte' } },

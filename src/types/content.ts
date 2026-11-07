@@ -272,7 +272,43 @@ export interface ContactPageContent {
   };
   steps: { label: string; items: Tuple3<string> };
 }
-export type BookingPageContent = PlaceholderPageContent;
+/**
+ * Booking form texts. Placeholders in braces are filled in by the form:
+ * {email} (site email, or the customer's email in success.text), {weekday}, {date}, {time}.
+ */
+export interface BookingFormContent {
+  /** "Available times · UTC" (keep the time zone in sync with src/lib/booking/config.ts). */
+  slotsLabel: string;
+  /** Screen-reader text while the times load. */
+  loading: string;
+  fields: { name: string; email: string; company: string; message: string };
+  /** Label of the hidden honeypot field (never shown). */
+  honeypotLabel: string;
+  submit: string;
+  sending: string;
+  /** Accessible name of a slot: "{weekday} {date} at {time}". */
+  slotAria: string;
+  slotUnavailable: string;
+  chooseTimeHint: string;
+  errors: { slot: string; name: string; email: string; tooLong: string; submit: string };
+  success: { title: string; text: string; again: string };
+  /** Shown instead of the slot grid when there are no available times. */
+  empty: string;
+  /** "By booking, you agree to our" + link + "." */
+  privacyNote: { before: string; link: InternalLinkItem; after: string };
+}
+
+export interface BookingPageContent {
+  meta: PageMeta;
+  hero: PageHeroContent;
+  intro: {
+    label: string;
+    title: string;
+    text: string;
+    facts: Tuple3<{ label: string; value: string }>;
+  };
+  form: BookingFormContent;
+}
 export type PrivacyPolicyPageContent = PlaceholderPageContent;
 export type CookiePolicyPageContent = PlaceholderPageContent;
 export type NotFoundPageContent = PlaceholderPageContent;

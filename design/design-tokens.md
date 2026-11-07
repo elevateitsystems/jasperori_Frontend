@@ -137,3 +137,8 @@ These were checked against the spec files when the tokens were coded in `src/app
   cut off at 1600px; the site builds what is visible (photo 814px = 50.875%, red panel to the screen
   edge). The hero button links to `#lets-talk` (same-page anchor). Separator grids (Home "Why",
   Contact steps) share `src/components/ui/SeparatedGrid.tsx`.
+- **Booking notes** (Phase 8): the booking section starts 2px below the hero (top padding 130px).
+  The 5 day columns are 105px with 8.5px gaps; slots 87x40 (44px tall on touch screens). Slot
+  states not in the design: hover lavender, selected navy with white text, unavailable crossed out.
+  The privacy note under the button (not in the design) makes the form box 32px taller (804px).
+  Booking logic lives in `src/lib/booking/` (service interface + mock; see its README).
