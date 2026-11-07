@@ -10,6 +10,7 @@ The token names match the variables Figma Make recorded (e.g. `--color-navy`, `-
 | navy-dark | #10192E | Footer background (all pages) |
 | purple | #5136A5 | Eyebrow labels, links, hero overlays, purple sections |
 | red (accent) | #EF1747 | Accent blocks, CTA buttons on dark/purple, highlights |
+| red-text | #D0143D | Form error messages ONLY (added in Phase 9, not in Figma). Contrast 5.46:1 on white, 5.05:1 on cloud; the brand red is 4.30:1 / 3.98:1, below WCAG AA for small text |
 | zinc-950 (text) | #09090B | Main body text |
 | ink-muted | #555563 | Secondary text, paragraphs |
 | ink-soft | #4A4C56 | Section intro paragraph (Home services) |
@@ -142,3 +143,7 @@ These were checked against the spec files when the tokens were coded in `src/app
   states not in the design: hover lavender, selected navy with white text, unavailable crossed out.
   The privacy note under the button (not in the design) makes the form box 32px taller (804px).
   Booking logic lives in `src/lib/booking/` (service interface + mock; see its README).
+- **Text pages without a design** (Phase 9: Privacy, Cookies, 404): `SimplePageHeader` (navy band,
+  the "simple" hero eyebrow, H1 in the 60px h2-xl style) and `Prose` (720px column, H2
+  ExtraBold 24/32, H3 Bold 18/28, text 16/28 ink-muted, purple square list markers, bordered
+  tables that scroll inside their wrapper on small screens). The Booking page stacks below `xl`.

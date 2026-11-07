@@ -12,6 +12,7 @@ export const colorTokens = [
   { name: 'navy-dark', className: 'bg-navy-dark' },
   { name: 'purple', className: 'bg-purple' },
   { name: 'red', className: 'bg-red' },
+  { name: 'red-text', className: 'bg-red-text' },
   { name: 'charcoal', className: 'bg-charcoal' },
   { name: 'zinc-950', className: 'bg-zinc-950' },
   { name: 'ink-muted', className: 'bg-ink-muted' },

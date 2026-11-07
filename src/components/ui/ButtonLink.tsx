@@ -15,6 +15,7 @@ import type { ActionLinkItem } from '@/types/content';
  * - cta:           white, navy text, ExtraBold 14/20, 56px tall, 28px side padding, large CTA shadow
  * - accent:        red, white text, ExtraBold 12/16 uppercase 1.56px tracking, 48px tall, 24px side
  *                  padding, glow shadow (About hero)
+ * - outline-dark:  transparent, 1px navy border, navy text, 44px tall (on white, e.g. the 404 page)
  * - accent-flat:   as accent, but square corners and no shadow (Services/Support/Contact/Booking)
  * All except accent-flat have a 4px radius. Hover only changes colour/shadow/transform, never the layout.
  */
@@ -22,6 +23,7 @@ const variants = {
   primary: 'h-11 px-5 bg-navy text-white hover:bg-navy-dark',
   light: 'h-12 px-6 bg-white text-navy shadow-glow hover:bg-cloud',
   'outline-light': 'h-12 px-6 border border-white text-white hover:bg-white/10',
+  'outline-dark': 'h-11 px-5 border border-navy text-navy hover:bg-cloud',
   cta: 'h-14 px-7 bg-white font-extrabold text-navy shadow-cta hover:bg-cloud',
   accent:
     'h-12 px-6 bg-red text-eyebrow tracking-caps-13 text-white shadow-glow hover:brightness-90',

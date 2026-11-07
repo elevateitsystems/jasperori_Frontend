@@ -1,6 +1,7 @@
 import { ButtonLink } from '@/components/ui/ButtonLink';
 import { CroppedImage } from '@/components/ui/CroppedImage';
 import { Eyebrow } from '@/components/ui/Eyebrow';
+import { SquareEyebrow } from '@/components/ui/SquareEyebrow';
 import { cn } from '@/lib/cn';
 import type { ImageCrop } from '@/lib/image-crops';
 import type { PageHeroContent } from '@/types/content';
@@ -78,10 +79,7 @@ export function PageHero({
           </div>
         ) : (
           <div className="lg:ml-9">
-            <p className="flex items-center gap-3 text-micro tracking-caps-24 text-white/60">
-              <span aria-hidden="true" className="size-1.5 shrink-0 bg-red" />
-              {content.eyebrow}
-            </p>
+            <SquareEyebrow>{content.eyebrow}</SquareEyebrow>
             <h1 id={id} className="mt-7 max-w-224 text-display text-white">
               {content.title}
             </h1>

@@ -4,7 +4,10 @@ import { about } from './about';
 import { booking } from './booking';
 import { contact } from './contact';
 import { contactStrip } from './contact-strip';
+import { cookiePolicy } from './cookie-policy';
 import { home } from './home';
+import { notFound } from './not-found';
+import { privacyPolicy } from './privacy-policy';
 import { services } from './services';
 import { site } from './site';
 import { supportPages } from './support';
@@ -19,7 +22,7 @@ export const sv = {
   supportPages,
   contact,
   booking,
-  privacyPolicy: { meta: { title: 'Integritetspolicy' } },
-  cookiePolicy: { meta: { title: 'Cookiepolicy' } },
-  notFound: { meta: { title: 'Sidan hittades inte' } },
+  privacyPolicy,
+  cookiePolicy,
+  notFound,
 } satisfies LocaleContent;

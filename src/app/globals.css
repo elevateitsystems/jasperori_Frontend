@@ -18,6 +18,8 @@
   --color-navy-dark: #10192e;
   --color-purple: #5136a5;
   --color-red: #ef1747;
+  /* Form error text only: darker brand red, 5.46:1 on white and 5.05:1 on cloud (WCAG AA). */
+  --color-red-text: #d0143d;
   --color-charcoal: #111315;
   --color-zinc-950: #09090b;
   --color-ink-muted: #555563;

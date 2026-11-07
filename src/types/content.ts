@@ -149,11 +149,6 @@ export interface SiteSettings {
   };
 }
 
-/** Temporary page content until each page gets its own type in its build phase. */
-export interface PlaceholderPageContent {
-  meta: PageMeta;
-}
-
 export interface HomePageContent {
   meta: PageMeta;
   hero: {
@@ -309,9 +304,54 @@ export interface BookingPageContent {
   };
   form: BookingFormContent;
 }
-export type PrivacyPolicyPageContent = PlaceholderPageContent;
-export type CookiePolicyPageContent = PlaceholderPageContent;
-export type NotFoundPageContent = PlaceholderPageContent;
+/** Text with optional inline links, e.g. ['Read our ', { label: 'cookie policy', href: '/cookie-policy' }, '.']. */
+export type RichText = string | readonly (string | LinkItem)[];
+
+/** Building blocks of a text page (no raw HTML, so a CMS can take it over). */
+export type ProseBlock =
+  | { type: 'paragraph'; text: RichText }
+  | { type: 'subheading'; text: string }
+  | { type: 'list'; items: readonly RichText[] }
+  | {
+      type: 'table';
+      /** Accessible name of the table (read by screen readers). */
+      caption: string;
+      columns: readonly string[];
+      rows: readonly (readonly string[])[];
+    };
+
+export interface ProseSection {
+  /** Anchor id for the contents list, e.g. 'your-rights'. */
+  id: string;
+  heading: string;
+  blocks: readonly ProseBlock[];
+}
+
+/** Compact page header for text pages (Privacy, Cookies, 404). */
+export interface SimplePageHeaderContent {
+  eyebrow: string;
+  title: string;
+  /** Optional short line under the title, e.g. "Last updated: …". */
+  text?: string;
+}
+
+/** Privacy policy, cookie policy and future text pages. */
+export interface LegalPageContent {
+  meta: PageMeta;
+  header: SimplePageHeaderContent;
+  /** Heading of the contents list ("Contents"). */
+  contentsLabel: string;
+  sections: readonly ProseSection[];
+}
+
+export type PrivacyPolicyPageContent = LegalPageContent;
+export type CookiePolicyPageContent = LegalPageContent;
+
+export interface NotFoundPageContent {
+  meta: PageMeta;
+  header: SimplePageHeaderContent;
+  actions: { home: InternalLinkItem; contact: InternalLinkItem };
+}
 
 /** All content for one locale. Every locale must match this shape exactly. */
 export interface LocaleContent {

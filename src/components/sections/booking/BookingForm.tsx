@@ -82,7 +82,7 @@ function Field({ id, label, error, className, children }: FieldProps) {
       </label>
       <div className="mt-2">{children}</div>
       {error ? (
-        <p id={`${id}-error`} className="mt-2 text-caption text-red">
+        <p id={`${id}-error`} className="mt-2 text-caption text-red-text">
           {error}
         </p>
       ) : null}
@@ -378,7 +378,7 @@ export function BookingForm({ content, siteEmail }: BookingFormProps) {
               </div>
             )}
             {errors.slotId ? (
-              <p id={`${id('slotId')}-error`} className="mt-2 text-caption text-red">
+              <p id={`${id('slotId')}-error`} className="mt-2 text-caption text-red-text">
                 {errors.slotId}
               </p>
             ) : null}
@@ -465,7 +465,7 @@ export function BookingForm({ content, siteEmail }: BookingFormProps) {
           </div>
 
           {status === 'error' ? (
-            <p className="mt-7 text-caption text-red">
+            <p className="mt-7 text-caption text-red-text">
               <WithEmailLink template={content.errors.submit} email={siteEmail} />
             </p>
           ) : null}
