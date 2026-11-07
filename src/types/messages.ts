@@ -22,4 +22,11 @@ export interface UiMessages {
     /** Read by screen readers after links that open in a new tab. */
     newTab: string;
   };
+  error: {
+    eyebrow: string;
+    title: string;
+    text: string;
+    retry: string;
+    home: string;
+  };
 }

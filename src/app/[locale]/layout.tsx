@@ -8,7 +8,8 @@ import { SkipLink } from '@/components/layout/SkipLink';
 import { getContent } from '@/content';
 import { routing } from '@/i18n/routing';
 import { fontVariables } from '@/lib/fonts';
-import { siteUrl } from '@/lib/site-url';
+/**import { siteUrl } from '@/lib/site-url';*/
+import {siteUrl} from '@/lib/site-env';
 
 import '../globals.css';
 
