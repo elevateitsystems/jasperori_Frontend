@@ -18,7 +18,13 @@ export async function Header() {
   const locale = await getLocale();
   const [site, t] = await Promise.all([getContent(locale, 'site'), getTranslations('a11y')]);
 
-  const navLinks = Object.values(site.navigation);
+  const navLinks = [
+    site.navigation.home,
+    site.navigation.support,
+    site.navigation.services,
+    site.navigation.contact,
+    site.navigation.about,
+  ];
   const { cta } = site.header;
 
   return (
