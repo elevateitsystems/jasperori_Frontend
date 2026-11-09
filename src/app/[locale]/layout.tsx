@@ -9,7 +9,7 @@ import { getContent } from '@/content';
 import { routing } from '@/i18n/routing';
 import { fontVariables } from '@/lib/fonts';
 /**import { siteUrl } from '@/lib/site-url';*/
-import {siteUrl} from '@/lib/site-env';
+import { siteUrl } from '@/lib/site-env';
 
 import '../globals.css';
 
@@ -42,11 +42,15 @@ export default async function LocaleLayout({ children }: LayoutProps<'/[locale]'
       <body className="flex flex-col">
         <NextIntlClientProvider>
           <SkipLink />
-          <Header />
+          <div className="print:hidden">
+            <Header />
+          </div>
           <main id="main" tabIndex={-1} data-menu-inert className="flex-1 outline-none">
             {children}
           </main>
-          <Footer />
+          <div className="print:hidden">
+            <Footer />
+          </div>
         </NextIntlClientProvider>
       </body>
     </html>

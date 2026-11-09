@@ -41,7 +41,7 @@ export const site: SiteSettings = {
         // TODO: replace '#' with the real LinkedIn and Facebook URLs when the client provides them.
         linkedin: { label: 'LinkedIn', href: '#', openInNewTab: true },
         facebook: { label: 'Facebook', href: '#', openInNewTab: true },
-        email: { label: 'hello@techsalem.se', href: 'mailto:hello@techsalem.se' },
+        email: { label: 'info@techsalem.se', href: 'mailto:info@techsalem.se' },
       },
     },
     copyright: '© 2026 TechSalem. Alla rättigheter förbehållna.',

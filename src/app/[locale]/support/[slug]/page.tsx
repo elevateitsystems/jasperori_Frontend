@@ -1,10 +1,9 @@
 import { getLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
-import { PageHero } from '@/components/sections/PageHero';
-import { SupportFaq } from '@/components/sections/support/SupportFaq';
-import { SupportHow } from '@/components/sections/support/SupportHow';
-import { SupportPaths } from '@/components/sections/support/SupportPaths';
+import { SupportCta } from '@/components/sections/support/SupportCta';
+import { SupportHero } from '@/components/sections/support/SupportHero';
+import { SupportServices } from '@/components/sections/support/SupportServices';
 import { getContent } from '@/content';
 import { isSupportSlug, supportSlugs } from '@/content/shared';
 import { getSupportPageMetadata } from '@/lib/metadata';
@@ -21,9 +20,7 @@ export async function generateMetadata({ params }: PageProps<'/[locale]/support/
 }
 
 /**
- * Support template (spec: design/spec/support.md). Every support page uses it; the content comes
- * from the slug. Hero (simple layout, plain cover fill, support overlay), paths, how it works,
- * FAQ. No contact strip: the FAQ is followed by the footer.
+ * Support catalog page. It presents the service scope and starting prices before a booking CTA.
  */
 export default async function SupportPage({ params }: PageProps<'/[locale]/support/[slug]'>) {
   const { slug } = await params;
@@ -34,10 +31,9 @@ export default async function SupportPage({ params }: PageProps<'/[locale]/suppo
 
   return (
     <>
-      <PageHero content={support.hero} layout="simple" overlay="support" id="support-hero-title" />
-      <SupportPaths content={support.paths} />
-      <SupportHow content={support.how} />
-      <SupportFaq content={support.faq} />
+      <SupportHero content={support.hero} />
+      <SupportServices content={support.services} />
+      <SupportCta content={support.cta} />
     </>
   );
 }

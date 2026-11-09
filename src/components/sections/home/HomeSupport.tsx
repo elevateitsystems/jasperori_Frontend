@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Icon } from '@/components/ui/Icon';
 import { Section } from '@/components/ui/Section';
@@ -24,6 +25,20 @@ export function HomeSupport({ content }: HomeSupportProps) {
       <h2 id="home-support-title" className="mt-5 max-w-168 text-h2 text-zinc-950">
         {content.title}
       </h2>
+
+      {/* ক্লায়েন্টের IT-Support Banner Image যা ক্লিক করলে সাপোর্ট পেজে নিয়ে যাবে */}
+      <div className="mt-8 overflow-hidden rounded-xl shadow-md transition-transform duration-300 hover:scale-[1.01]">
+        <Link href="/support" className="block w-full">
+          <Image
+            src="/images/6305419613449164358.jpg"
+            alt="Är du i behov av IT-support?"
+            width={1136}
+            height={500}
+            className="h-auto w-full object-cover"
+            priority
+          />
+        </Link>
+      </div>
 
       <ul data-reveal className="mt-10 grid gap-5 md:grid-cols-2 lg:mt-14">
         {content.cards.map((card, index) => {

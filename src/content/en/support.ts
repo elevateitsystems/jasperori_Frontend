@@ -1,81 +1,78 @@
 import type { SupportPageContent, SupportSlug } from '@/types/content';
 
-const pathText1 = 'Editable support category for a defined customer need, platform, or service.';
-const pathText2 = 'Editable support category providing a second clear path for customers.';
-const stepText = 'A simple support journey keeps attention on the issue—not the process.';
-
-/** support-01: the design copy. */
 const support01: SupportPageContent = {
   meta: {
-    title: 'Support',
+    title: 'IT support for home and business',
     description:
-      'Get reliable support from TechSalem. Two focused support paths help you find the right route quickly.',
+      'See TechSalem’s IT support services, coverage, and starting prices for homes and small businesses.',
   },
   hero: {
-    eyebrow: 'Business support',
-    title: 'Reliable support without unnecessary friction.',
-    text: 'Two focused support paths help you find the right route quickly. Final support scope and service levels remain editable.',
+    eyebrow: 'TechSalem IT support',
+    title: 'Services for home and business.',
+    text: "Choose a service below, or get in touch if you cannot find what you are looking for. We solve most things related to computers and networks.",
     image: {
       src: '/images/hero-office-wide.png',
-      alt: 'Open-plan office with people working at desks',
+      alt: 'People working with computers in a bright office',
       width: 1920,
       height: 720,
     },
-    primaryCta: { label: 'Start a conversation', href: '/contact' },
   },
-  paths: {
-    label: '01 / Choose your path',
-    title: 'Support designed around continuity.',
-    text: 'When something needs attention, the experience should be clear and direct. Our support structure prioritizes context, ownership, and practical communication.',
-    cards: [
-      {
-        title: 'Support area 01',
-        text: pathText1,
-        tone: 'navy',
-        link: { label: 'Start support request', href: '/contact' },
-      },
-      {
-        title: 'Support area 02',
-        text: pathText2,
-        tone: 'purple',
-        link: { label: 'Start support request', href: '/contact' },
-      },
-    ],
-  },
-  how: {
-    label: '02 / How it works',
-    title: 'Clear from the first contact.',
-    steps: [
-      { title: 'Choose the relevant support area', text: stepText },
-      { title: 'Share the context and priority', text: stepText },
-      { title: 'Receive a clear next step', text: stepText },
-    ],
-  },
-  faq: {
-    label: 'Frequently asked questions',
+  services: {
+    label: 'IT support services',
+    title: 'Find the right help',
+    text: 'Clear service areas and starting prices. Book an appointment and we will help you take the next step.',
     items: [
-      { question: 'Which support path should I choose?', answer: pathText1 },
-      { question: 'What should I include in my request?', answer: pathText2 },
       {
-        question: 'How do I follow my request?',
-        answer: 'Not sure where to start? Contact us and we will help direct your request.',
+        title: 'Computer help at home',
+        text: 'Slow computer, viruses, installations or general troubleshooting — we come to your home or help by remote access.',
+        price: 'From 495 SEK',
+        link: { label: 'Book a consultation', href: '/booking' },
+      },
+      {
+        title: 'Network & Wi-Fi',
+        text: 'Poor coverage, dropped connection or a new home? We build a network that actually lasts.',
+        price: 'From 695 SEK',
+        link: { label: 'Book a consultation', href: '/booking' },
+      },
+      {
+        title: 'Viruses & security',
+        text: 'Protection against viruses, fraud and intrusions. We clean up and set up security that lasts over time.',
+        price: 'From 895 SEK',
+        link: { label: 'Book a consultation', href: '/booking' },
+      },
+      {
+        title: 'Data recovery & backup',
+        text: 'Lost files or a broken hard drive? We save what we can and set up automatic backup going forward.',
+        price: 'Quote after assessment',
+        link: { label: 'Book a consultation', href: '/booking' },
+      },
+      {
+        title: 'Business support',
+        text: 'Ongoing IT operations for small businesses — we keep track so you can focus on your business.',
+        price: 'From 1,495 SEK/month',
+        link: { label: 'Book a consultation', href: '/booking' },
+      },
+      {
+        title: 'Printers & peripherals',
+        text: 'Installation and troubleshooting of printers, scanners and other equipment in the home or office.',
+        price: 'From 395 SEK',
+        link: { label: 'Book a consultation', href: '/booking' },
       },
     ],
+  },
+  cta: {
+    title: 'Ready to get it sorted?',
+    text: "Book an appointment today — we will get back to you within 24 hours with a fixed price.",
+    button: { label: 'Book an appointment', href: '/booking' },
   },
 };
 
-/** support-02: support-01 with only its own hero copy and metadata. */
 const support02: SupportPageContent = {
   ...support01,
   meta: {
     ...support01.meta,
-    title: 'Support page 02',
-    description: 'TechSalem support page 02: a second focused support path with clear next steps.',
-  },
-  hero: {
-    ...support01.hero,
-    title: 'Clear help for every support need.',
-    text: 'A second focused support path. Final support scope and service levels remain editable.',
+    title: 'IT support services',
+    description: 'Explore TechSalem’s IT support services and starting prices.',
   },
 };
 

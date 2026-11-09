@@ -1,5 +1,68 @@
 @import 'tailwindcss';
 
+@page {
+  size: A4 portrait;
+  margin: 0;
+}
+
+@media print {
+  html,
+  body {
+    min-height: 0 !important;
+    background: #fff !important;
+  }
+
+  body {
+    display: block !important;
+  }
+
+  .invoice-workspace {
+    padding: 0 !important;
+    background: #fff !important;
+  }
+
+  .invoice-workspace > .site-container,
+  .invoice-layout {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+  }
+
+  .invoice-workspace > .site-container {
+    padding: 0 !important;
+  }
+
+  .invoice-workspace > .site-container > div {
+    max-width: none !important;
+    margin: 0 !important;
+  }
+
+  .invoice-paper {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+  }
+
+  .invoice-editor,
+  .invoice-screen-only {
+    display: none !important;
+  }
+
+  .invoice-paper {
+    min-height: 297mm !important;
+    padding: 12mm !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+
+  .invoice-items,
+  .invoice-company-footer {
+    break-inside: avoid;
+  }
+}
+
 /*
  * TechSalem design tokens.
  *

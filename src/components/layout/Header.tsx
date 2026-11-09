@@ -1,8 +1,10 @@
 import { getLocale, getTranslations } from 'next-intl/server';
+import { UserRound } from 'lucide-react';
 
 import { ButtonLink } from '@/components/ui/ButtonLink';
 import { Logo } from '@/components/ui/Logo';
 import { getContent } from '@/content';
+import { Link } from '@/i18n/navigation';
 
 import { LanguageSwitch } from './LanguageSwitch';
 import { MobileMenu } from './MobileMenu';
@@ -42,6 +44,7 @@ export async function Header() {
 
         <div className="hidden items-center gap-3 lg:flex">
           <LanguageSwitch />
+          <AdminDashboardLink />
           <ButtonLink href={cta.href}>{cta.label}</ButtonLink>
         </div>
 
@@ -51,12 +54,28 @@ export async function Header() {
               <NavLinks links={navLinks} variant="mobile" />
             </nav>
             <LanguageSwitch className="self-start" />
-            <ButtonLink href={cta.href} className="w-full">
-              {cta.label}
-            </ButtonLink>
+            <div className="flex items-center gap-3">
+              <AdminDashboardLink />
+              <ButtonLink href={cta.href} className="w-full">
+                {cta.label}
+              </ButtonLink>
+            </div>
           </div>
         </MobileMenu>
       </div>
     </header>
+  );
+}
+
+function AdminDashboardLink() {
+  return (
+    <Link
+      href="/admin"
+      aria-label="Admin Dashboard"
+      title="Admin Dashboard"
+      className="inline-flex size-11 shrink-0 items-center justify-center rounded-sm text-navy transition-colors hover:bg-cloud hover:text-red focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red"
+    >
+      <UserRound aria-hidden="true" className="size-5" strokeWidth={1.8} />
+    </Link>
   );
 }
