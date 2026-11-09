@@ -171,7 +171,9 @@ const company = {
   swish: '1237102130',
 };
 
-function localDate(date = new Date()) {
+// FIX: new Date() som default parameter ger build-fel i Next.js 16.
+// Vi tar bort default-parametern och skickar alltid in datumet explicit.
+function localDate(date: Date) {
   return new Date(date.getTime() - date.getTimezoneOffset() * 60_000).toISOString().slice(0, 10);
 }
 
@@ -182,8 +184,8 @@ function addDays(date: string, days: number) {
   return localDate(result);
 }
 
-function createInvoice(): Invoice {
-  const today = localDate();
+// FIX: Skicka in 'today' som en sträng istället för att anropa new Date() här inne.
+function createInvoice(today: string): Invoice {
   return {
     id: `new-${Date.now()}`,
     number: '',
@@ -267,12 +269,19 @@ function Field({
 
 export function InvoiceBuilder({ locale }: { locale: Locale }) {
   const copy = text[locale];
-  const [invoice, setInvoice] = useState<Invoice>(() => createInvoice());
+  const [invoice, setInvoice] = useState<Invoice | null>(null);
   const [saved, setSaved] = useState<Invoice[]>([]);
   const [notice, setNotice] = useState('');
-  const amounts = useMemo(() => totals(invoice), [invoice]);
+  
+  // amounts kräver att invoice finns, annars returnerar vi 0-värden
+  const amounts = useMemo(() => {
+    if (!invoice) return { subtotal: 0, vat: 0, rounding: 0, amountDue: 0 };
+    return totals(invoice);
+  }, [invoice]);
 
   useEffect(() => {
+    const today = localDate(new Date()); // Här är det säkert att använda new Date() eftersom det körs i webbläsaren.
+    
     try {
       const stored = localStorage.getItem(storageKey);
       const invoices = stored ? (JSON.parse(stored) as Invoice[]) : [];
@@ -280,15 +289,28 @@ export function InvoiceBuilder({ locale }: { locale: Locale }) {
     } catch {
       setSaved([]);
     }
-    setInvoice(createInvoice());
+    setInvoice(createInvoice(today));
   }, []);
 
+  // Om invoice är null (under första renderingen) visar vi en laddningsskärm
+  if (!invoice) {
+    return (
+      <section className="invoice-workspace bg-cloud py-8 md:py-10">
+        <div className="site-container flex min-h-[50vh] items-center justify-center">
+          <p className="text-body text-ink-muted">Loading invoice...</p>
+        </div>
+      </section>
+    );
+  }
+
   function update<K extends keyof Invoice>(key: K, value: Invoice[K]) {
-    setInvoice((current) => ({ ...current, [key]: value }));
+    if (!invoice) return;
+    setInvoice((current) => (current ? { ...current, [key]: value } : current));
     setNotice('');
   }
 
   function saveInvoice(next = invoice, announce = true) {
+    if (!next) return false;
     const updated = [next, ...saved.filter((item) => item.id !== next.id)];
     try {
       localStorage.setItem(storageKey, JSON.stringify(updated));
@@ -303,16 +325,20 @@ export function InvoiceBuilder({ locale }: { locale: Locale }) {
   }
 
   function startNew() {
+    if (!invoice) return;
     const hasData =
       invoice.customerName ||
       invoice.subject ||
       invoice.items.some((item) => item.description || item.unitPrice);
     if (hasData && !window.confirm(copy.newConfirm)) return;
-    setInvoice(createInvoice());
+    
+    const today = localDate(new Date());
+    setInvoice(createInvoice(today));
     setNotice('');
   }
 
   function markSent() {
+    if (!invoice) return;
     const year = invoice.issueDate.slice(0, 4) || String(new Date().getFullYear());
     const next = {
       ...invoice,
@@ -323,6 +349,7 @@ export function InvoiceBuilder({ locale }: { locale: Locale }) {
   }
 
   function createEmailDraft() {
+    if (!invoice) return;
     if (!invoice.customerEmail.trim()) {
       setNotice(copy.needEmail);
       return;
@@ -344,6 +371,7 @@ export function InvoiceBuilder({ locale }: { locale: Locale }) {
   }
 
   function updateItem(index: number, field: keyof InvoiceItem, value: string) {
+    if (!invoice) return;
     const items = invoice.items.map((item, itemIndex) =>
       itemIndex === index ? { ...item, [field]: value } : item,
     );
@@ -351,6 +379,7 @@ export function InvoiceBuilder({ locale }: { locale: Locale }) {
   }
 
   function addItem() {
+    if (!invoice) return;
     update('items', [
       ...invoice.items,
       { description: '', quantity: '1', unit: 'timme', unitPrice: '' },
@@ -358,7 +387,7 @@ export function InvoiceBuilder({ locale }: { locale: Locale }) {
   }
 
   function removeItem(index: number) {
-    if (invoice.items.length === 1) return;
+    if (!invoice || invoice.items.length === 1) return;
     update(
       'items',
       invoice.items.filter((_, itemIndex) => itemIndex !== index),
