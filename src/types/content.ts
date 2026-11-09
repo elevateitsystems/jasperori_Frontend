@@ -143,6 +143,7 @@ export interface SiteSettings {
         linkedin: LinkItem;
         facebook: LinkItem;
         email: LinkItem;
+         email2: LinkItem;
       };
     };
     /** Written out (not calculated) so the client can edit the year. */
@@ -228,26 +229,25 @@ export interface ServicesPageContent {
   next: { label: string; title: string; text: string; link: InternalLinkItem };
 }
 /** Colour of a support path card (from content). */
-export type SupportCardTone = 'navy' | 'purple';
-
 /** One support page. All support pages share one template; only the content differs. */
 export interface SupportPageContent {
   meta: PageMeta;
-  hero: PageHeroContent;
-  paths: {
+  hero: {
+    eyebrow: string;
+    title: string;
+    text: string;
+    image: ImageAsset;
+  };
+  services: {
     label: string;
     title: string;
     text: string;
-    cards: Tuple2<{ title: string; text: string; tone: SupportCardTone; link: InternalLinkItem }>;
+    items: Tuple6<{ title: string; text: string; price: string; link: InternalLinkItem }>;
   };
-  how: {
-    label: string;
+  cta: {
     title: string;
-    steps: Tuple3<{ title: string; text: string }>;
-  };
-  faq: {
-    label: string;
-    items: Tuple3<{ question: string; answer: string }>;
+    text: string;
+    button: InternalLinkItem;
   };
 }
 export interface ContactPageContent {

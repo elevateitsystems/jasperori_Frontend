@@ -1,4 +1,5 @@
 import { bookingConfig } from './config';
+import { readStoredBookings, writeStoredBookings } from './admin-storage';
 import type { BookingService } from './service';
 import type { BookingDay, BookingSlot } from './types';
 
@@ -70,14 +71,20 @@ export const mockBookingService: BookingService = {
 
       const date = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
       const dayIndex = result.length;
+      const existingBookings = readStoredBookings();
       const slots: BookingSlot[] = bookingConfig.slotTimes.map((time, slotIndex) => {
         const start = zonedTimeToUtc(year, month, day, time, timeZone);
         const end = new Date(start.getTime() + bookingConfig.durationMinutes * 60_000);
+        const id = `${date}T${time}`;
         return {
-          id: `${date}T${time}`,
+          id,
           start: start.toISOString(),
           end: end.toISOString(),
-          available: !UNAVAILABLE.some(([d, s]) => d === dayIndex && s === slotIndex),
+          available:
+            !UNAVAILABLE.some(([d, s]) => d === dayIndex && s === slotIndex) &&
+            !existingBookings.some(
+              (booking) => booking.slotId === id && booking.status === 'confirmed',
+            ),
         };
       });
       slots.forEach((slot) => knownSlots.set(slot.id, slot));
@@ -89,7 +96,16 @@ export const mockBookingService: BookingService = {
   async createBooking(request) {
     await delay(800);
     const slot = knownSlots.get(request.slotId);
-    if (!slot || !slot.available) return { ok: false, error: 'slot_unavailable' };
+    const savedBookings = readStoredBookings();
+    if (
+      !slot ||
+      !slot.available ||
+      savedBookings.some(
+        (booking) => booking.slotId === request.slotId && booking.status === 'confirmed',
+      )
+    ) {
+      return { ok: false, error: 'slot_unavailable' };
+    }
     // Honeypot filled: pretend it worked, so bots learn nothing.
     if (request.website) {
       return { ok: true, booking: { id: 'mock-ignored', slot, email: request.email } };
@@ -97,9 +113,25 @@ export const mockBookingService: BookingService = {
     if (request.email.trim().toLowerCase() === 'fail@example.com') {
       return { ok: false, error: 'server' };
     }
+    const id = `BK-${Date.now().toString(36).toUpperCase()}`;
+    writeStoredBookings([
+      {
+        id,
+        slotId: request.slotId,
+        slot,
+        name: request.name,
+        email: request.email,
+        company: request.company ?? '',
+        message: request.message ?? '',
+        locale: request.locale,
+        createdAt: new Date().toISOString(),
+        status: 'confirmed',
+      },
+      ...savedBookings,
+    ]);
     return {
       ok: true,
-      booking: { id: `mock-${Date.now().toString(36)}`, slot, email: request.email },
+      booking: { id, slot, email: request.email },
     };
   },
 };

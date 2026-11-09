@@ -206,7 +206,7 @@ Top-level blocks are listed in vertical (top → bottom) order. Colors show hex/
             - frame "Link" · x1120 y2269 248×20 · flex-col
               - TEXT "Facebook"  · Manrope Regular 14px · lh 20px · #ffffff/white @0.55  · x1120 y2269 w63  · tw: fontSize=--text-sm lineHeight=--tw-leading
             - frame "Link" · x1120 y2301 248×20 · flex-col
-              - TEXT "hello@techsalem.se"  · Manrope Regular 14px · lh 20px · #ffffff/white @0.55  · x1120 y2301 w131  · tw: fontSize=--text-sm lineHeight=--tw-leading
+              - TEXT "info@techsalem.se"  · Manrope Regular 14px · lh 20px · #ffffff/white @0.55  · x1120 y2301 w131  · tw: fontSize=--text-sm lineHeight=--tw-leading
     - frame "Container" · x232 y2410 1136×44 · flex-row gap12 pad(t28 r0 b28 l0) justify-space_between
       - frame "Paragraph" · x232 y2438 212×16 · flex-col
         - TEXT "© 2026 TechSalem. All rights reserved."  · Manrope Regular 12px · lh 16px · #ffffff/white @0.4  · x232 y2438 w212  · tw: fontSize=--text-xs lineHeight=--tw-leading

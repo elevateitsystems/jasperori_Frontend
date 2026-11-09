@@ -38,10 +38,11 @@ export const site: SiteSettings = {
     connect: {
       heading: 'Connect',
       links: {
-        // TODO: replace '#' with the real LinkedIn and Facebook URLs when the client provides them.
+       
         linkedin: { label: 'LinkedIn', href: '#', openInNewTab: true },
         facebook: { label: 'Facebook', href: '#', openInNewTab: true },
-        email: { label: 'hello@techsalem.se', href: 'mailto:hello@techsalem.se' },
+        email: { label: 'info@techsalem.se', href: 'mailto:info@techsalem.se' },
+        email2: { label: 'support@techsalem.se', href: 'mailto:support@techsalem.se' },
       },
     },
     copyright: '© 2026 TechSalem. All rights reserved.',

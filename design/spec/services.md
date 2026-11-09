@@ -158,7 +158,7 @@ Top-level blocks are listed in vertical (top → bottom) order. Colors show hex/
       - frame "Link" · x824 y3779 544×61 · border 1px #17233f/navy @0.15 · flex-row pad(t20 r0 b20 l0) justify-space_between items-center
         - frame "Text" · x824 y3799 37×20 · flex-col
           - TEXT "Email"  · Manrope Bold 14px · lh 20px · #555563/muted  · x824 y3799 w37  · tw: color=--color-ink-muted fontSize=--text-sm lineHeight=--tw-leading fontWeight=--font-weight-bold
-        - TEXT "hello@techsalem.se"  · Manrope Bold 14px · lh 20px · #09090b/text  · x1229 y3799 w139  · tw: color=--color-zinc-950 fontSize=--text-sm lineHeight=--tw-leading fontWeight=--font-weight-bold
+        - TEXT "info@techsalem.se"  · Manrope Bold 14px · lh 20px · #09090b/text  · x1229 y3799 w139  · tw: color=--color-zinc-950 fontSize=--text-sm lineHeight=--tw-leading fontWeight=--font-weight-bold
       - frame "LinkComponent" · x824 y3840 544×61 · border 1px #17233f/navy @0.15 · flex-row pad(t20 r0 b20 l0) justify-space_between items-center
         - frame "CorporatePage" · x824 y3860 90×20 · flex-col
           - TEXT "Consultation"  · Manrope Bold 14px · lh 20px · #555563/muted  · x824 y3860 w90  · tw: color=--color-ink-muted fontSize=--text-sm lineHeight=--tw-leading fontWeight=--font-weight-bold
@@ -216,7 +216,7 @@ Top-level blocks are listed in vertical (top → bottom) order. Colors show hex/
             - frame "Link" · x1120 y4242 248×20 · flex-col
               - TEXT "Facebook"  · Manrope Regular 14px · lh 20px · #ffffff/white @0.55  · x1120 y4242 w63  · tw: fontSize=--text-sm lineHeight=--tw-leading
             - frame "Link" · x1120 y4274 248×20 · flex-col
-              - TEXT "hello@techsalem.se"  · Manrope Regular 14px · lh 20px · #ffffff/white @0.55  · x1120 y4274 w131  · tw: fontSize=--text-sm lineHeight=--tw-leading
+              - TEXT "info@techsalem.se"  · Manrope Regular 14px · lh 20px · #ffffff/white @0.55  · x1120 y4274 w131  · tw: fontSize=--text-sm lineHeight=--tw-leading
     - frame "Container" · x232 y4383 1136×44 · flex-row gap12 pad(t28 r0 b28 l0) justify-space_between
       - frame "Paragraph" · x232 y4411 212×16 · flex-col
         - TEXT "© 2026 TechSalem. All rights reserved."  · Manrope Regular 12px · lh 16px · #ffffff/white @0.4  · x232 y4411 w212  · tw: fontSize=--text-xs lineHeight=--tw-leading
