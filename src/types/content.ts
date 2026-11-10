@@ -142,8 +142,8 @@ export interface SiteSettings {
       links: {
         linkedin: LinkItem;
         facebook: LinkItem;
-        email: LinkItem;
-         email2: LinkItem;
+        infoEmail: LinkItem;
+        supportEmail: LinkItem;
       };
     };
     /** Written out (not calculated) so the client can edit the year. */

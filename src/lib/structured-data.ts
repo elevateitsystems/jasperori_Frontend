@@ -16,7 +16,7 @@ const localized = (locale: Locale, path: InternalPath) =>
  */
 export async function getSiteStructuredData(locale: Locale) {
   const site = await getContent(locale, 'site');
-  const { linkedin, facebook, email } = site.footer.connect.links;
+  const { linkedin, facebook, infoEmail } = site.footer.connect.links;
   const sameAs = [linkedin, facebook]
     .map((l) => l.href)
     .filter((href) => href.startsWith('https://'));
@@ -29,7 +29,7 @@ export async function getSiteStructuredData(locale: Locale) {
       name: site.siteName,
       url: localized(locale, '/'),
       logo: abs('/icon.svg'),
-      email: email.label,
+      email: infoEmail.label,
       description: site.footer.tagline,
       areaServed: { '@type': 'Country', name: 'Sweden' },
       ...(sameAs.length ? { sameAs } : {}),

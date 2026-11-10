@@ -28,7 +28,7 @@ export const contact: ContactPageContent = {
     title: 'The right work starts with the right questions.',
     text: 'You do not need a finished brief. Bring the challenge, opportunity, or idea as it is today, and we will explore it together.',
     links: [
-      { label: 'Email', link: site.footer.connect.links.email },
+      { label: 'Email', link: site.footer.connect.links.infoEmail },
       { label: 'Calendar', link: { label: 'Book a consultation', href: '/booking' } },
     ],
   },

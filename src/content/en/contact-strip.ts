@@ -8,7 +8,7 @@ export const contactStrip: ContactStripContent = {
   title: 'What can we',
   titleAccent: 'simplify for you?',
   rows: [
-    { label: 'Email', link: site.footer.connect.links.email },
+    { label: 'Email', link: site.footer.connect.links.infoEmail },
     { label: 'Consultation', link: { label: 'Choose a time', href: '/booking' } },
     { label: 'LinkedIn', link: { ...site.footer.connect.links.linkedin, label: 'TechSalem' } },
   ],

@@ -8,7 +8,7 @@ export const contactStrip: ContactStripContent = {
   title: 'Vad kan vi',
   titleAccent: 'förenkla för dig?',
   rows: [
-    { label: 'E-post', link: site.footer.connect.links.email },
+    { label: 'E-post', link: site.footer.connect.links.infoEmail },
     { label: 'Konsultation', link: { label: 'Välj en tid', href: '/booking' } },
     { label: 'LinkedIn', link: { ...site.footer.connect.links.linkedin, label: 'TechSalem' } },
   ],
