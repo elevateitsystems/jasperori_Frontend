@@ -32,6 +32,7 @@ interface Invoice {
 }
 
 const storageKey = 'techsalem.invoice-manager.v1';
+const presetVatRates = ['25', '12', '6', '0'];
 
 const text = {
   en: {
@@ -57,6 +58,9 @@ const text = {
     sellerReference: 'Our reference',
     subject: 'Invoice subject',
     vatRate: 'VAT rate',
+    presetVatRate: 'Select a rate',
+    customVatRate: 'Custom rate (%)',
+    customRateOption: 'Custom rate',
     items: 'Items',
     description: 'Description',
     quantity: 'Quantity',
@@ -118,6 +122,9 @@ const text = {
     sellerReference: 'Vår referens',
     subject: 'Fakturan avser',
     vatRate: 'Momssats',
+    presetVatRate: 'Välj momssats',
+    customVatRate: 'Anpassad momssats (%)',
+    customRateOption: 'Anpassad momssats',
     items: 'Fakturarader',
     description: 'Beskrivning',
     quantity: 'Antal',
@@ -215,7 +222,8 @@ function totals(invoice: Invoice) {
     (sum, item) => sum + numeric(item.quantity) * numeric(item.unitPrice),
     0,
   );
-  const vat = Math.round((subtotal * numeric(invoice.vatRate) + Number.EPSILON) * 100) / 100;
+  const vat =
+    Math.round(((subtotal * numeric(invoice.vatRate)) / 100 + Number.EPSILON) * 100) / 100;
   const beforeRounding = subtotal + vat;
   const amountDue = Math.round(beforeRounding);
   return { subtotal, vat, rounding: amountDue - beforeRounding, amountDue };
@@ -244,6 +252,7 @@ function Field({
   type = 'text',
   min,
   step,
+  inputMode,
 }: {
   label: string;
   value: string;
@@ -251,6 +260,7 @@ function Field({
   type?: string;
   min?: string;
   step?: string;
+  inputMode?: 'decimal' | 'numeric' | 'text';
 }) {
   return (
     <label className="grid gap-1.5 text-body-sm font-semibold text-zinc-950">
@@ -260,6 +270,7 @@ function Field({
         value={value}
         min={min}
         step={step}
+        inputMode={inputMode}
         onChange={(event) => onChange(event.target.value)}
         className="min-h-11 w-full rounded-sm border border-line bg-white px-3 text-body-sm font-normal outline-none focus:border-purple focus:ring-2 focus:ring-purple/20"
       />
@@ -520,20 +531,34 @@ export function InvoiceBuilder({ locale }: { locale: Locale }) {
                       update('dueDate', addDays(invoice.issueDate, numeric(v)));
                     }}
                   />
-                  <label className="grid gap-1.5 text-body-sm font-semibold text-zinc-950">
-                    {copy.vatRate}
-                    <select
-                      value={invoice.vatRate}
-                      onChange={(event) => update('vatRate', event.target.value)}
-                      className="min-h-11 rounded-sm border border-line bg-white px-3 text-body-sm font-normal outline-none focus:border-purple"
-                    >
-                      {[25, 12, 6, 0].map((rate) => (
-                        <option key={rate} value={rate}>
-                          {rate}%
-                        </option>
-                      ))}
-                    </select>
-                  </label>
+                  <fieldset className="grid gap-2 sm:col-span-2">
+                    <legend className="text-body-sm font-semibold text-zinc-950">
+                      {copy.vatRate}
+                    </legend>
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      <label className="grid gap-1.5 text-body-sm font-semibold text-zinc-950">
+                        {copy.presetVatRate}
+                        <select
+                          value={presetVatRates.includes(invoice.vatRate) ? invoice.vatRate : ''}
+                          onChange={(event) => update('vatRate', event.target.value)}
+                          className="min-h-11 rounded-sm border border-line bg-white px-3 text-body-sm font-normal outline-none focus:border-purple"
+                        >
+                          <option value="">{copy.customRateOption}</option>
+                          {presetVatRates.map((rate) => (
+                            <option key={rate} value={rate}>
+                              {rate}%
+                            </option>
+                          ))}
+                        </select>
+                      </label>
+                      <Field
+                        label={copy.customVatRate}
+                        value={presetVatRates.includes(invoice.vatRate) ? '' : invoice.vatRate}
+                        onChange={(value) => update('vatRate', value)}
+                        inputMode="decimal"
+                      />
+                    </div>
+                  </fieldset>
                   <div className="sm:col-span-2">
                     <Field
                       label={copy.subject}

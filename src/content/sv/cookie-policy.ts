@@ -8,7 +8,7 @@ import type { CookiePolicyPageContent } from '@/types/content';
 
 import { site } from './site';
 
-const email = site.footer.connect.links.email;
+const email = site.footer.connect.links.infoEmail;
 
 export const cookiePolicy: CookiePolicyPageContent = {
   meta: {

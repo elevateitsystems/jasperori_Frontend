@@ -41,8 +41,8 @@ export const site: SiteSettings = {
        
         linkedin: { label: 'LinkedIn', href: '#', openInNewTab: true },
         facebook: { label: 'Facebook', href: '#', openInNewTab: true },
-        email: { label: 'info@techsalem.se', href: 'mailto:info@techsalem.se' },
-        email2: { label: 'support@techsalem.se', href: 'mailto:support@techsalem.se' },
+        infoEmail: { label: 'info@techsalem.se', href: 'mailto:info@techsalem.se' },
+        supportEmail: { label: 'support@techsalem.se', href: 'mailto:support@techsalem.se' },
       },
     },
     copyright: '© 2026 TechSalem. All rights reserved.',

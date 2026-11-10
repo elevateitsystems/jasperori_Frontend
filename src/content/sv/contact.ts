@@ -28,7 +28,7 @@ export const contact: ContactPageContent = {
     title: 'Rätt arbete börjar med rätt frågor.',
     text: 'Du behöver ingen färdig brief. Kom med utmaningen, möjligheten eller idén som den ser ut i dag, så utforskar vi den tillsammans.',
     links: [
-      { label: 'E-post', link: site.footer.connect.links.email },
+      { label: 'E-post', link: site.footer.connect.links.infoEmail },
       { label: 'Kalender', link: { label: 'Boka konsultation', href: '/booking' } },
     ],
   },

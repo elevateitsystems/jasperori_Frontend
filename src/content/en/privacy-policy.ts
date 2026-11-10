@@ -7,7 +7,7 @@ import type { PrivacyPolicyPageContent } from '@/types/content';
 
 import { site } from './site';
 
-const email = site.footer.connect.links.email;
+const email = site.footer.connect.links.infoEmail;
 
 export const privacyPolicy: PrivacyPolicyPageContent = {
   meta: {

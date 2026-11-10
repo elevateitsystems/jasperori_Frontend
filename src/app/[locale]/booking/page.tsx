@@ -19,7 +19,7 @@ export default async function BookingPage() {
     getContent(locale, 'booking'),
     getContent(locale, 'site'),
   ]);
-  const siteEmail = site.footer.connect.links.email.label;
+  const siteEmail = site.footer.connect.links.infoEmail.label;
 
   return (
     <>
