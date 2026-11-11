@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { getLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
@@ -22,7 +23,17 @@ export async function generateMetadata({ params }: PageProps<'/[locale]/support/
 /**
  * Support catalog page. It presents the service scope and starting prices before a booking CTA.
  */
-export default async function SupportPage({ params }: PageProps<'/[locale]/support/[slug]'>) {
+export default function SupportPage({ params }: PageProps<'/[locale]/support/[slug]'>) {
+  return (
+    <Suspense fallback={null}>
+      <SupportPageContent params={params} />
+    </Suspense>
+  );
+}
+
+async function SupportPageContent({
+  params,
+}: Pick<PageProps<'/[locale]/support/[slug]'>, 'params'>) {
   const { slug } = await params;
   if (!isSupportSlug(slug)) notFound();
 
