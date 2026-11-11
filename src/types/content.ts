@@ -73,6 +73,7 @@ export type Tuple2<T> = [T, T];
 export type Tuple3<T> = [T, T, T];
 export type Tuple4<T> = [T, T, T, T];
 export type Tuple6<T> = [T, T, T, T, T, T];
+export type Tuple7<T> = [T, T, T, T, T, T, T];
 
 /** A heading whose last part has another colour; rendered as one heading. */
 export interface SplitTitle {
@@ -190,6 +191,7 @@ export interface HomePageContent {
   support: {
     eyebrow: string;
     title: string;
+    image: ImageAsset;
     cards: Tuple2<{ icon: IconName; title: string; text: string; link: InternalLinkItem }>;
   };
   cta: CtaBannerContent;
@@ -242,7 +244,7 @@ export interface SupportPageContent {
     label: string;
     title: string;
     text: string;
-    items: Tuple6<{ title: string; text: string; price: string; link: InternalLinkItem }>;
+    items: Tuple7<{ title: string; text: string; price: string; link: InternalLinkItem }>;
   };
   cta: {
     title: string;

@@ -38,7 +38,7 @@ export default async function LocaleLayout({ children }: LayoutProps<'/[locale]'
 
   // data-motion: global switch for scroll-reveal animations ('on' | 'off'), see CLAUDE.md.
   return (
-    <html lang={locale} className={fontVariables} data-motion="on">
+    <html lang={locale} className={fontVariables} data-motion="on" data-scroll-behavior="smooth">
       <body className="flex flex-col">
         <NextIntlClientProvider>
           <SkipLink />

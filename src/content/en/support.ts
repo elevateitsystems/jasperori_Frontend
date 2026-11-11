@@ -9,7 +9,7 @@ const support01: SupportPageContent = {
   hero: {
     eyebrow: 'TechSalem IT support',
     title: 'Services for home and business.',
-    text: "Choose a service below, or get in touch if you cannot find what you are looking for. We solve most things related to computers and networks.",
+    text: 'Choose a service below, or get in touch if you cannot find what you are looking for. We solve most things related to computers and networks.',
     image: {
       src: '/images/hero-office-wide.png',
       alt: 'People working with computers in a bright office',
@@ -58,11 +58,17 @@ const support01: SupportPageContent = {
         price: 'From 395 SEK',
         link: { label: 'Book a consultation', href: '/booking' },
       },
+      {
+        title: 'Website development',
+        text: 'We build custom websites of all kinds, from simple sites to complex, advanced web applications. Book a consultation or contact us directly to commission your project.',
+        price: 'Project-based pricing',
+        link: { label: 'Book a consultation', href: '/booking' },
+      },
     ],
   },
   cta: {
     title: 'Ready to get it sorted?',
-    text: "Book an appointment today — we will get back to you within 24 hours with a fixed price.",
+    text: 'Book an appointment today — we will get back to you within 24 hours with a fixed price.',
     button: { label: 'Book an appointment', href: '/booking' },
   },
 };

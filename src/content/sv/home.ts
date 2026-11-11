@@ -38,8 +38,8 @@ export const home: HomePageContent = {
     cards: [
       {
         icon: 'network',
-        title: 'Tjänsteområde 01',
-        text: serviceCardText,
+        title: 'Skräddarsydd webbutveckling',
+        text: 'Vi skapar skräddarsydda webbplatser av alla slag – från enkla webbplatser till komplexa, avancerade webbapplikationer. Kontakta oss direkt för att prata om ditt projekt.',
         link: { label: 'Läs mer', href: '/services' },
       },
       {
@@ -81,6 +81,12 @@ export const home: HomePageContent = {
   support: {
     eyebrow: 'Support',
     title: 'Rätt hjälp, precis när du behöver den.',
+    image: {
+      src: '/images/6305419613449164358.jpg',
+      alt: 'TechSalems IT-supportbanner med två personer som arbetar vid datorer',
+      width: 1254,
+      height: 1254,
+    },
     cards: [
       {
         icon: 'headphones',

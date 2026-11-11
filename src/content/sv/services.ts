@@ -13,13 +13,13 @@ export const services: ServicesPageContent = {
   meta: {
     title: 'Tjänster',
     description:
-      'TechSalems konsulttjänster: praktisk teknik- och verksamhetsexpertis formad efter dina prioriteringar, från första fråga till tydliga nästa steg.',
+      'TechSalems konsulttjänster och skräddarsydda webbutveckling, från enkla webbplatser till komplexa, avancerade webbapplikationer.',
     image: heroImage,
   },
   hero: {
-    eyebrow: 'Konsulttjänster',
+    eyebrow: 'Konsulttjänster och webbutveckling',
     title: 'Praktisk expertis för verkliga framsteg.',
-    text: 'Ett fokuserat konsulterbjudande utformat efter dina prioriteringar. De slutliga tjänstenamnen kan uppdateras när erbjudandet är fastställt.',
+    text: 'Ett fokuserat konsulterbjudande utformat efter dina prioriteringar. Vi skapar också skräddarsydda webbplatser, från enkla webbplatser till komplexa, avancerade webbapplikationer. Kontakta oss direkt för att prata om ditt webbprojekt.',
     image: heroImage,
     primaryCta: { label: 'Starta ett samtal', href: '/contact' },
   },
@@ -30,11 +30,11 @@ export const services: ServicesPageContent = {
     text: 'Vi håller erbjudandet medvetet tydligt. Varje uppdrag formas utifrån affärsmålet, den nuvarande miljön och vad ditt team behöver för att komma vidare.',
   },
   services: {
-    areaLabel: 'Konsultområde',
+    areaLabel: 'Tjänst',
     items: [
       {
-        title: 'Konsulttjänst 01',
-        text: 'Redigerbar platshållare för ett strategiskt erbjudande inom teknik- eller verksamhetsrådgivning.',
+        title: 'Skräddarsydd webbutveckling',
+        text: 'Vi skapar skräddarsydda webbplatser av alla slag – från enkla webbplatser till komplexa, avancerade webbapplikationer. Kontakta oss direkt för att prata om ditt projekt.',
         tone: 'navy',
       },
       {

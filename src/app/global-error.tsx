@@ -16,7 +16,7 @@ export default function GlobalError({
   reset: () => void;
 }) {
   return (
-    <html lang="sv">
+    <html lang="sv" data-scroll-behavior="smooth">
       <body className="flex min-h-screen items-center bg-navy text-white">
         <main className="site-container py-20">
           {(['sv', 'en'] as const).map((locale) => (

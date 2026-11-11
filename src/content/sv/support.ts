@@ -58,6 +58,12 @@ const support01: SupportPageContent = {
         price: 'Från 395 SEK',
         link: { label: 'Boka konsultation', href: '/booking' },
       },
+      {
+        title: 'Webbutveckling',
+        text: 'Vi bygger skräddarsydda webbplatser av alla slag, från enkla webbplatser till komplexa, avancerade webbapplikationer. Boka en konsultation eller kontakta oss direkt för att anlita oss för ditt projekt.',
+        price: 'Pris enligt offert',
+        link: { label: 'Boka konsultation', href: '/booking' },
+      },
     ],
   },
   cta: {
