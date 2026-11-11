@@ -1,5 +1,6 @@
 import {
   BriefcaseBusiness,
+  CodeXml,
   DatabaseBackup,
   LaptopMinimal,
   Printer,
@@ -19,19 +20,17 @@ const serviceIcons = [
   DatabaseBackup,
   BriefcaseBusiness,
   Printer,
+  CodeXml,
 ] as const;
 
 interface SupportServicesProps {
   content: SupportPageContent['services'];
 }
 
-/** Six clear service cards with starting prices, following the client's existing Services page. */
+/** Clear service cards with starting prices, following the client's existing Services page. */
 export function SupportServices({ content }: SupportServicesProps) {
   return (
-    <Section
-      labelledBy="support-services-title"
-      className="bg-cloud py-16 md:py-20 lg:py-24"
-    >
+    <Section labelledBy="support-services-title" className="bg-cloud py-16 md:py-20 lg:py-24">
       <div className="mx-auto max-w-inner">
         <div className="mx-auto max-w-160 text-center">
           <SectionLabel className="font-bold text-purple">{content.label}</SectionLabel>
@@ -48,7 +47,7 @@ export function SupportServices({ content }: SupportServicesProps) {
             return (
               <li
                 key={service.title}
-                className="flex min-h-64 flex-col border border-line bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
+                className="shadow-sm hover:shadow-md flex min-h-64 flex-col border border-line bg-white p-5 transition-shadow"
               >
                 <span
                   aria-hidden="true"

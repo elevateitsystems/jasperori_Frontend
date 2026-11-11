@@ -37,8 +37,8 @@ export const home: HomePageContent = {
     cards: [
       {
         icon: 'network',
-        title: 'Service Area 01',
-        text: serviceCardText,
+        title: 'Custom website development',
+        text: 'We build custom websites of all kinds, from simple sites to complex, advanced web applications. Contact us directly to discuss your project.',
         link: { label: 'Learn More', href: '/services' },
       },
       {
@@ -80,6 +80,12 @@ export const home: HomePageContent = {
   support: {
     eyebrow: 'Support',
     title: 'The right help, right when you need it.',
+    image: {
+      src: '/images/6305419613449164358.jpg',
+      alt: 'TechSalem IT support banner with two people working at computers',
+      width: 1254,
+      height: 1254,
+    },
     cards: [
       {
         icon: 'headphones',

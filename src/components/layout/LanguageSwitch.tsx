@@ -58,11 +58,43 @@ export function LanguageSwitch({ className }: LanguageSwitchProps) {
                 : 'text-ink-muted hover:text-navy forced-colors:text-[LinkText]',
             )}
           >
-            {labels[locale].short}
+            <LanguageFlag locale={locale} />
+            <span>{labels[locale].short}</span>
             <span className="sr-only"> ({labels[locale].name})</span>
           </Link>
         );
       })}
     </div>
+  );
+}
+
+function LanguageFlag({ locale }: { locale: Locale }) {
+  if (locale === 'en') {
+    return (
+      <svg
+        aria-hidden="true"
+        className="h-3 w-4 shrink-0 rounded-[1px]"
+        focusable="false"
+        viewBox="0 0 60 30"
+      >
+        <path fill="#012169" d="M0 0h60v30H0z" />
+        <path fill="#fff" d="M0 0h6.7L60 26.65V30h-6.7L0 3.35zm60 0h-6.7L0 26.65V30h6.7L60 3.35z" />
+        <path fill="#c8102e" d="M0 0h2.7L60 27.3V30h-2.7L0 2.7zm60 0h-2.7L0 27.3V30h2.7L60 2.7z" />
+        <path fill="#fff" d="M24 0h12v30H24zM0 9h60v12H0z" />
+        <path fill="#c8102e" d="M26.4 0h7.2v30h-7.2zM0 11.4h60v7.2H0z" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg
+      aria-hidden="true"
+      className="h-3 w-4 shrink-0 rounded-[1px]"
+      focusable="false"
+      viewBox="0 0 16 10"
+    >
+      <path fill="#006aa7" d="M0 0h16v10H0z" />
+      <path fill="#fecc00" d="M5.5 0h2v10h-2zM0 4h16v2H0z" />
+    </svg>
   );
 }

@@ -13,13 +13,13 @@ export const services: ServicesPageContent = {
   meta: {
     title: 'Services',
     description:
-      "TechSalem's consulting services: practical technology and business expertise shaped around your priorities, from first question to clear next steps.",
+      "TechSalem's consulting and custom website development services, from simple websites to complex, advanced web applications.",
     image: heroImage,
   },
   hero: {
-    eyebrow: 'Consulting services',
+    eyebrow: 'Consulting & website development',
     title: 'Practical expertise for meaningful progress.',
-    text: 'A focused consulting portfolio designed around your priorities. Final service names can be updated when the offering is confirmed.',
+    text: 'A focused consulting portfolio designed around your priorities. We also build custom websites, from simple sites to complex, advanced web applications. Contact us directly to discuss your website project.',
     image: heroImage,
     primaryCta: { label: 'Start a conversation', href: '/contact' },
   },
@@ -30,11 +30,11 @@ export const services: ServicesPageContent = {
     text: 'We keep the offering intentionally clear. Each engagement is shaped around the business outcome, the current environment, and what your team needs to move forward.',
   },
   services: {
-    areaLabel: 'Consulting area',
+    areaLabel: 'Service',
     items: [
       {
-        title: 'Consulting service 01',
-        text: 'Editable placeholder for a strategic technology or business consulting offer.',
+        title: 'Custom website development',
+        text: 'We create custom websites of every kind, from simple sites to complex, advanced web applications. Contact us directly to discuss your project.',
         tone: 'navy',
       },
       {

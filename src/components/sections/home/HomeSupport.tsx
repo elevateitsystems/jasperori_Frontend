@@ -26,15 +26,15 @@ export function HomeSupport({ content }: HomeSupportProps) {
         {content.title}
       </h2>
 
-      {/* ক্লায়েন্টের IT-Support Banner Image যা ক্লিক করলে সাপোর্ট পেজে নিয়ে যাবে */}
-      <div className="mt-8 overflow-hidden rounded-xl shadow-md transition-transform duration-300 hover:scale-[1.01]">
+      <div className="shadow-md mx-auto mt-8 w-full max-w-xl overflow-hidden rounded-xl transition-transform duration-300 hover:scale-[1.01]">
         <Link href="/support" className="block w-full">
           <Image
-            src="/images/6305419613449164358.jpg"
-            alt="Är du i behov av IT-support?"
-            width={1136}
-            height={500}
-            className="h-auto w-full object-cover"
+            src={content.image.src}
+            alt={content.image.alt}
+            width={content.image.width}
+            height={content.image.height}
+            sizes="(max-width: 576px) 100vw, 576px"
+            className="h-auto w-full"
             priority
           />
         </Link>
