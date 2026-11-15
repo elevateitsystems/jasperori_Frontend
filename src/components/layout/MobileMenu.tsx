@@ -4,7 +4,7 @@ import { MenuIcon, XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useId, useRef, useState, type MouseEvent, type ReactNode } from 'react';
 
-import { usePathname } from '@/i18n/navigation';
+import { routing } from '@/i18n/routing';
 import { cn } from '@/lib/cn';
 
 /** Same as Tailwind's `lg` breakpoint: from here on the desktop header is shown. */
@@ -22,16 +22,49 @@ interface MobileMenuProps {
  *   (elements marked with data-menu-inert), so keyboard focus can't reach hidden content.
  * - Closes when a link is clicked, when the route changes and when the screen grows to desktop.
  */
+function currentPath() {
+  const [, maybeLocale, ...rest] = window.location.pathname.split('/');
+  if ((routing.locales as readonly string[]).includes(maybeLocale)) {
+    const path = `/${rest.join('/')}`;
+    return path === '/' ? '/' : path;
+  }
+  return window.location.pathname || '/';
+}
+
 export function MobileMenu({ children }: MobileMenuProps) {
   const t = useTranslations('a11y');
-  const pathname = usePathname();
   const panelId = useId();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
   // Remember on which page the menu was opened: a route change closes it without an effect.
   const [openOnPath, setOpenOnPath] = useState<string | null>(null);
-  const isOpen = openOnPath === pathname;
+  const [pathname, setPathname] = useState<string | null>(null);
+  const isOpen = pathname !== null && openOnPath === pathname;
+
+  useEffect(() => {
+    // Defer the update. Next.js calls history.replaceState during render, and a state update there is illegal.
+    const read = () => {
+      window.setTimeout(() => setPathname(currentPath()), 0);
+    };
+    read();
+    window.addEventListener('popstate', read);
+    const push = history.pushState.bind(history);
+    const replace = history.replaceState.bind(history);
+    history.pushState = (...args: Parameters<History['pushState']>) => {
+      push(...args);
+      read();
+    };
+    history.replaceState = (...args: Parameters<History['replaceState']>) => {
+      replace(...args);
+      read();
+    };
+    return () => {
+      window.removeEventListener('popstate', read);
+      history.pushState = push;
+      history.replaceState = replace;
+    };
+  }, []);
 
   const close = (returnFocus: boolean) => {
     setOpenOnPath(null);
@@ -87,7 +120,12 @@ export function MobileMenu({ children }: MobileMenuProps) {
         aria-expanded={isOpen}
         aria-controls={panelId}
         aria-label={isOpen ? t('closeMenu') : t('openMenu')}
-        onClick={() => (isOpen ? close(false) : setOpenOnPath(pathname))}
+        onClick={() => {
+          const path = currentPath();
+          setPathname(path);
+          if (isOpen) close(false);
+          else setOpenOnPath(path);
+        }}
         className="-mr-2.5 inline-flex size-11 items-center justify-center rounded-sm text-navy lg:hidden"
       >
         {isOpen ? (

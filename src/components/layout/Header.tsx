@@ -1,10 +1,13 @@
-import { getLocale, getTranslations } from 'next-intl/server';
 import { UserRound } from 'lucide-react';
+import { getLocale, getTranslations } from 'next-intl/server';
+import { Suspense } from 'react';
 
 import { ButtonLink } from '@/components/ui/ButtonLink';
 import { Logo } from '@/components/ui/Logo';
 import { getContent } from '@/content';
 import { Link } from '@/i18n/navigation';
+import { cn } from '@/lib/cn';
+import type { InternalLinkItem } from '@/types/content';
 
 import { LanguageSwitch } from './LanguageSwitch';
 import { MobileMenu } from './MobileMenu';
@@ -39,11 +42,15 @@ export async function Header() {
         />
 
         <nav aria-label={t('mainNavigation')} className="hidden lg:block">
-          <NavLinks links={navLinks} variant="desktop" />
+          <Suspense fallback={<NavLinkFallback links={navLinks} variant="desktop" />}>
+            <NavLinks links={navLinks} variant="desktop" />
+          </Suspense>
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <LanguageSwitch />
+          <Suspense fallback={<LanguageSwitchFallback />}>
+            <LanguageSwitch />
+          </Suspense>
           <AdminDashboardLink />
           <ButtonLink href={cta.href}>{cta.label}</ButtonLink>
         </div>
@@ -51,9 +58,13 @@ export async function Header() {
         <MobileMenu>
           <div className="site-container flex flex-col gap-8 pt-2 pb-10">
             <nav aria-label={t('mainNavigation')}>
-              <NavLinks links={navLinks} variant="mobile" />
+              <Suspense fallback={<NavLinkFallback links={navLinks} variant="mobile" />}>
+                <NavLinks links={navLinks} variant="mobile" />
+              </Suspense>
             </nav>
-            <LanguageSwitch className="self-start" />
+            <Suspense fallback={<LanguageSwitchFallback className="self-start" />}>
+              <LanguageSwitch className="self-start" />
+            </Suspense>
             <div className="flex items-center gap-3">
               <AdminDashboardLink />
               <ButtonLink href={cta.href} className="w-full">
@@ -64,6 +75,47 @@ export async function Header() {
         </MobileMenu>
       </div>
     </header>
+  );
+}
+
+function NavLinkFallback({
+  links,
+  variant,
+}: {
+  links: InternalLinkItem[];
+  variant: 'desktop' | 'mobile';
+}) {
+  return (
+    <ul className={variant === 'desktop' ? 'flex items-center gap-8 text-nav' : 'flex flex-col'}>
+      {links.map((link) => (
+        <li key={link.href}>
+          <Link
+            href={link.href}
+            className={cn(
+              'text-navy/75 transition-colors hover:text-navy',
+              variant === 'desktop'
+                ? 'touch-target block'
+                : 'block border-b border-line py-4 text-title-20 font-semibold',
+            )}
+          >
+            {link.label}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function LanguageSwitchFallback({ className }: { className?: string }) {
+  return (
+    <div aria-hidden="true" className={cn('inline-flex rounded-full bg-cloud p-1', className)}>
+      <span className="inline-flex items-center rounded-full bg-white px-2.5 py-1.5 text-lang text-navy shadow-switch">
+        EN
+      </span>
+      <span className="inline-flex items-center rounded-full px-2.5 py-1.5 text-lang text-ink-muted">
+        SV
+      </span>
+    </div>
   );
 }
 
