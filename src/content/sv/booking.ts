@@ -56,7 +56,7 @@ export const booking: BookingPageContent = {
     },
     success: {
       title: 'Tack – din konsultation är bokad.',
-      text: 'Vi har skickat en bekräftelse till {email}. Vi ses {date} kl. {time}.',
+      text: 'Din konsultation är reserverad {date} kl. {time}. Vi kontaktar dig på {email}.',
       again: 'Boka en annan tid',
     },
     empty: 'Inga lediga tider just nu. Mejla oss gärna på {email}.',

@@ -47,9 +47,9 @@ export interface ActionLinkItem {
   href: InternalPath | AnchorHref;
 }
 
-/** An image in public/images. Use an empty alt for purely decorative images. */
+/** A designed image in public/images, or an upload stored in Supabase Storage. */
 export interface ImageAsset {
-  src: `/images/${string}`;
+  src: `/images/${string}` | `https://${string}`;
   alt: string;
   width: number;
   height: number;

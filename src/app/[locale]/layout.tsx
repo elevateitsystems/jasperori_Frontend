@@ -42,13 +42,13 @@ export default async function LocaleLayout({ children }: LayoutProps<'/[locale]'
       <body className="flex flex-col">
         <NextIntlClientProvider>
           <SkipLink />
-          <div className="print:hidden">
+          <div data-site-chrome className="print:hidden">
             <Header />
           </div>
           <main id="main" tabIndex={-1} data-menu-inert className="flex-1 outline-none">
             {children}
           </main>
-          <div className="print:hidden">
+          <div data-site-chrome className="print:hidden">
             <Footer />
           </div>
         </NextIntlClientProvider>

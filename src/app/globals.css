@@ -707,3 +707,16 @@
     }
   }
 }
+
+/* Admin routes render their own shell. The marketing header and footer stay on every public page. */
+body:has([data-admin-shell]) {
+  background: var(--color-cloud);
+}
+
+body:has([data-admin-shell]) [data-site-chrome] {
+  display: none;
+}
+
+body:has([data-admin-shell]) #main {
+  min-height: 100dvh;
+}

@@ -1,15 +1,17 @@
-# Booking service (frontend contract)
+# Booking service
 
-The booking page (`/[locale]/booking`) talks to the backend only through the `BookingService`
-interface in `service.ts`. Today it uses `mock-service.ts`. To connect the real backend, implement
-the interface (for example with `fetch` calls to your API) and change the one line in
-`service.ts`:
+The booking form calls `bookingService` in `service.ts`. That client talks to the Next.js route handlers:
 
-```ts
-export const bookingService: BookingService = realBookingService; // was mockBookingService
-```
+- `GET /api/booking/availability` — the next weekdays of slots
+- `POST /api/booking` — create a booking
 
-Nothing else in the UI needs to change.
+Both are implemented in `src/lib/booking/repository.ts` and stored in the Supabase Postgres
+database through Prisma. The server always builds the grid from
+`config.ts` (time zone, slot times, duration, number of days). A slot disappears once it has a
+booking that is not cancelled.
+
+Confirmation email is not sent yet. The booking is stored and listed in the admin panel. Email
+delivery is a later step. The success message does not claim that an email was sent.
 
 ## Interface
 
@@ -84,13 +86,14 @@ generic message ("Something went wrong…") and keeps the entered values.
 
 ## Backend notes
 
-- **Real slots** should come from the admin panel (opening hours, blocked times, bookings), not
-  from `config.ts`. Re-check that the slot is still free when booking (`slot_unavailable`).
-- **Emails**: send a confirmation to the customer (in `locale`), and a notification to
-  hej@techsalem.se and jasper@techsalem.se with **Reply-To set to the customer's email**.
-- **Spam protection** belongs on the server: verify a captcha and rate-limit by IP/email. If the
-  honeypot (`website`) is filled, return a fake success and do not book or send anything.
+- Booked slots are stored in Postgres. The grid itself (hours, length, time zone, how many days) still
+  comes from `config.ts`. Changing opening hours in the admin panel is a later step.
+- The server re-checks that the slot is free when booking (`slot_unavailable`).
+- **Emails are not sent yet.** When an email service is connected, send a confirmation to the
+  customer (in `locale`) and a notification to hej@techsalem.se and jasper@techsalem.se with
+  **Reply-To set to the customer's email**.
+- Spam protection: 8 booking attempts per hour per IP. If the honeypot (`website`) is filled, the
+  API returns a fake success and does not store a booking. A captcha can be added later.
 - **Time zone**: the design shows UTC. To switch to Swedish time, change `timeZone` in `config.ts`
   to `Europe/Stockholm` and update the "UTC" labels in `src/content/{en,sv}/booking.ts`.
-- **Mock test values**: `fail@example.com` returns an error; a filled honeypot returns a fake
-  success.
+- Admin sign-in, content edits and booking status live in the same database. See `src/lib/db`.
