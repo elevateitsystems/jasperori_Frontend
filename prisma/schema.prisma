@@ -1,0 +1,91 @@
+// TechSalem data model. Postgres on Supabase.
+// Runtime queries use DATABASE_URL (transaction pooler).
+// Migrations use DIRECT_URL (session pooler).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Locale {
+  sv
+  en
+}
+
+enum BookingStatus {
+  confirmed
+  cancelled
+  completed
+}
+
+/// Staff account for the admin panel. Created once from ADMIN_EMAIL and ADMIN_PASSWORD.
+model Admin {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  passwordHash String    @map("password_hash")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  sessions     Session[]
+
+  @@map("admins")
+}
+
+/// HttpOnly session. The cookie stores the raw token; only the hash is kept here.
+model Session {
+  id        String   @id @default(uuid())
+  adminId   String   @map("admin_id")
+  admin     Admin    @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  tokenHash String   @unique @map("token_hash")
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([adminId])
+  @@index([expiresAt])
+  @@map("sessions")
+}
+
+/// One published page document per language. The JSON matches the typed content shape.
+model ContentDocument {
+  locale    Locale
+  key       String
+  data      Json
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@id([locale, key])
+  @@map("content_documents")
+}
+
+/// A consultation. openSlotId is set while the slot is taken and cleared when cancelled,
+/// so Postgres can enforce one open booking per slot (nulls are allowed more than once).
+model Booking {
+  id         String        @id
+  slotId     String        @map("slot_id")
+  openSlotId String?       @unique @map("open_slot_id")
+  slotStart  DateTime      @map("slot_start")
+  slotEnd    DateTime      @map("slot_end")
+  name       String
+  email      String
+  company    String        @default("")
+  message    String        @default("")
+  locale     Locale
+  status     BookingStatus @default(confirmed)
+  createdAt  DateTime      @default(now()) @map("created_at")
+
+  @@index([createdAt])
+  @@index([email])
+  @@map("bookings")
+}
+
+/// Short-lived counters for login and booking attempts.
+model RateLimit {
+  id        Int      @id @default(autoincrement())
+  bucket    String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([bucket, createdAt])
+  @@map("rate_limits")
+}

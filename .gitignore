@@ -36,6 +36,12 @@ yarn-error.log*
 # vercel
 .vercel
 
+# local database (created on the server; do not commit)
+/data/
+
+# images uploaded from the admin panel
+/public/images/uploads/*
+!/public/images/uploads/.gitkeep
 # typescript
 *.tsbuildinfo
 next-env.d.ts

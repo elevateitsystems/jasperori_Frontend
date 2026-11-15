@@ -1,34 +1,37 @@
 'use client';
 
+import { CalendarDays, ExternalLink, FileText, LogOut, Receipt } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect, useState, type ChangeEvent } from 'react';
+import { useState, type ChangeEvent } from 'react';
 
+import {
+  logoutAdmin,
+  restoreContentPage,
+  saveContentPage,
+  updateBookingStatus,
+} from '@/app/[locale]/admin/actions';
 import { Link } from '@/i18n/navigation';
 import type { Locale } from '@/i18n/routing';
-import {
-  bookingUpdateEvent,
-  readStoredBookings,
-  writeStoredBookings,
-  type StoredBooking,
-} from '@/lib/booking/admin-storage';
+import type { BookingRecord } from '@/lib/booking/types';
 
 type ContentByLocale = Record<Locale, Record<string, unknown>>;
 type PanelTab = 'content' | 'bookings';
 
-const contentStorageKey = 'techsalem.admin-content.v1';
-
 const pageOptions = [
-  ['home', 'Home'],
-  ['about', 'About'],
-  ['services', 'Services'],
-  ['contactStrip', 'Shared contact strip'],
-  ['contact', 'Contact'],
-  ['booking', 'Booking'],
-  ['supportPages', 'Support pages'],
-  ['privacyPolicy', 'Privacy policy'],
-  ['cookiePolicy', 'Cookie policy'],
-  ['site', 'Site settings and footer'],
+  ['home', { en: 'Home', sv: 'Hem' }],
+  ['about', { en: 'About', sv: 'Om oss' }],
+  ['services', { en: 'Services', sv: 'Tjänster' }],
+  ['contactStrip', { en: 'Shared contact strip', sv: 'Delad kontaktrad' }],
+  ['contact', { en: 'Contact', sv: 'Kontakt' }],
+  ['booking', { en: 'Booking', sv: 'Bokning' }],
+  ['supportPages', { en: 'Support pages', sv: 'Supportsidor' }],
+  ['privacyPolicy', { en: 'Privacy policy', sv: 'Integritetspolicy' }],
+  ['cookiePolicy', { en: 'Cookie policy', sv: 'Cookiepolicy' }],
+  ['site', { en: 'Site settings and footer', sv: 'Webbplats och sidfot' }],
 ] as const;
+
+const fieldClass =
+  'w-full rounded-md border border-line bg-white px-3 text-body-sm text-zinc-950 outline-none focus:border-purple focus:ring-2 focus:ring-purple/20';
 
 const copy = {
   en: {
@@ -38,12 +41,17 @@ const copy = {
     bookings: 'Bookings',
     locale: 'Language',
     page: 'Page',
-    save: 'Save edits in this browser',
-    reset: 'Reset page edits',
-    saved: 'Edits saved in this browser.',
-    saveFailed: 'Unable to save changes. Browser storage may be full or unavailable.',
+    save: 'Save this page',
+    saving: 'Saving…',
+    reset: 'Restore original text',
+    resetConfirm: 'Restore the original text for this page on the live site?',
+    restored: 'Original text restored. The live site is updated.',
+    saved: 'Saved. The live site is updated.',
+    saveFailed: 'The page could not be saved. Sign in again if your session has expired.',
+    slotTaken: 'That time is already booked by another request.',
+    logout: 'Log out',
     invoices: 'Open invoice manager',
-    empty: 'No booking requests are stored in this browser yet.',
+    empty: 'No booking requests yet.',
     ref: 'Reference',
     customer: 'Customer',
     when: 'Date and time (UTC)',
@@ -59,7 +67,12 @@ const copy = {
     company: 'Company',
     message: 'Message',
     close: 'Close',
-    contentHelp: 'Edit the fields below. Upload image files directly from your computer.',
+    contentHelp: 'Choose a page, edit its fields, then save. The live site updates immediately.',
+    pages: 'Pages',
+    viewSite: 'View website',
+    imageSettings: 'Image size and position',
+    all: 'All',
+    draftHint: 'Edits stay here until you save.',
     uploadImage: 'Upload image',
     changeImage: 'Change image',
     removeImage: 'Remove image',
@@ -75,12 +88,17 @@ const copy = {
     bookings: 'Bokningar',
     locale: 'Språk',
     page: 'Sida',
-    save: 'Spara ändringar i webbläsaren',
-    reset: 'Återställ sidändringar',
-    saved: 'Ändringarna har sparats i webbläsaren.',
-    saveFailed: 'Det gick inte att spara. Webbläsarens lagring kan vara full eller otillgänglig.',
+    save: 'Spara den här sidan',
+    saving: 'Sparar…',
+    reset: 'Återställ originaltext',
+    resetConfirm: 'Återställa originaltexten för den här sidan på den live-webbplatsen?',
+    restored: 'Originaltexten är återställd. Webbplatsen är uppdaterad.',
+    saved: 'Sparat. Webbplatsen är uppdaterad.',
+    saveFailed: 'Sidan kunde inte sparas. Logga in igen om sessionen har gått ut.',
+    slotTaken: 'Den tiden är redan bokad av en annan förfrågan.',
+    logout: 'Logga ut',
     invoices: 'Öppna fakturahantering',
-    empty: 'Inga bokningar finns sparade i den här webbläsaren ännu.',
+    empty: 'Inga bokningsförfrågningar ännu.',
     ref: 'Referens',
     customer: 'Kund',
     when: 'Datum och tid (UTC)',
@@ -96,7 +114,12 @@ const copy = {
     company: 'Företag',
     message: 'Meddelande',
     close: 'Stäng',
-    contentHelp: 'Redigera fälten nedan. Ladda upp bildfiler direkt från din dator.',
+    contentHelp: 'Välj en sida, redigera fälten och spara. Webbplatsen uppdateras direkt.',
+    pages: 'Sidor',
+    viewSite: 'Visa webbplatsen',
+    imageSettings: 'Bildstorlek och position',
+    all: 'Alla',
+    draftHint: 'Ändringarna ligger kvar här tills du sparar.',
     uploadImage: 'Ladda upp bild',
     changeImage: 'Byt bild',
     removeImage: 'Ta bort bild',
@@ -106,16 +129,6 @@ const copy = {
     noBookings: 'Inga bokningar hittades för filtret.',
   },
 } as const;
-
-function mergeObjects(base: unknown, override: unknown): unknown {
-  if (Array.isArray(override) || override === null || typeof override !== 'object') return override;
-  if (base === null || typeof base !== 'object' || Array.isArray(base)) return override;
-  const result: Record<string, unknown> = { ...(base as Record<string, unknown>) };
-  for (const [key, value] of Object.entries(override)) {
-    result[key] = key in result ? mergeObjects(result[key], value) : value;
-  }
-  return result;
-}
 
 function fieldName(value: string) {
   return value
@@ -219,10 +232,9 @@ function ImageField({
   }
 
   return (
-    <div className="grid gap-3 border-b border-line py-3 last:border-0">
-      <span className="text-body-sm font-semibold text-zinc-950">{fieldName('src')}</span>
+    <div className="grid gap-3">
       {hasImage ? (
-        <div className="relative aspect-video w-full max-w-md overflow-hidden rounded-sm border border-line bg-cloud">
+        <div className="relative aspect-video w-full max-w-md overflow-hidden rounded-lg border border-line bg-cloud">
           <Image
             src={value}
             alt=""
@@ -236,7 +248,7 @@ function ImageField({
         <p className="text-caption text-ink-muted">{words.noImage}</p>
       )}
       <div className="flex flex-wrap items-center gap-3">
-        <label className="inline-flex min-h-11 cursor-pointer items-center rounded-sm bg-navy px-4 text-button text-white focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-purple hover:bg-navy-dark">
+        <label className="inline-flex min-h-10 cursor-pointer items-center rounded-md bg-navy px-3 text-caption font-bold text-white focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-purple hover:bg-navy-dark">
           {isUploading ? words.uploadingImage : hasImage ? words.changeImage : words.uploadImage}
           <input
             id={id}
@@ -254,7 +266,7 @@ function ImageField({
               setError('');
               onChange(path, '');
             }}
-            className="min-h-11 rounded-sm border border-line px-4 text-button text-ink-muted hover:bg-cloud"
+            className="min-h-10 rounded-md border border-line px-3 text-caption font-bold text-ink-muted hover:bg-cloud"
           >
             {words.removeImage}
           </button>
@@ -274,6 +286,7 @@ function ContentTree({
   path,
   onChange,
   words,
+  defaultOpen = false,
 }: {
   value: unknown;
   path: (string | number)[];
@@ -283,6 +296,7 @@ function ContentTree({
     dimensions?: { width: number; height: number },
   ) => void;
   words: (typeof copy)[Locale];
+  defaultOpen?: boolean;
 }) {
   const key = String(path[path.length - 1] ?? 'Content');
   const label = fieldName(key);
@@ -296,24 +310,24 @@ function ContentTree({
     const longText =
       value.length > 90 || /text|description|tagline|answer|paragraph|slogan/i.test(key);
     return (
-      <div className="grid gap-2 border-b border-line py-3 last:border-0">
-        <label htmlFor={id} className="text-body-sm font-semibold text-zinc-950">
+      <div className="grid gap-2">
+        <label htmlFor={id} className="text-caption font-semibold text-zinc-950">
           {label}
         </label>
         {longText ? (
           <textarea
             id={id}
             value={value}
-            rows={3}
+            rows={4}
             onChange={(event) => onChange(path, event.target.value)}
-            className="w-full rounded-sm border border-line bg-white p-3 text-body-sm outline-none focus:border-purple focus:ring-2 focus:ring-purple/20"
+            className={`${fieldClass} py-2`}
           />
         ) : (
           <input
             id={id}
             value={value}
             onChange={(event) => onChange(path, event.target.value)}
-            className="min-h-11 w-full rounded-sm border border-line bg-white px-3 text-body-sm outline-none focus:border-purple focus:ring-2 focus:ring-purple/20"
+            className={`${fieldClass} min-h-11`}
           />
         )}
       </div>
@@ -322,8 +336,8 @@ function ContentTree({
 
   if (typeof value === 'number') {
     return (
-      <div className="grid gap-2 border-b border-line py-3 last:border-0">
-        <label htmlFor={id} className="text-body-sm font-semibold text-zinc-950">
+      <div className="grid gap-2">
+        <label htmlFor={id} className="text-caption font-semibold text-zinc-950">
           {label}
         </label>
         <input
@@ -331,7 +345,7 @@ function ContentTree({
           type="number"
           value={value}
           onChange={(event) => onChange(path, Number(event.target.value))}
-          className="min-h-11 rounded-sm border border-line px-3 text-body-sm"
+          className={`${fieldClass} min-h-11`}
         />
       </div>
     );
@@ -339,7 +353,7 @@ function ContentTree({
 
   if (typeof value === 'boolean') {
     return (
-      <label className="flex items-center gap-3 border-b border-line py-3 text-body-sm font-semibold text-zinc-950">
+      <label className="flex min-h-11 items-center gap-3 rounded-md border border-line bg-white px-3 text-body-sm font-semibold text-zinc-950">
         <input
           type="checkbox"
           checked={value}
@@ -353,8 +367,8 @@ function ContentTree({
 
   if (Array.isArray(value)) {
     return (
-      <details open={path.length === 0} className="mt-3 rounded-sm border border-line bg-white p-4">
-        <summary className="cursor-pointer text-title-18 font-bold text-navy">
+      <details className="rounded-lg border border-line bg-cloud/60 p-4">
+        <summary className="cursor-pointer text-body-sm font-bold text-navy">
           {label} ({value.length})
         </summary>
         <div className="mt-2 grid gap-2">
@@ -373,11 +387,79 @@ function ContentTree({
   }
 
   if (value && typeof value === 'object') {
+    const record = value as Record<string, unknown>;
+    if (path.length === 0) {
+      return (
+        <div className="grid gap-3">
+          {Object.entries(record).map(([childKey, child], index) => (
+            <ContentTree
+              key={`${id}-${childKey}`}
+              value={child}
+              path={[childKey]}
+              onChange={onChange}
+              words={words}
+              defaultOpen={index === 0}
+            />
+          ))}
+        </div>
+      );
+    }
+
+    if (typeof record.src === 'string') {
+      const advancedKeys = ['width', 'height', 'focalPoint'].filter(
+        (childKey) => childKey in record,
+      );
+      const otherKeys = Object.keys(record).filter(
+        (childKey) => childKey !== 'src' && !advancedKeys.includes(childKey),
+      );
+      return (
+        <section className="rounded-lg border border-line bg-white p-4">
+          <h3 className="text-body-sm font-bold text-navy">{label}</h3>
+          <div className="mt-3 grid gap-3">
+            <ImageField
+              id={`${id}-src`}
+              path={[...path, 'src']}
+              value={record.src}
+              onChange={onChange}
+              words={words}
+            />
+            {otherKeys.map((childKey) => (
+              <ContentTree
+                key={`${id}-${childKey}`}
+                value={record[childKey]}
+                path={[...path, childKey]}
+                onChange={onChange}
+                words={words}
+              />
+            ))}
+            {advancedKeys.length ? (
+              <details className="rounded-md bg-cloud px-3 py-2">
+                <summary className="cursor-pointer text-caption font-semibold text-ink-muted">
+                  {words.imageSettings}
+                </summary>
+                <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                  {advancedKeys.map((childKey) => (
+                    <ContentTree
+                      key={`${id}-${childKey}`}
+                      value={record[childKey]}
+                      path={[...path, childKey]}
+                      onChange={onChange}
+                      words={words}
+                    />
+                  ))}
+                </div>
+              </details>
+            ) : null}
+          </div>
+        </section>
+      );
+    }
+
     return (
-      <details open={path.length === 0} className="mt-3 rounded-sm border border-line bg-white p-4">
-        <summary className="cursor-pointer text-title-18 font-bold text-navy">{label}</summary>
-        <div className="mt-2 grid gap-2">
-          {Object.entries(value).map(([childKey, child]) => (
+      <details open={defaultOpen} className="rounded-lg border border-line bg-white p-4">
+        <summary className="cursor-pointer text-body-sm font-bold text-navy">{label}</summary>
+        <div className="mt-4 grid gap-3">
+          {Object.entries(record).map(([childKey, child]) => (
             <ContentTree
               key={`${id}-${childKey}`}
               value={child}
@@ -396,47 +478,28 @@ function ContentTree({
 
 export function AdminPanel({
   initialContent,
+  initialBookings,
   defaultLocale,
-  onLogout,
+  email,
 }: {
   initialContent: ContentByLocale;
+  initialBookings: BookingRecord[];
   defaultLocale: Locale;
-  onLogout: () => void;
+  email: string;
 }) {
   const words = copy[defaultLocale];
   const [tab, setTab] = useState<PanelTab>('content');
   const [locale, setLocale] = useState<Locale>(defaultLocale);
   const [page, setPage] = useState<string>('home');
   const [content, setContent] = useState<ContentByLocale>(initialContent);
-  const [bookings, setBookings] = useState<StoredBooking[]>([]);
+  const [bookings, setBookings] = useState<BookingRecord[]>(initialBookings);
   const [notice, setNotice] = useState('');
+  const [saving, setSaving] = useState(false);
 
-  const selectedPageLabel = pageOptions.find(([key]) => key === page)?.[1] ?? page;
-
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem(contentStorageKey);
-      if (stored) {
-        const overrides = JSON.parse(stored) as ContentByLocale;
-        setContent({
-          en: mergeObjects(initialContent.en, overrides.en ?? {}) as Record<string, unknown>,
-          sv: mergeObjects(initialContent.sv, overrides.sv ?? {}) as Record<string, unknown>,
-        });
-      }
-    } catch {
-      setNotice('');
-    }
-    const refreshBookings = () => setBookings(readStoredBookings());
-    refreshBookings();
-    window.addEventListener('storage', refreshBookings);
-    window.addEventListener(bookingUpdateEvent, refreshBookings);
-    return () => {
-      window.removeEventListener('storage', refreshBookings);
-      window.removeEventListener(bookingUpdateEvent, refreshBookings);
-    };
-  }, [initialContent]);
-
-  const pageContent = content[locale][page];
+  const selectedOption = pageOptions.find(([key]) => key === page);
+  const selectedPageLabel = selectedOption ? selectedOption[1][defaultLocale] : page;
+  const noticeIsError = notice === words.saveFailed || notice === words.slotTaken;
+  const pageContent = content[locale]?.[page];
 
   function updateContent(
     path: (string | number)[],
@@ -462,147 +525,287 @@ export function AdminPanel({
     setNotice('');
   }
 
-  function saveContent() {
+  async function saveContent() {
+    setSaving(true);
+    setNotice('');
     try {
-      localStorage.setItem(contentStorageKey, JSON.stringify(content));
+      const result = await saveContentPage(locale, page, pageContent);
+      if (!result.ok) {
+        setNotice(words.saveFailed);
+        return;
+      }
+      setContent((current) => ({
+        ...current,
+        [locale]: { ...current[locale], [page]: result.data },
+      }));
       setNotice(words.saved);
+    } catch {
+      setNotice(words.saveFailed);
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function resetPage() {
+    if (!window.confirm(words.resetConfirm)) return;
+    setSaving(true);
+    setNotice('');
+    try {
+      const result = await restoreContentPage(locale, page);
+      if (!result.ok) {
+        setNotice(words.saveFailed);
+        return;
+      }
+      setContent((current) => ({
+        ...current,
+        [locale]: { ...current[locale], [page]: result.data },
+      }));
+      setNotice(words.restored);
+    } catch {
+      setNotice(words.saveFailed);
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function changeBookingStatus(id: string, status: BookingRecord['status']) {
+    setNotice('');
+    try {
+      const result = await updateBookingStatus(id, status);
+      if (!result.ok) {
+        setNotice(result.error === 'conflict' ? words.slotTaken : words.saveFailed);
+        return;
+      }
+      setBookings(result.bookings);
     } catch {
       setNotice(words.saveFailed);
     }
   }
 
-  function resetPage() {
-    setContent((current) => ({
-      ...current,
-      [locale]: { ...current[locale], [page]: structuredClone(initialContent[locale][page]) },
-    }));
-    setNotice('');
-  }
-
-  function setBookingStatus(id: string, status: StoredBooking['status']) {
-    const updated = bookings.map((booking) =>
-      booking.id === id ? { ...booking, status } : booking,
-    );
-    writeStoredBookings(updated);
-    setBookings(updated);
-  }
-
   return (
-    <section className="min-h-[70vh] bg-cloud py-10 md:py-14">
-      <div className="site-container">
-        <div className="mx-auto max-w-[1500px]">
-          <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+    <div data-admin-shell className="flex min-h-dvh bg-cloud text-zinc-950">
+      <aside className="sticky top-0 hidden h-dvh w-[248px] shrink-0 flex-col bg-navy md:flex">
+        <div className="px-5 pt-6 pb-4">
+          <p className="text-title-18 font-extrabold tracking-tight text-white">TechSalem</p>
+          <p className="mt-1 text-caption text-white/70">{words.title}</p>
+        </div>
+        <nav aria-label={words.title} className="flex flex-1 flex-col gap-1 px-3">
+          <button
+            type="button"
+            onClick={() => setTab('content')}
+            className={sideItemClass(tab === 'content')}
+            aria-current={tab === 'content' ? 'page' : undefined}
+          >
+            <FileText aria-hidden="true" className="size-4 shrink-0" />
+            {words.content}
+          </button>
+          <button
+            type="button"
+            onClick={() => setTab('bookings')}
+            className={sideItemClass(tab === 'bookings')}
+            aria-current={tab === 'bookings' ? 'page' : undefined}
+          >
+            <CalendarDays aria-hidden="true" className="size-4 shrink-0" />
+            <span className="min-w-0 flex-1 text-left">{words.bookings}</span>
+            <span className="text-caption">{bookings.length}</span>
+          </button>
+          <Link href="/invoice" className={sideItemClass(false)}>
+            <Receipt aria-hidden="true" className="size-4 shrink-0" />
+            {words.invoices}
+          </Link>
+          <Link href="/" className={sideItemClass(false)}>
+            <ExternalLink aria-hidden="true" className="size-4 shrink-0" />
+            {words.viewSite}
+          </Link>
+        </nav>
+        <div className="border-t border-white/10 p-4 pb-16">
+          <p className="truncate text-caption text-white/70">{email}</p>
+          <form action={logoutAdmin} className="mt-3">
+            <input type="hidden" name="locale" value={defaultLocale} />
+            <button
+              type="submit"
+              className="inline-flex min-h-10 items-center gap-2 rounded-md px-2 text-button text-white hover:bg-white/10"
+            >
+              <LogOut aria-hidden="true" className="size-4" />
+              {words.logout}
+            </button>
+          </form>
+        </div>
+      </aside>
+
+      <div className="flex min-w-0 flex-1 flex-col">
+        <header className="sticky top-0 z-20 border-b border-line bg-white">
+          <div className="flex gap-2 overflow-x-auto px-4 py-3 md:hidden">
+            <button
+              type="button"
+              onClick={() => setTab('content')}
+              className={mobileItemClass(tab === 'content')}
+            >
+              {words.content}
+            </button>
+            <button
+              type="button"
+              onClick={() => setTab('bookings')}
+              className={mobileItemClass(tab === 'bookings')}
+            >
+              {words.bookings}
+            </button>
+            <Link href="/invoice" className={mobileItemClass(false)}>
+              {words.invoices}
+            </Link>
+            <Link href="/" className={mobileItemClass(false)}>
+              {words.viewSite}
+            </Link>
+            <form action={logoutAdmin}>
+              <input type="hidden" name="locale" value={defaultLocale} />
+              <button type="submit" className={mobileItemClass(false)}>
+                {words.logout}
+              </button>
+            </form>
+          </div>
+          <div className="flex items-end justify-between gap-4 px-4 py-4 md:px-8">
             <div>
-              <h1 className="text-h2 text-zinc-950">{words.title}</h1>
-              <p className="mt-2 text-body-sm text-ink-muted">{words.subtitle}</p>
+              <p className="text-caption font-semibold tracking-wide text-ink-muted uppercase">
+                {tab === 'content' ? words.content : words.bookings}
+              </p>
+              <h1 className="mt-1 text-title-24 font-extrabold tracking-tight text-zinc-950">
+                {tab === 'content' ? selectedPageLabel : words.bookings}
+              </h1>
             </div>
-            <div className="flex flex-wrap gap-2">
-              <Link
-                href="/invoice"
-                className="min-h-11 w-fit rounded-sm bg-navy px-4 py-3 text-button text-white hover:bg-navy-dark"
-              >
-                {words.invoices}
-              </Link>
-              <button
-                type="button"
-                onClick={onLogout}
-                className="min-h-11 rounded-sm border border-navy px-4 text-button text-navy hover:bg-white"
-              >
-                {defaultLocale === 'sv' ? 'Logga ut' : 'Log out'}
-              </button>
-            </div>
+            <p className="hidden text-caption text-ink-muted md:block">{email}</p>
           </div>
+        </header>
 
-          <div className="mt-8 flex gap-2 border-b border-line">
-            {(['content', 'bookings'] as const).map((value) => (
-              <button
-                key={value}
-                type="button"
-                onClick={() => setTab(value)}
-                className={`min-h-11 border-b-2 px-4 text-button ${tab === value ? 'border-purple text-purple' : 'border-transparent text-ink-muted'}`}
-              >
-                {words[value]}
-              </button>
-            ))}
-          </div>
-
+        <div className={`flex-1 px-4 py-5 md:px-8 md:py-6 ${tab === 'content' ? 'pb-8' : ''}`}>
           {tab === 'content' ? (
-            <div className="mt-6 grid items-start gap-6 xl:grid-cols-[280px_minmax(0,1fr)]">
-              <aside className="grid gap-4 rounded-sm border border-line bg-white p-5">
-                <label className="grid gap-2 text-body-sm font-semibold text-zinc-950">
+            <div className="grid items-start gap-5 lg:grid-cols-[240px_minmax(0,1fr)]">
+              <div className="rounded-xl border border-line bg-white p-3 lg:sticky lg:top-28">
+                <p className="px-2 text-caption font-semibold tracking-wide text-ink-muted uppercase">
                   {words.locale}
-                  <select
-                    value={locale}
-                    onChange={(event) => setLocale(event.target.value as Locale)}
-                    className="min-h-11 rounded-sm border border-line px-3"
-                  >
-                    <option value="sv">Svenska</option>
-                    <option value="en">English</option>
-                  </select>
-                </label>
-                <label className="grid gap-2 text-body-sm font-semibold text-zinc-950">
-                  {words.page}
-                  <select
-                    value={page}
-                    onChange={(event) => setPage(event.target.value)}
-                    className="min-h-11 rounded-sm border border-line px-3"
-                  >
-                    {pageOptions.map(([key, label]) => (
-                      <option key={key} value={key}>
-                        {label}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <button
-                  type="button"
-                  onClick={saveContent}
-                  className="min-h-11 rounded-sm bg-navy px-4 text-button text-white hover:bg-navy-dark"
-                >
-                  {words.save}
-                </button>
-                <button
-                  type="button"
-                  onClick={resetPage}
-                  className="min-h-11 rounded-sm border border-line px-4 text-button text-ink-muted hover:bg-cloud"
-                >
-                  {words.reset}
-                </button>
-                {notice ? (
-                  <p
-                    role="status"
-                    className={`text-body-sm ${notice === words.saveFailed ? 'text-red-text' : 'text-purple'}`}
-                  >
-                    {notice}
-                  </p>
-                ) : null}
-              </aside>
+                </p>
+                <div className="mt-2 grid grid-cols-2 gap-1 rounded-lg bg-cloud p-1">
+                  {(['sv', 'en'] as const).map((value) => (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => setLocale(value)}
+                      className={`min-h-10 rounded-md text-button ${
+                        locale === value ? 'shadow-sm bg-white text-navy' : 'text-ink-muted'
+                      }`}
+                      aria-pressed={locale === value}
+                    >
+                      {value === 'sv' ? 'Svenska' : 'English'}
+                    </button>
+                  ))}
+                </div>
+                <p className="mt-4 px-2 text-caption font-semibold tracking-wide text-ink-muted uppercase">
+                  {words.pages}
+                </p>
+                <div className="mt-2 grid gap-1">
+                  {pageOptions.map(([key, label]) => (
+                    <button
+                      key={key}
+                      type="button"
+                      onClick={() => setPage(key)}
+                      aria-current={page === key ? 'true' : undefined}
+                      className={`rounded-md px-3 py-2 text-left text-body-sm ${
+                        page === key
+                          ? 'bg-lavender font-semibold text-purple'
+                          : 'text-zinc-950 hover:bg-cloud'
+                      }`}
+                    >
+                      {label[defaultLocale]}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               <div>
-                <h2 aria-live="polite" className="mb-3 text-title-24 font-bold text-zinc-950">
-                  {selectedPageLabel}
-                </h2>
                 <p className="mb-4 text-body-sm text-ink-muted">{words.contentHelp}</p>
-                <ContentTree
-                  key={page}
-                  value={pageContent}
-                  path={[]}
-                  onChange={updateContent}
-                  words={words}
-                />
+                {pageContent !== undefined ? (
+                  <ContentTree
+                    key={`${locale}-${page}`}
+                    value={pageContent}
+                    path={[]}
+                    onChange={updateContent}
+                    words={words}
+                  />
+                ) : null}
               </div>
             </div>
           ) : (
-            <BookingManager
-              bookings={bookings}
-              locale={locale}
-              onStatus={setBookingStatus}
-              words={words}
-            />
+            <div>
+              {notice ? (
+                <p
+                  role="status"
+                  className={`mb-4 rounded-md px-3 py-2 text-body-sm ${
+                    noticeIsError ? 'bg-red-text/10 text-red-text' : 'bg-lavender text-purple'
+                  }`}
+                >
+                  {notice}
+                </p>
+              ) : null}
+              <BookingManager
+                bookings={bookings}
+                locale={locale}
+                onStatus={changeBookingStatus}
+                words={words}
+              />
+            </div>
           )}
         </div>
+
+        {tab === 'content' ? (
+          <div className="sticky bottom-0 z-20 flex flex-wrap items-center gap-3 border-t border-line bg-white px-4 py-3 md:px-8">
+            <button
+              type="button"
+              onClick={saveContent}
+              disabled={saving || pageContent === undefined}
+              className="min-h-11 rounded-md bg-navy px-4 text-button text-white hover:bg-navy-dark disabled:opacity-60"
+            >
+              {saving ? words.saving : words.save}
+            </button>
+            <button
+              type="button"
+              onClick={resetPage}
+              disabled={saving}
+              className="min-h-11 rounded-md border border-line px-4 text-button text-ink-muted hover:bg-cloud disabled:opacity-60"
+            >
+              {words.reset}
+            </button>
+            {notice ? (
+              <p
+                role="status"
+                className={`text-body-sm ${noticeIsError ? 'text-red-text' : 'text-purple'}`}
+              >
+                {notice}
+              </p>
+            ) : (
+              <p className="text-caption text-ink-muted">{words.draftHint}</p>
+            )}
+          </div>
+        ) : null}
       </div>
-    </section>
+    </div>
   );
+}
+
+function sideItemClass(active: boolean) {
+  return `flex min-h-11 w-full items-center gap-3 rounded-md px-3 text-left text-button ${
+    active ? 'bg-white text-navy' : 'text-white/80 hover:bg-white/10'
+  }`;
+}
+
+function mobileItemClass(active: boolean) {
+  return `inline-flex min-h-10 shrink-0 items-center rounded-md px-3 text-button ${
+    active ? 'bg-navy text-white' : 'bg-cloud text-navy'
+  }`;
+}
+
+function statusClass(status: BookingRecord['status']) {
+  if (status === 'confirmed') return 'bg-lavender text-purple';
+  if (status === 'completed') return 'bg-navy/10 text-navy';
+  return 'bg-cloud text-ink-muted';
 }
 
 function BookingManager({
@@ -611,45 +814,62 @@ function BookingManager({
   onStatus,
   words,
 }: {
-  bookings: StoredBooking[];
+  bookings: BookingRecord[];
   locale: Locale;
-  onStatus: (id: string, status: StoredBooking['status']) => void;
+  onStatus: (id: string, status: BookingRecord['status']) => void;
   words: (typeof copy)[Locale];
 }) {
-  const [filter, setFilter] = useState<'all' | StoredBooking['status']>('all');
+  const [filter, setFilter] = useState<'all' | BookingRecord['status']>('all');
   const visible = bookings
     .filter((booking) => filter === 'all' || booking.status === filter)
     .sort((a, b) => a.slot.start.localeCompare(b.slot.start));
   const language = locale === 'sv' ? 'sv-SE' : 'en-GB';
+  const counts = {
+    all: bookings.length,
+    confirmed: bookings.filter((booking) => booking.status === 'confirmed').length,
+    cancelled: bookings.filter((booking) => booking.status === 'cancelled').length,
+    completed: bookings.filter((booking) => booking.status === 'completed').length,
+  };
+  const filters = [
+    ['all', words.all],
+    ['confirmed', words.confirmed],
+    ['cancelled', words.cancelled],
+    ['completed', words.completed],
+  ] as const;
 
   return (
-    <div className="mt-6">
-      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-body-sm text-ink-muted">
-          {bookings.length} · {words.bookings}
-        </p>
-        <select
-          value={filter}
-          onChange={(event) => setFilter(event.target.value as typeof filter)}
-          className="min-h-11 w-fit rounded-sm border border-line bg-white px-3 text-body-sm"
-        >
-          <option value="all">All</option>
-          <option value="confirmed">{words.confirmed}</option>
-          <option value="cancelled">{words.cancelled}</option>
-          <option value="completed">{words.completed}</option>
-        </select>
+    <div>
+      <div className="mb-4 flex flex-wrap gap-2">
+        {filters.map(([value, label]) => (
+          <button
+            key={value}
+            type="button"
+            onClick={() => setFilter(value)}
+            aria-pressed={filter === value}
+            className={`min-h-10 rounded-full px-3 text-caption font-bold ${
+              filter === value ? 'bg-navy text-white' : 'border border-line bg-white text-ink-muted'
+            }`}
+          >
+            {label} {counts[value]}
+          </button>
+        ))}
       </div>
       {visible.length ? (
-        <ul className="grid gap-4">
+        <ul className="grid gap-3">
           {visible.map((booking) => (
-            <li key={booking.id} className="rounded-sm border border-line bg-white p-5">
+            <li key={booking.id} className="rounded-xl border border-line bg-white p-5">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-                <div>
-                  <p className="text-title-18 font-bold text-zinc-950">
-                    {booking.name}{' '}
-                    <span className="font-normal text-ink-muted">· {booking.id}</span>
-                  </p>
-                  <p className="mt-1 text-body-sm text-ink-muted">
+                <div className="min-w-0">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <p className="text-title-18 font-bold text-zinc-950">{booking.name}</p>
+                    <span
+                      className={`rounded-full px-2.5 py-1 text-caption font-bold ${statusClass(booking.status)}`}
+                    >
+                      {words[booking.status]}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-caption text-ink-muted">{booking.id}</p>
+                  <p className="mt-2 text-body-sm text-zinc-950">
                     {new Intl.DateTimeFormat(language, {
                       dateStyle: 'medium',
                       timeStyle: 'short',
@@ -658,10 +878,15 @@ function BookingManager({
                     UTC
                   </p>
                   <p className="mt-1 text-body-sm">
-                    <a href={`mailto:${booking.email}`} className="underline underline-offset-2">
+                    <a
+                      href={`mailto:${booking.email}`}
+                      className="text-purple underline underline-offset-2"
+                    >
                       {booking.email}
                     </a>
-                    {booking.company ? ` · ${booking.company}` : ''}
+                    {booking.company ? (
+                      <span className="text-ink-muted"> · {booking.company}</span>
+                    ) : null}
                   </p>
                   {booking.message ? (
                     <p className="mt-3 max-w-180 text-body-sm whitespace-pre-wrap text-ink-muted">
@@ -670,22 +895,19 @@ function BookingManager({
                   ) : null}
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="rounded-full bg-lavender px-3 py-1 text-caption font-bold text-purple">
-                    {words[booking.status]}
-                  </span>
                   {booking.status === 'confirmed' ? (
                     <>
                       <button
                         type="button"
                         onClick={() => onStatus(booking.id, 'completed')}
-                        className="min-h-10 rounded-sm border border-line px-3 text-caption font-bold hover:bg-cloud"
+                        className="min-h-10 rounded-md border border-line px-3 text-caption font-bold hover:bg-cloud"
                       >
                         {words.complete}
                       </button>
                       <button
                         type="button"
                         onClick={() => onStatus(booking.id, 'cancelled')}
-                        className="min-h-10 rounded-sm border border-red-text px-3 text-caption font-bold text-red-text hover:bg-red-text/5"
+                        className="min-h-10 rounded-md border border-red-text px-3 text-caption font-bold text-red-text hover:bg-red-text/5"
                       >
                         {words.cancel}
                       </button>
@@ -694,7 +916,7 @@ function BookingManager({
                     <button
                       type="button"
                       onClick={() => onStatus(booking.id, 'confirmed')}
-                      className="min-h-10 rounded-sm border border-line px-3 text-caption font-bold hover:bg-cloud"
+                      className="min-h-10 rounded-md border border-line px-3 text-caption font-bold hover:bg-cloud"
                     >
                       {words.restore}
                     </button>
@@ -705,7 +927,7 @@ function BookingManager({
           ))}
         </ul>
       ) : (
-        <p className="rounded-sm border border-line bg-white p-6 text-body-sm text-ink-muted">
+        <p className="rounded-xl border border-dashed border-line bg-white p-8 text-body-sm text-ink-muted">
           {bookings.length ? words.noBookings : words.empty}
         </p>
       )}

@@ -1,20 +1,20 @@
+import { cacheLife, cacheTag } from 'next/cache';
+
 import type { Locale } from '@/i18n/routing';
+import { readPublished } from '@/lib/db/content';
 import type { ContentKey, LocaleContent } from '@/types/content';
 
-import { en } from './en';
-import { sv } from './sv';
-
-/** Every locale must provide the full LocaleContent shape: a missing field is a type error. */
-const contentByLocale: Record<Locale, LocaleContent> = { sv, en };
-
 /**
- * The single entry point for content. Components only call this function, so a CMS can later
- * replace the implementation (e.g. a fetch) without touching components. It is async for that
- * reason, even though the local content is available immediately.
+ * Published content for the public site. The database is the live source; the files in
+ * src/content are the original copy used to seed it and to restore a page.
+ * Cached until an admin save calls updateTag, so editing the site does not wait on a timer.
  */
 export async function getContent<K extends ContentKey>(
   locale: Locale,
   key: K,
 ): Promise<LocaleContent[K]> {
-  return contentByLocale[locale][key];
+  'use cache';
+  cacheLife('max');
+  cacheTag('content', `content:${locale}:${key}`);
+  return await readPublished(locale, key);
 }

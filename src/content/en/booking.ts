@@ -56,7 +56,7 @@ export const booking: BookingPageContent = {
     },
     success: {
       title: 'Thank you – your consultation is booked.',
-      text: 'We have sent a confirmation to {email}. See you on {date} at {time}.',
+      text: 'Your consultation is reserved for {date} at {time}. We will contact you at {email}.',
       again: 'Book another time',
     },
     empty: 'No available times right now. Please email us at {email}.',

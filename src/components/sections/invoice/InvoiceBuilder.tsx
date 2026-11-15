@@ -283,7 +283,7 @@ export function InvoiceBuilder({ locale }: { locale: Locale }) {
   const [invoice, setInvoice] = useState<Invoice | null>(null);
   const [saved, setSaved] = useState<Invoice[]>([]);
   const [notice, setNotice] = useState('');
-  
+
   // amounts kräver att invoice finns, annars returnerar vi 0-värden
   const amounts = useMemo(() => {
     if (!invoice) return { subtotal: 0, vat: 0, rounding: 0, amountDue: 0 };
@@ -292,7 +292,7 @@ export function InvoiceBuilder({ locale }: { locale: Locale }) {
 
   useEffect(() => {
     const today = localDate(new Date()); // Här är det säkert att använda new Date() eftersom det körs i webbläsaren.
-    
+
     try {
       const stored = localStorage.getItem(storageKey);
       const invoices = stored ? (JSON.parse(stored) as Invoice[]) : [];
@@ -342,7 +342,7 @@ export function InvoiceBuilder({ locale }: { locale: Locale }) {
       invoice.subject ||
       invoice.items.some((item) => item.description || item.unitPrice);
     if (hasData && !window.confirm(copy.newConfirm)) return;
-    
+
     const today = localDate(new Date());
     setInvoice(createInvoice(today));
     setNotice('');

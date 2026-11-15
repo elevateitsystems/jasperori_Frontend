@@ -51,3 +51,19 @@ export type BookingResult =
       };
     }
   | { ok: false; error: BookingErrorCode };
+
+export type BookingStatus = 'confirmed' | 'cancelled' | 'completed';
+
+/** A booking stored by the server and shown in the admin panel. */
+export interface BookingRecord {
+  id: string;
+  slotId: string;
+  slot: BookingSlot;
+  name: string;
+  email: string;
+  company: string;
+  message: string;
+  locale: Locale;
+  createdAt: string;
+  status: BookingStatus;
+}

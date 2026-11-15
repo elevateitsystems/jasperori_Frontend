@@ -1,27 +1,20 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import { getLocale } from 'next-intl/server';
 
-import { AdminPortal } from '@/components/sections/admin/AdminPortal';
-import { getContent } from '@/content';
+import { AdminPanel } from '@/components/sections/admin/AdminPanel';
+import { AdminLogin } from '@/components/sections/admin/AdminPortal';
+import { getAdminSession } from '@/lib/auth/session';
+import { listBookings } from '@/lib/booking/repository';
+import { contentKeys } from '@/lib/db/defaults';
+import { readPublished } from '@/lib/db/content';
 import type { Locale } from '@/i18n/routing';
-import type { ContentKey } from '@/types/content';
 
-const editableKeys = [
-  'site',
-  'contactStrip',
-  'home',
-  'about',
-  'services',
-  'supportPages',
-  'contact',
-  'booking',
-  'privacyPolicy',
-  'cookiePolicy',
-] as const satisfies readonly ContentKey[];
+const editableKeys = contentKeys.filter((key) => key !== 'notFound');
 
-async function getLocaleContent(locale: Locale) {
+async function localeContent(locale: Locale) {
   const entries = await Promise.all(
-    editableKeys.map(async (key) => [key, await getContent(locale, key)] as const),
+    editableKeys.map(async (key) => [key, await readPublished(locale, key)] as const),
   );
   return Object.fromEntries(entries) as Record<string, unknown>;
 }
@@ -33,9 +26,31 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function AdminPage() {
-  const defaultLocale = await getLocale();
-  const [sv, en] = await Promise.all([getLocaleContent('sv'), getLocaleContent('en')]);
+export default function AdminPage() {
+  return (
+    <Suspense fallback={<div className="min-h-[70vh] bg-cloud" aria-busy="true" />}>
+      <AdminGate />
+    </Suspense>
+  );
+}
 
-  return <AdminPortal defaultLocale={defaultLocale} initialContent={{ sv, en }} />;
+/** Session cookies cannot be part of the static shell, so this streams in behind Suspense. */
+async function AdminGate() {
+  const [locale, session] = await Promise.all([getLocale(), getAdminSession()]);
+  if (!session) return <AdminLogin locale={locale} />;
+
+  const [sv, en, bookings] = await Promise.all([
+    localeContent('sv'),
+    localeContent('en'),
+    listBookings(),
+  ]);
+
+  return (
+    <AdminPanel
+      defaultLocale={locale}
+      email={session.email}
+      initialContent={{ sv, en }}
+      initialBookings={bookings}
+    />
+  );
 }
