@@ -1,7 +1,9 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { ArrowLeft } from 'lucide-react';
+import { useMemo, useState, useSyncExternalStore } from 'react';
 
+import { useRouter } from '@/i18n/navigation';
 import type { Locale } from '@/i18n/routing';
 
 type InvoiceStatus = 'draft' | 'sent' | 'paid';
@@ -43,6 +45,7 @@ const text = {
     savedInvoices: 'Saved invoices',
     noInvoices: 'No saved invoices yet.',
     newInvoice: 'New invoice',
+    back: 'Back',
     customer: 'Customer',
     name: 'Name / company',
     address: 'Street address',
@@ -107,6 +110,7 @@ const text = {
     savedInvoices: 'Sparade fakturor',
     noInvoices: 'Inga sparade fakturor ännu.',
     newInvoice: 'Ny faktura',
+    back: 'Tillbaka',
     customer: 'Kund',
     name: 'Namn / företag',
     address: 'Gatuadress',
@@ -245,6 +249,66 @@ function invoiceNumber(year: string, saved: Invoice[]) {
   return `${prefix}${String(highest + 1).padStart(3, '0')}`;
 }
 
+const EMPTY_INVOICES: Invoice[] = [];
+let savedSnapshot = EMPTY_INVOICES;
+let savedSnapshotRaw: string | null = null;
+let savedSnapshotReady = false;
+const savedListeners = new Set<() => void>();
+
+function readSavedInvoices() {
+  let raw: string | null = null;
+  try {
+    raw = localStorage.getItem(storageKey);
+  } catch {
+    raw = null;
+  }
+  if (savedSnapshotReady && raw === savedSnapshotRaw) return savedSnapshot;
+  savedSnapshotReady = true;
+  savedSnapshotRaw = raw;
+  if (!raw) {
+    savedSnapshot = EMPTY_INVOICES;
+    return savedSnapshot;
+  }
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    savedSnapshot = Array.isArray(parsed) ? (parsed as Invoice[]) : EMPTY_INVOICES;
+  } catch {
+    savedSnapshot = EMPTY_INVOICES;
+  }
+  return savedSnapshot;
+}
+
+function getServerSavedInvoices() {
+  return EMPTY_INVOICES;
+}
+
+function subscribeSaved(listener: () => void) {
+  savedListeners.add(listener);
+  const onStorage = (event: StorageEvent) => {
+    if (event.key !== null && event.key !== storageKey) return;
+    savedSnapshotReady = false;
+    listener();
+  };
+  window.addEventListener('storage', onStorage);
+  return () => {
+    savedListeners.delete(listener);
+    window.removeEventListener('storage', onStorage);
+  };
+}
+
+function writeSavedInvoices(invoices: Invoice[]) {
+  const raw = JSON.stringify(invoices);
+  localStorage.setItem(storageKey, raw);
+  savedSnapshot = invoices;
+  savedSnapshotRaw = raw;
+  savedSnapshotReady = true;
+  savedListeners.forEach((listener) => listener());
+}
+
+function subscribeToClient() {
+  return () => {};
+}
+
 function Field({
   label,
   value,
@@ -280,28 +344,20 @@ function Field({
 
 export function InvoiceBuilder({ locale }: { locale: Locale }) {
   const copy = text[locale];
+  const router = useRouter();
+  const mounted = useSyncExternalStore(subscribeToClient, () => true, () => false);
+  const saved = useSyncExternalStore(subscribeSaved, readSavedInvoices, getServerSavedInvoices);
   const [invoice, setInvoice] = useState<Invoice | null>(null);
-  const [saved, setSaved] = useState<Invoice[]>([]);
   const [notice, setNotice] = useState('');
 
-  // amounts kräver att invoice finns, annars returnerar vi 0-värden
+  if (mounted && invoice === null) {
+    setInvoice(createInvoice(localDate(new Date())));
+  }
+
   const amounts = useMemo(() => {
     if (!invoice) return { subtotal: 0, vat: 0, rounding: 0, amountDue: 0 };
     return totals(invoice);
   }, [invoice]);
-
-  useEffect(() => {
-    const today = localDate(new Date()); // Här är det säkert att använda new Date() eftersom det körs i webbläsaren.
-
-    try {
-      const stored = localStorage.getItem(storageKey);
-      const invoices = stored ? (JSON.parse(stored) as Invoice[]) : [];
-      setSaved(Array.isArray(invoices) ? invoices : []);
-    } catch {
-      setSaved([]);
-    }
-    setInvoice(createInvoice(today));
-  }, []);
 
   // Om invoice är null (under första renderingen) visar vi en laddningsskärm
   if (!invoice) {
@@ -324,8 +380,7 @@ export function InvoiceBuilder({ locale }: { locale: Locale }) {
     if (!next) return false;
     const updated = [next, ...saved.filter((item) => item.id !== next.id)];
     try {
-      localStorage.setItem(storageKey, JSON.stringify(updated));
-      setSaved(updated);
+      writeSavedInvoices(updated);
       setInvoice(next);
       if (announce) setNotice(copy.saved);
       return true;
@@ -333,6 +388,14 @@ export function InvoiceBuilder({ locale }: { locale: Locale }) {
       setNotice(copy.localNotice);
       return false;
     }
+  }
+
+  function goBack() {
+    if (window.history.length > 1) {
+      router.back();
+      return;
+    }
+    router.push('/admin');
   }
 
   function startNew() {
@@ -416,13 +479,23 @@ export function InvoiceBuilder({ locale }: { locale: Locale }) {
               <h1 className="text-h2 text-zinc-950">{copy.title}</h1>
               <p className="mt-2 text-body-sm text-ink-muted">{copy.subtitle}</p>
             </div>
-            <button
-              type="button"
-              onClick={startNew}
-              className="min-h-11 rounded-sm border border-navy px-4 text-button text-navy hover:bg-white"
-            >
-              {copy.newInvoice}
-            </button>
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={goBack}
+                className="inline-flex min-h-11 items-center gap-2 rounded-sm border border-navy px-4 text-button text-navy hover:bg-white"
+              >
+                <ArrowLeft aria-hidden="true" className="size-4" />
+                {copy.back}
+              </button>
+              <button
+                type="button"
+                onClick={startNew}
+                className="min-h-11 rounded-sm border border-navy px-4 text-button text-navy hover:bg-white"
+              >
+                {copy.newInvoice}
+              </button>
+            </div>
           </div>
 
           <div className="invoice-layout grid items-start gap-6 xl:grid-cols-[minmax(340px,420px)_minmax(0,1fr)]">
