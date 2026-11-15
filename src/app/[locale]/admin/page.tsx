@@ -4,6 +4,7 @@ import { getLocale } from 'next-intl/server';
 
 import { AdminPanel } from '@/components/sections/admin/AdminPanel';
 import { AdminLogin } from '@/components/sections/admin/AdminPortal';
+import { loadingLabel, SiteLoading } from '@/components/ui/SiteLoading';
 import { getAdminSession } from '@/lib/auth/session';
 import { listBookings } from '@/lib/booking/repository';
 import { contentKeys } from '@/lib/db/defaults';
@@ -26,9 +27,17 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function AdminPage() {
+export default async function AdminPage() {
+  const locale = await getLocale();
+
   return (
-    <Suspense fallback={<div className="min-h-[70vh] bg-cloud" aria-busy="true" />}>
+    <Suspense
+      fallback={
+        <div data-admin-shell>
+          <SiteLoading label={loadingLabel(locale)} />
+        </div>
+      }
+    >
       <AdminGate />
     </Suspense>
   );
