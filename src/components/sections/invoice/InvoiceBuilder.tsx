@@ -3,6 +3,7 @@
 import { ArrowLeft } from 'lucide-react';
 import { useMemo, useState, useSyncExternalStore } from 'react';
 
+import { loadingLabel, SiteLoading } from '@/components/ui/SiteLoading';
 import { useRouter } from '@/i18n/navigation';
 import type { Locale } from '@/i18n/routing';
 
@@ -345,7 +346,11 @@ function Field({
 export function InvoiceBuilder({ locale }: { locale: Locale }) {
   const copy = text[locale];
   const router = useRouter();
-  const mounted = useSyncExternalStore(subscribeToClient, () => true, () => false);
+  const mounted = useSyncExternalStore(
+    subscribeToClient,
+    () => true,
+    () => false,
+  );
   const saved = useSyncExternalStore(subscribeSaved, readSavedInvoices, getServerSavedInvoices);
   const [invoice, setInvoice] = useState<Invoice | null>(null);
   const [notice, setNotice] = useState('');
@@ -359,15 +364,8 @@ export function InvoiceBuilder({ locale }: { locale: Locale }) {
     return totals(invoice);
   }, [invoice]);
 
-  // Om invoice är null (under första renderingen) visar vi en laddningsskärm
   if (!invoice) {
-    return (
-      <section className="invoice-workspace bg-cloud py-8 md:py-10">
-        <div className="site-container flex min-h-[50vh] items-center justify-center">
-          <p className="text-body text-ink-muted">Loading invoice...</p>
-        </div>
-      </section>
-    );
+    return <SiteLoading label={loadingLabel(locale)} />;
   }
 
   function update<K extends keyof Invoice>(key: K, value: Invoice[K]) {

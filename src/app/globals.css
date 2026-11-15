@@ -720,3 +720,25 @@ body:has([data-admin-shell]) [data-site-chrome] {
 body:has([data-admin-shell]) #main {
   min-height: 100dvh;
 }
+
+/* Route and page loading. A full brand bar stays put when motion is reduced. */
+.site-loading-bar {
+  width: 100%;
+  background: var(--gradient-brand);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-motion='off']) .site-loading-bar {
+    width: 35%;
+    animation: site-loading-slide 1.15s ease-in-out infinite;
+  }
+}
+
+@keyframes site-loading-slide {
+  from {
+    transform: translateX(-120%);
+  }
+  to {
+    transform: translateX(320%);
+  }
+}
