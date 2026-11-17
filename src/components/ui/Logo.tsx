@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/cn';
 
@@ -48,20 +50,26 @@ export function LogoMark({
 }
 
 /**
- * TechSalem logo: the mark, then the word mark with a 10px gap. Links to the home page of the
- * current language.
+ * TechSalem logo image linking to the home page of the current language.
  */
-export function Logo({ name, label, variant, className }: LogoProps) {
-  const isLight = variant === 'light';
-
+export function Logo({ label, className }: LogoProps) {
   return (
     <Link
       href="/"
       aria-label={label}
       className={cn('touch-target inline-flex items-center gap-2.5', className)}
     >
+      {/* Previous logo rendering:
       <LogoMark variant={variant} />
       <span className={cn('text-logo', isLight ? 'text-navy' : 'text-white')}>{name}</span>
+      */}
+      <Image
+        src="/images/newlogo.jpg"
+        alt=""
+        width={95}
+        height={36}
+        className="h-9 w-auto shrink-0"
+      />
     </Link>
   );
 }

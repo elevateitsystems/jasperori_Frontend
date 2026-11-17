@@ -6,8 +6,8 @@ import { Link, usePathname } from '@/i18n/navigation';
 import type { Locale } from '@/i18n/routing';
 import { cn } from '@/lib/cn';
 
-/** Order as in the design: EN first, then SV. */
-const SWITCH_LOCALES = ['en', 'sv'] as const satisfies readonly Locale[];
+/** Swedish first (the default language), then English. */
+const SWITCH_LOCALES = ['sv', 'en'] as const satisfies readonly Locale[];
 
 interface LanguageSwitchProps {
   className?: string;
@@ -24,9 +24,9 @@ export function LanguageSwitch({ className }: LanguageSwitchProps) {
   const pathname = usePathname();
   const t = useTranslations();
 
-  const labels: Record<Locale, { short: string; name: string }> = {
-    en: { short: t('lang.en'), name: t('lang.enName') },
-    sv: { short: t('lang.sv'), name: t('lang.svName') },
+  const labels: Record<Locale, { name: string }> = {
+    en: { name: t('lang.enName') },
+    sv: { name: t('lang.svName') },
   };
 
   return (
@@ -59,7 +59,6 @@ export function LanguageSwitch({ className }: LanguageSwitchProps) {
             )}
           >
             <LanguageFlag locale={locale} />
-            <span>{labels[locale].short}</span>
             <span className="sr-only"> ({labels[locale].name})</span>
           </Link>
         );
@@ -68,7 +67,7 @@ export function LanguageSwitch({ className }: LanguageSwitchProps) {
   );
 }
 
-function LanguageFlag({ locale }: { locale: Locale }) {
+export function LanguageFlag({ locale }: { locale: Locale }) {
   if (locale === 'en') {
     return (
       <svg
