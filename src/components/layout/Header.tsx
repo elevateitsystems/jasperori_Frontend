@@ -9,7 +9,7 @@ import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/cn';
 import type { InternalLinkItem } from '@/types/content';
 
-import { LanguageSwitch } from './LanguageSwitch';
+import { LanguageFlag, LanguageSwitch } from './LanguageSwitch';
 import { MobileMenu } from './MobileMenu';
 import { NavLinks } from './NavLinks';
 
@@ -109,11 +109,11 @@ function NavLinkFallback({
 function LanguageSwitchFallback({ className }: { className?: string }) {
   return (
     <div aria-hidden="true" className={cn('inline-flex rounded-full bg-cloud p-1', className)}>
-      <span className="inline-flex items-center rounded-full bg-white px-2.5 py-1.5 text-lang text-navy shadow-switch">
-        EN
+      <span className="inline-flex items-center justify-center rounded-full bg-white px-2.5 py-1.5 shadow-switch">
+        <LanguageFlag locale="sv" />
       </span>
-      <span className="inline-flex items-center rounded-full px-2.5 py-1.5 text-lang text-ink-muted">
-        SV
+      <span className="inline-flex items-center justify-center rounded-full px-2.5 py-1.5">
+        <LanguageFlag locale="en" />
       </span>
     </div>
   );
