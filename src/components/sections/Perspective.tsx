@@ -6,23 +6,12 @@ import type { SplitTitle } from '@/types/content';
 
 interface PerspectiveProps {
   content: SplitTitle & { label: string; text: string };
-  /** Unique heading id per page. */
   id: string;
-  /**
-   * lg: ExtraBold 16px label that wraps to two lines (About).
-   * sm: ExtraBold 10/15, 2.2px tracking (Services).
-   */
+
   labelSize: 'sm' | 'lg';
-  /** Vertical padding; 120px top and bottom by default. */
   className?: string;
 }
 
-/**
- * "01 / Our perspective" (spec: About and Services "Frame 2147240630"). Cloud background, 1136px
- * inner width. From `xl`: a 149px label column, then the 741px content column starting 296px
- * from the left edge (147px gap). Heading ExtraBold 60/61.2 with a red accent; text 16/32, 36px
- * below, max 672px.
- */
 export function Perspective({ content, id, labelSize, className }: PerspectiveProps) {
   return (
     <Section
