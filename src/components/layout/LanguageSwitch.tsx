@@ -59,8 +59,8 @@ export function LanguageSwitch({ className }: LanguageSwitchProps) {
             )}
           >
             <LanguageFlag locale={locale} />
-            <span>{labels[locale].short}</span>
-            <span className="sr-only"> ({labels[locale].name})</span>
+            {/* <span>{labels[locale].short}</span>
+            <span className="sr-only"> ({labels[locale].name})</span> */}
           </Link>
         );
       })}
